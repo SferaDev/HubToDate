@@ -13,8 +13,10 @@ public class IntentReceiver extends BroadcastReceiver {
         String[] data = intent.getData().toString().split(":");
         Utils.createToast(data[1]);
         if (intent.getAction().equals("android.intent.action.PACKAGE_ADDED")) {
+            // TODO
         }
         if (intent.getAction().equals("android.intent.action.PACKAGE_REMOVED")) {
+            // TODO
         }
     }
 }
