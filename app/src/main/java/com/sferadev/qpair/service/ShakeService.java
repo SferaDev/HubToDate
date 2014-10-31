@@ -2,20 +2,16 @@ package com.sferadev.qpair.service;
 
 import android.app.ActivityManager;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.IBinder;
-import android.os.RemoteException;
 
-import com.lge.qpair.api.r1.IPeerContext;
-import com.lge.qpair.api.r1.IPeerIntent;
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.Utils;
 import com.sferadev.qpair.listener.ShakeListener;
+import com.sferadev.qpair.utils.QPairUtils;
 
 public class ShakeService extends Service {
 
@@ -43,7 +39,7 @@ public class ShakeService extends Service {
                     final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
 
                     // Bind to the QPair service
-                    boolean bindResult = bindService(intent, new MyServiceConnection(packageName, activityName), 0);
+                    boolean bindResult = bindService(intent, new QPairUtils.MyActivityConnection(packageName, activityName), 0);
 
                     if (!bindResult) {
                         Utils.createToast("QPair: Binding to service has failed");
@@ -58,46 +54,6 @@ public class ShakeService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    public class MyServiceConnection implements ServiceConnection {
-
-        String myPackage;
-        String myActivity;
-
-        MyServiceConnection(String mPackage, String mActivity) {
-            myPackage = mPackage;
-            myActivity = mActivity;
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-
-            IPeerContext peerContext = IPeerContext.Stub.asInterface(service);
-
-            try {
-                IPeerIntent peerIntent = peerContext.newPeerIntent();
-
-                if (myActivity.startsWith(".")) {
-                    peerIntent.setClassName(myPackage, myActivity);
-                } else {
-                    Utils.createToast("QPair: Apologies, this app is not supported"); //TODO
-                }
-
-                peerContext.startActivityOnPeer(peerIntent, null);
-
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-            unbindService(this);
-
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-        }
-
     }
 
 }
