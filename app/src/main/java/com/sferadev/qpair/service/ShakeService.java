@@ -40,7 +40,6 @@ public class ShakeService extends Service {
                     Utils.createToast("QPair: Opening app in G Pad");
                     String packageName = foregroundTaskInfo.topActivity.getPackageName();
                     String activityName = foregroundTaskInfo.topActivity.getShortClassName();
-                    Utils.createToast("DEBUG: " + packageName + " " + activityName);
                     final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
 
                     // Bind to the QPair service
@@ -52,13 +51,12 @@ public class ShakeService extends Service {
                 }
             }
         });
-        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
         return Service.START_STICKY;
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -75,24 +73,23 @@ public class ShakeService extends Service {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
 
-            // create an IPeerContext when the service is connected.
             IPeerContext peerContext = IPeerContext.Stub.asInterface(service);
 
             try {
-                // create an IPeerIntent to be sent.
                 IPeerIntent peerIntent = peerContext.newPeerIntent();
 
-                // set the Activity class to be invoked on the peer.
-                peerIntent.setClassName(myPackage, myActivity);
+                if (myActivity.startsWith(".")) {
+                    peerIntent.setClassName(myPackage, myActivity);
+                } else {
+                    Utils.createToast("QPair: Apologies, this app is not supported"); //TODO
+                }
 
-                // call startActivityOnPeer() with an IPeerIntent using IPeerContext.
                 peerContext.startActivityOnPeer(peerIntent, null);
 
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
 
-            // unbind the QPair service.
             unbindService(this);
 
         }

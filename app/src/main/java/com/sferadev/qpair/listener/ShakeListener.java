@@ -27,10 +27,6 @@ public class ShakeListener implements SensorEventListener {
         this.mListener = listener;
     }
 
-    public interface OnShakeListener {
-        public void onShake(int count);
-    }
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // ignore
@@ -69,5 +65,9 @@ public class ShakeListener implements SensorEventListener {
                 mListener.onShake(mShakeCount);
             }
         }
+    }
+
+    public interface OnShakeListener {
+        public void onShake(int count);
     }
 }
