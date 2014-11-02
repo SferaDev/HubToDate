@@ -1,4 +1,4 @@
-package com.sferadev.qpair;
+package com.sferadev.qpair.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -13,7 +13,14 @@ import static com.sferadev.qpair.App.getContext;
 
 public class Utils {
 
-    public static void sendString(int key, String string) {
+    //TODO: Create LogUtils class
+
+    //TODO: Implement checks for Tablet APK installed!
+    //TODO: 1 module with checks. Custom info depending if it's tab or phone!
+
+    public static boolean IS_APP_ADVANCED = true; //TODO: Must be disabled for Public Preview
+
+    public static void sendString(int key, String string) { //TODO Implement in AdvancedUtils class
         try {
             // TODO
         } catch (Exception e) {

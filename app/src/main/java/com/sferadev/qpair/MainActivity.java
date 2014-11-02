@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sferadev.qpair.service.ShakeService;
+import com.sferadev.qpair.utils.Utils;
 import com.shamanland.fab.FloatingActionButton;
 
 

@@ -9,7 +9,7 @@ import android.hardware.SensorManager;
 import android.os.IBinder;
 
 import com.lge.qpair.api.r1.QPairConstants;
-import com.sferadev.qpair.Utils;
+import com.sferadev.qpair.utils.Utils;
 import com.sferadev.qpair.listener.ShakeListener;
 import com.sferadev.qpair.utils.QPairUtils;
 

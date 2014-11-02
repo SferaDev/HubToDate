@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
-import com.sferadev.qpair.Utils;
+import com.sferadev.qpair.utils.Utils;
 import com.sferadev.qpair.utils.QPairUtils;
 
 public class IntentReceiver extends BroadcastReceiver {

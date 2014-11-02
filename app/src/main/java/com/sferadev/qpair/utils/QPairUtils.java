@@ -9,7 +9,6 @@ import android.os.RemoteException;
 import com.lge.qpair.api.r1.IPeerContext;
 import com.lge.qpair.api.r1.IPeerIntent;
 import com.sferadev.qpair.App;
-import com.sferadev.qpair.Utils;
 
 public class QPairUtils {
 
