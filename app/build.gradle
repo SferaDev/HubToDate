@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.shamanland:fab:0.0.3'
     compile files('libs/LGQPairAPIs.jar')
+    compile 'com.r0adkll:postoffice:1.1.4'
 }

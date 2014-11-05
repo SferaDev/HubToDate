@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.IBinder;
 
 import com.lge.qpair.api.r1.QPairConstants;
+import com.sferadev.qpair.App;
 import com.sferadev.qpair.utils.Utils;
 import com.sferadev.qpair.listener.ShakeListener;
 import com.sferadev.qpair.utils.QPairUtils;
@@ -39,7 +40,7 @@ public class ShakeService extends Service {
                     final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
 
                     // Bind to the QPair service
-                    boolean bindResult = bindService(intent, new QPairUtils.MyActivityConnection(packageName, activityName), 0);
+                    boolean bindResult = App.getContext().bindService(intent, new QPairUtils.MyActivityConnection(packageName, activityName), 0);
 
                     if (!bindResult) {
                         Utils.createToast("QPair: Binding to service has failed");

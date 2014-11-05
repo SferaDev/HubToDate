@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.BatteryManager;
 import android.widget.Toast;
+
+import com.sferadev.qpair.App;
 
 import static com.sferadev.qpair.App.getContext;
 
@@ -19,14 +22,6 @@ public class Utils {
     //TODO: 1 module with checks. Custom info depending if it's tab or phone!
 
     public static boolean IS_APP_ADVANCED = true; //TODO: Must be disabled for Public Preview
-
-    public static void sendString(int key, String string) { //TODO Implement in AdvancedUtils class
-        try {
-            // TODO
-        } catch (Exception e) {
-            // TODO
-        }
-    }
 
     public static void createToast(String string) {
         Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
@@ -41,6 +36,19 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static void openActivity(String packageName) {
+        Intent i = App.getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        App.getContext().startActivity(i);
+    }
+
+    public static void openURL(String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.getContext().startActivity(i);
     }
 
     public static String getBatteryLevel() {

@@ -28,6 +28,13 @@
         </activity>
 
         <receiver
+            android:name=".receiver.AdvancedReceiver">
+            <intent-filter>
+                <action android:name="com.sferadev.qpair.OPEN_ACTIVITY" />
+                <action android:name="com.sferadev.qpair.OPEN_URL" />
+            </intent-filter>
+        </receiver>
+        <receiver
             android:name=".receiver.BootReceiver"
             android:enabled="true"
             android:exported="false">
