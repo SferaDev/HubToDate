@@ -10,9 +10,12 @@ import android.os.IBinder;
 
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
-import com.sferadev.qpair.utils.Utils;
 import com.sferadev.qpair.listener.ShakeListener;
 import com.sferadev.qpair.utils.QPairUtils;
+
+import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_ACTIVITY;
+import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
+import static com.sferadev.qpair.utils.Utils.createToast;
 
 public class ShakeService extends Service {
 
@@ -34,17 +37,14 @@ public class ShakeService extends Service {
                 if (count > 1) {
                     ActivityManager am = (ActivityManager) ShakeService.this.getSystemService(ACTIVITY_SERVICE);
                     ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
-                    Utils.createToast("QPair: Opening app in G Pad");
-                    String packageName = foregroundTaskInfo.topActivity.getPackageName();
-                    String activityName = foregroundTaskInfo.topActivity.getShortClassName();
-                    final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+
+                    createToast("QPair: Working right now!");
 
                     // Bind to the QPair service
-                    boolean bindResult = App.getContext().bindService(intent, new QPairUtils.MyActivityConnection(packageName, activityName), 0);
-
-                    if (!bindResult) {
-                        Utils.createToast("QPair: Binding to service has failed");
-                    }
+                    String packageName = foregroundTaskInfo.topActivity.getPackageName();
+                    createToast(packageName);
+                    final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+                    App.getContext().bindService(intent, new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, packageName), 0);
                 }
             }
         });

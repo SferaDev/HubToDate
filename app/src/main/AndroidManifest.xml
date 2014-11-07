@@ -31,6 +31,7 @@
             android:name=".receiver.AdvancedReceiver">
             <intent-filter>
                 <action android:name="com.sferadev.qpair.OPEN_ACTIVITY" />
+                <action android:name="com.sferadev.qpair.OPEN_PLAY_STORE" />
                 <action android:name="com.sferadev.qpair.OPEN_URL" />
             </intent-filter>
         </receiver>

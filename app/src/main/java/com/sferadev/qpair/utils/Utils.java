@@ -1,7 +1,11 @@
 package com.sferadev.qpair.utils;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -10,18 +14,24 @@ import android.net.Uri;
 import android.os.BatteryManager;
 import android.widget.Toast;
 
+import com.r0adkll.postoffice.PostOffice;
+import com.r0adkll.postoffice.model.Delivery;
+import com.r0adkll.postoffice.model.Design;
 import com.sferadev.qpair.App;
+import com.sferadev.qpair.R;
 
 import static com.sferadev.qpair.App.getContext;
 
 public class Utils {
 
-    //TODO: Create LogUtils class
+    public static String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
+    public static String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
+    public static String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
 
-    //TODO: Implement checks for Tablet APK installed!
-    //TODO: 1 module with checks. Custom info depending if it's tab or phone!
+    public static String EXTRA_URL = "url";
+    public static String EXTRA_PACKAGE_NAME = "packageName";
 
-    public static boolean IS_APP_ADVANCED = true; //TODO: Must be disabled for Public Preview
+    public static boolean IS_APP_ADVANCED = true; //TODO
 
     public static void createToast(String string) {
         Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
@@ -39,16 +49,52 @@ public class Utils {
     }
 
     public static void openActivity(String packageName) {
-        Intent i = App.getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
         i.addCategory(Intent.CATEGORY_LAUNCHER);
-        App.getContext().startActivity(i);
+        getContext().startActivity(i);
+    }
+
+    public static void openPlayStore(String packageName) {
+        try {
+            Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage("com.android.vending");
+            launchIntent.setComponent(new ComponentName("com.android.vending", "com.google.android.finsky.activities.LaunchUrlHandlerActivity"));
+            launchIntent.setData(Uri.parse("market://details?id=" + packageName));
+            getContext().startActivity(launchIntent);
+        } catch (android.content.ActivityNotFoundException e) {
+            e.printStackTrace();
+            openURL("http://play.google.com/store/apps/details?id=" + packageName);
+        }
     }
 
     public static void openURL(String url) {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        App.getContext().startActivity(i);
+        getContext().startActivity(i);
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public static Delivery createToast(Context context, String title, String data) {
+         return PostOffice.newMail(context)
+                .setTitle(title)
+                .setMessage(data)
+                .setDesign(Design.MATERIAL_LIGHT)
+                .setCancelable(false)
+                .setCanceledOnTouchOutside(true)
+                .setShouldProperlySortButtons(true)
+                .setButtonTextColor(Dialog.BUTTON_NEGATIVE, R.color.amber_500)
+                .setButton(Dialog.BUTTON_NEGATIVE, App.getContext().getString(android.R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                })
+                .setButtonTextColor(Dialog.BUTTON_POSITIVE, R.color.pink_500)
+                .setButton(Dialog.BUTTON_POSITIVE, App.getContext().getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                })
+                .build();
     }
 
     public static String getBatteryLevel() {
