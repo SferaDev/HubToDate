@@ -1,11 +1,8 @@
 package com.sferadev.qpair.utils;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -13,12 +10,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.widget.Toast;
-
-import com.r0adkll.postoffice.PostOffice;
-import com.r0adkll.postoffice.model.Delivery;
-import com.r0adkll.postoffice.model.Design;
-import com.sferadev.qpair.App;
-import com.sferadev.qpair.R;
 
 import static com.sferadev.qpair.App.getContext;
 
@@ -71,30 +62,6 @@ public class Utils {
         i.setData(Uri.parse(url));
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(i);
-    }
-
-    @SuppressLint("ResourceAsColor")
-    public static Delivery createToast(Context context, String title, String data) {
-         return PostOffice.newMail(context)
-                .setTitle(title)
-                .setMessage(data)
-                .setDesign(Design.MATERIAL_LIGHT)
-                .setCancelable(false)
-                .setCanceledOnTouchOutside(true)
-                .setShouldProperlySortButtons(true)
-                .setButtonTextColor(Dialog.BUTTON_NEGATIVE, R.color.amber_500)
-                .setButton(Dialog.BUTTON_NEGATIVE, App.getContext().getString(android.R.string.no), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.cancel();
-                    }
-                })
-                .setButtonTextColor(Dialog.BUTTON_POSITIVE, R.color.pink_500)
-                .setButton(Dialog.BUTTON_POSITIVE, App.getContext().getString(android.R.string.yes), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }
-                })
-                .build();
     }
 
     public static String getBatteryLevel() {

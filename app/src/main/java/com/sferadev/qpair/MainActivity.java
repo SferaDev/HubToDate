@@ -25,7 +25,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //TODO
-                createToast(MainActivity.this, "Hi", "This is a test").show(getFragmentManager());
             }
         });
 
