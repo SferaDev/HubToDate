@@ -1,6 +1,7 @@
 package com.sferadev.qpair.utils;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.preference.PreferenceManager;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.sferadev.qpair.App;
@@ -36,6 +38,15 @@ public class Utils {
     public static void createToast(String string) {
         Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    public static void createDialog(String title, String message) {
+        AlertDialog dialog = new AlertDialog.Builder(App.getContext())
+                .setTitle(title)
+                .setMessage(message)
+                .create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
     }
 
     public static void setPreferences(String key, String value) {

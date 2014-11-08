@@ -38,13 +38,12 @@ public class ShakeService extends Service {
                     ActivityManager am = (ActivityManager) ShakeService.this.getSystemService(ACTIVITY_SERVICE);
                     ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
 
-                    createToast("QPair: Working right now!");
-
-                    // Bind to the QPair service
-                    String packageName = foregroundTaskInfo.topActivity.getPackageName();
-                    createToast(packageName);
-                    final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                    App.getContext().bindService(intent, new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, packageName), 0);
+                    if (QPairUtils.isQPairOn() && QPairUtils.isConnected()) {
+                        final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+                        App.getContext().bindService(intent, new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, foregroundTaskInfo.topActivity.getPackageName()), 0);
+                    } else {
+                        createToast("QPair: You're not connected to Peer");
+                    }
                 }
             }
         });
