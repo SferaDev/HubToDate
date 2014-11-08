@@ -62,6 +62,8 @@
                 <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.media.RINGER_MODE_CHANGED" />
+                <action android:name="android.media.VIBRATE_SETTING_CHANGED" />
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
