@@ -22,13 +22,14 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <receiver
-            android:name=".receiver.AdvancedReceiver">
+            android:name=".receiver.AdvancedReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.sferadev.qpair.OPEN_ACTIVITY" />
                 <action android:name="com.sferadev.qpair.OPEN_PLAY_STORE" />
@@ -44,7 +45,10 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.IntentReceiver">
+        <receiver
+            android:name=".receiver.IntentReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />

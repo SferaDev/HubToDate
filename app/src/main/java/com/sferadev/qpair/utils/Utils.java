@@ -5,11 +5,15 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.BatteryManager;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
+
+import com.sferadev.qpair.App;
 
 import static com.sferadev.qpair.App.getContext;
 
@@ -22,11 +26,45 @@ public class Utils {
     public static String EXTRA_URL = "url";
     public static String EXTRA_PACKAGE_NAME = "packageName";
 
-    public static boolean IS_APP_ADVANCED = true; //TODO
+    public static String KEY_IS_PHONE = "isPhone";
+    public static String KEY_IS_ON = "isOn";
+    public static String KEY_IS_CONNECTED = "isConnected";
+
+    public static boolean isAdvanced = true; //TODO
 
     public static void createToast(String string) {
         Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    public static void setPreferences(String key, String value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putString(key, value);
+        mEditor.commit();
+    }
+
+    public static void setPreferences(String key, boolean value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putBoolean(key, value);
+        mEditor.commit();
+    }
+
+    public static void setPreferences(String key, int value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putInt(key, value);
+        mEditor.commit();
+    }
+
+    public static String getPreferences(String key, String defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getString(key, defaultValue);
+    }
+
+    public static boolean getPreferences(String key, boolean defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(key, defaultValue);
+    }
+
+    public static int getPreferences(String key, int defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
     }
 
     public static boolean isServiceRunning(Class<?> serviceClass) {

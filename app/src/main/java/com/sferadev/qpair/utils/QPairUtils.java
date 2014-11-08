@@ -36,6 +36,28 @@ public class QPairUtils {
         return null;
     }
 
+    public static boolean isPhone() {
+        if (getQPairProperty(EXTRA_QPAIR_DEVICE_TYPE).equals("phone")) {
+            Utils.setPreferences(Utils.KEY_IS_PHONE, true);
+            return true;
+        } else {
+            Utils.setPreferences(Utils.KEY_IS_PHONE, false);
+            return false;
+        }
+    }
+
+    public static boolean isQPairOn() {
+        boolean isOn = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_ON));
+        Utils.setPreferences(Utils.KEY_IS_ON, isOn);
+        return isOn;
+    }
+
+    public static boolean isConnected() {
+        boolean isConnected = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_CONNECTED));
+        Utils.setPreferences(Utils.KEY_IS_CONNECTED, isConnected);
+        return isConnected;
+    }
+
     public static class sendBroadcastConnection implements ServiceConnection {
 
         String myAction, myExtra[];
