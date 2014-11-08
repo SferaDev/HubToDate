@@ -29,6 +29,7 @@ public class Utils {
     public static String KEY_IS_PHONE = "isPhone";
     public static String KEY_IS_ON = "isOn";
     public static String KEY_IS_CONNECTED = "isConnected";
+    public static String KEY_LAST_APP = "lastApp";
 
     public static boolean isAdvanced = true; //TODO
 
