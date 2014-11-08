@@ -33,7 +33,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     App.getContext().bindService(i, new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, data[1]), 0);
                     break;
                 default:
-                    createToast("New intent received: " + intent.getAction());
+                    createToast("New intent received: " + intent.getAction() + " with: " + data[1]);
                     break;
             }
         }
