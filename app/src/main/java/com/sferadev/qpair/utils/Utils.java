@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.BatteryManager;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.sferadev.qpair.App;
@@ -24,6 +25,7 @@ public class Utils {
     public static String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
     public static String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
     public static String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
+    public static String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
 
     public static String EXTRA_URL = "url";
     public static String EXTRA_PACKAGE_NAME = "packageName";
@@ -112,6 +114,13 @@ public class Utils {
         i.setData(Uri.parse(url));
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(i);
+    }
+
+    public static void switchIME() {
+        InputMethodManager imeManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imeManager != null) {
+            imeManager.showInputMethodPicker();
+        }
     }
 
     public static String getBatteryLevel() {

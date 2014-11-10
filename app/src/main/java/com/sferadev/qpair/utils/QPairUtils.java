@@ -75,7 +75,9 @@ public class QPairUtils {
             try {
                 IPeerIntent peerIntent = peerContext.newPeerIntent();
                 peerIntent.setAction(myAction);
-                peerIntent.putStringExtra(myExtra[0], myExtra[1]);
+                if (myExtra[0] != null) {
+                    peerIntent.putStringExtra(myExtra[0], myExtra[1]);
+                }
                 peerContext.sendBroadcastOnPeer(peerIntent, null);
             } catch (RemoteException e) {
                 e.printStackTrace();
