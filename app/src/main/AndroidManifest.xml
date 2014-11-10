@@ -35,15 +35,7 @@
                 <action android:name="com.sferadev.qpair.OPEN_ACTIVITY" />
                 <action android:name="com.sferadev.qpair.OPEN_PLAY_STORE" />
                 <action android:name="com.sferadev.qpair.OPEN_URL" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".receiver.BootReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.sferadev.qpair.CHANGE_IME" />
             </intent-filter>
         </receiver>
         <receiver
@@ -53,6 +45,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.AIRPLANE_MODE" />
                 <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.intent.action.DATE_CHANGED" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
