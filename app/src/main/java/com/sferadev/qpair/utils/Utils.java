@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
@@ -26,9 +27,11 @@ public class Utils {
     public static String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
     public static String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
     public static String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
+    public static String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
 
     public static String EXTRA_URL = "url";
     public static String EXTRA_PACKAGE_NAME = "packageName";
+    public static String EXTRA_WIFI_STATE = "wifiState";
 
     public static String KEY_IS_PHONE = "isPhone";
     public static String KEY_IS_ON = "isOn";
@@ -121,6 +124,11 @@ public class Utils {
         if (imeManager != null) {
             imeManager.showInputMethodPicker();
         }
+    }
+
+    public static void switchWifi(boolean state) {
+        WifiManager wifiManager = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(state);
     }
 
     public static String getBatteryLevel() {

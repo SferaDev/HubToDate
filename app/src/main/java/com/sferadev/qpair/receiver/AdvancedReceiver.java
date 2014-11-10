@@ -23,6 +23,9 @@ public class AdvancedReceiver extends BroadcastReceiver {
             case "com.sferadev.qpair.CHANGE_IME":
                 switchIME();
                 break;
+            case "com.sferadev.qpair.CHANGE_WIFI":
+                switchWifi(Boolean.parseBoolean(intent.getStringExtra(EXTRA_WIFI_STATE)));
+                break;
             default:
                 createToast(intent.getAction().toString());
         }

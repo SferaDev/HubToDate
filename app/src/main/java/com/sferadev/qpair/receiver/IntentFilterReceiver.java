@@ -3,12 +3,15 @@ package com.sferadev.qpair.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 
 import com.lge.qpair.api.r1.QPairConstants;
-import com.sferadev.qpair.App;
 import com.sferadev.qpair.service.ShakeService;
 
-import static com.sferadev.qpair.utils.QPairUtils.*;
+import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.QPairUtils.isConnected;
+import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
+import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 import static com.sferadev.qpair.utils.Utils.*;
 
 public class IntentFilterReceiver extends BroadcastReceiver {
@@ -17,8 +20,8 @@ public class IntentFilterReceiver extends BroadcastReceiver {
 
         // Load Shake Service if off
         if (!isServiceRunning(ShakeService.class)) {
-            Intent serviceIntent = new Intent(App.getContext(), ShakeService.class);
-            App.getContext().startService(serviceIntent);
+            Intent serviceIntent = new Intent(getContext(), ShakeService.class);
+            getContext().startService(serviceIntent);
         }
 
         if (isQPairOn() && isConnected()) {
@@ -28,18 +31,29 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     String[] dataPackageAdded = intent.getData().toString().split(":");
                     if (dataPackageAdded[1] != getPreferences(KEY_LAST_APP, null)) {
                         setPreferences(KEY_LAST_APP, dataPackageAdded[1]);
-                        App.getContext().bindService(i, new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageAdded[1]), 0);
+                        getContext().bindService(i, new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageAdded[1]), 0);
                     }
                     break;
                 case "android.intent.action.PACKAGE_REMOVED":
                     String[] dataPackageRemoved = intent.getData().toString().split(":");
                     if (dataPackageRemoved[1] != getPreferences(KEY_LAST_APP, null)) {
                         setPreferences(KEY_LAST_APP, dataPackageRemoved[1]);
-                        App.getContext().bindService(i, new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageRemoved[1]), 0);
+                        getContext().bindService(i, new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageRemoved[1]), 0);
                     }
                     break;
                 case "android.intent.action.INPUT_METHOD_CHANGED":
-                    App.getContext().bindService(i, new sendBroadcastConnection(ACTION_CHANGE_IME, null, null), 0);
+                    getContext().bindService(i, new sendBroadcastConnection(ACTION_CHANGE_IME), 0);
+                    break;
+                case "android.net.wifi.WIFI_STATE_CHANGED":
+                    int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
+                    switch (state) {
+                        case WifiManager.WIFI_STATE_DISABLED:
+                            getContext().bindService(i, new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA_WIFI_STATE, "false"), 0);
+                            break;
+                        case WifiManager.WIFI_STATE_ENABLED:
+                            getContext().bindService(i, new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA_WIFI_STATE, "true"), 0);
+                            break;
+                    }
                     break;
                 default:
                     createToast("New intent received: " + intent.getAction());
