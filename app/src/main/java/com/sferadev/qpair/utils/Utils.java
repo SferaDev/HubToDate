@@ -136,7 +136,6 @@ public class Utils {
     }
 
     public static void setRingerMode(int value) {
-        createToast("setRingerMode: " + value);
         if (value != -1) {
             AudioManager audioManager = (AudioManager) App.getContext().getSystemService(Context.AUDIO_SERVICE);
             audioManager.setRingerMode(value);
