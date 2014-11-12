@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -86,6 +87,17 @@ public class Utils {
 
     public static int getPreferences(String key, int defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
+    }
+
+    public static String getForegroundApp() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //TODO: You're screwed!
+        } else {
+            ActivityManager am = (ActivityManager) App.getContext().getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
+            return foregroundTaskInfo.topActivity.getPackageName();
+        }
+        return null;
     }
 
     public static boolean isServiceRunning(Class<?> serviceClass) {

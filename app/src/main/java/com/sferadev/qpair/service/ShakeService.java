@@ -1,6 +1,5 @@
 package com.sferadev.qpair.service;
 
-import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import com.sferadev.qpair.utils.QPairUtils;
 import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_ACTIVITY;
 import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
 import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.Utils.getForegroundApp;
 
 public class ShakeService extends Service {
 
@@ -35,12 +35,9 @@ public class ShakeService extends Service {
             @Override
             public void onShake(int count) {
                 if (count > 1) {
-                    ActivityManager am = (ActivityManager) ShakeService.this.getSystemService(ACTIVITY_SERVICE);
-                    ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
-
                     if (QPairUtils.isQPairOn() && QPairUtils.isConnected()) {
                         final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                        App.getContext().bindService(intent, new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, foregroundTaskInfo.topActivity.getPackageName()), 0);
+                        App.getContext().bindService(intent, new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, getForegroundApp()), 0);
                     } else {
                         createToast("QPair: You're not connected to Peer");
                     }
