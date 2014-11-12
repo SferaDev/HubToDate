@@ -45,22 +45,21 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.AIRPLANE_MODE" />
-                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_LOW" /> <!-- TODO -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+                <action android:name="android.intent.action.DATE_CHANGED" /> <!-- TODO -->
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" /> <!-- TODO -->
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
-                <action android:name="android.intent.action.MEDIA_BAD_REMOVAL" />
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" /> <!-- TODO -->
+                <action android:name="android.intent.action.MEDIA_BAD_REMOVAL" /> <!-- TODO -->
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> <!-- TODO -->
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.media.RINGER_MODE_CHANGED" />
-                <action android:name="android.media.VIBRATE_SETTING_CHANGED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" /> <!-- TODO -->
+                <action android:name="android.media.RINGER_MODE_CHANGED" /> <!-- TODO -->
+                <action android:name="android.media.VIBRATE_SETTING_CHANGED" /> <!-- TODO -->
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>

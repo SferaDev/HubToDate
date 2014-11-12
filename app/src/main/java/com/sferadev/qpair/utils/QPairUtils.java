@@ -68,7 +68,7 @@ public class QPairUtils {
 
         public sendBroadcastConnection(String mAction, String mExtraName, String mExtraValue) {
             myAction = mAction;
-            myExtra = new String[] {mExtraName, mExtraValue};
+            myExtra = new String[]{mExtraName, mExtraValue};
         }
 
         @Override

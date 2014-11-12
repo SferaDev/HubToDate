@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        card_view:cardCornerRadius="16dp"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        card_view:cardCornerRadius="16dp">
 
         <TextView
             android:id="@+id/info_text"

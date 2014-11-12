@@ -12,7 +12,16 @@ import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
-import static com.sferadev.qpair.utils.Utils.*;
+import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_IME;
+import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
+import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
+import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
+import static com.sferadev.qpair.utils.Utils.EXTRA_WIFI_STATE;
+import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
+import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.Utils.getPreferences;
+import static com.sferadev.qpair.utils.Utils.isServiceRunning;
+import static com.sferadev.qpair.utils.Utils.setPreferences;
 
 public class IntentFilterReceiver extends BroadcastReceiver {
     @Override
