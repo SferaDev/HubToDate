@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -28,15 +29,18 @@ public class Utils {
     public static String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
     public static String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
     public static String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
+    public static String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
 
     public static String EXTRA_URL = "url";
     public static String EXTRA_PACKAGE_NAME = "packageName";
     public static String EXTRA_WIFI_STATE = "wifiState";
+    public static String EXTRA_RINGER_MODE = "ringerMode";
 
     public static String KEY_IS_PHONE = "isPhone";
     public static String KEY_IS_ON = "isOn";
     public static String KEY_IS_CONNECTED = "isConnected";
     public static String KEY_LAST_APP = "lastApp";
+    public static String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
     public static boolean isAdvanced = true; //TODO
 
@@ -129,6 +133,14 @@ public class Utils {
     public static void switchWifi(boolean state) {
         WifiManager wifiManager = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(state);
+    }
+
+    public static void setRingerMode(int value) {
+        createToast("setRingerMode: " + value);
+        if (value != -1) {
+            AudioManager audioManager = (AudioManager) App.getContext().getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setRingerMode(value);
+        }
     }
 
     public static String getBatteryLevel() {

@@ -3,6 +3,7 @@ package com.sferadev.qpair.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 
 import com.lge.qpair.api.r1.QPairConstants;
@@ -12,17 +13,7 @@ import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
-import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_IME;
-import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
-import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
-import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
-import static com.sferadev.qpair.utils.Utils.EXTRA_WIFI_STATE;
-import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
-import static com.sferadev.qpair.utils.Utils.createToast;
-import static com.sferadev.qpair.utils.Utils.getPreferences;
-import static com.sferadev.qpair.utils.Utils.isServiceRunning;
-import static com.sferadev.qpair.utils.Utils.setPreferences;
-
+import static com.sferadev.qpair.utils.Utils.*;
 public class IntentFilterReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -62,6 +53,12 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                         case WifiManager.WIFI_STATE_ENABLED:
                             getContext().bindService(i, new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA_WIFI_STATE, "true"), 0);
                             break;
+                    }
+                    break;
+                case "android.media.RINGER_MODE_CHANGED":
+                    if (intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1) != getPreferences(KEY_LAST_RINGER_MODE, -1)) {
+                        setPreferences(KEY_LAST_RINGER_MODE, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1));
+                        getContext().bindService(i, new sendBroadcastConnection(ACTION_CHANGE_RINGER_MODE, EXTRA_RINGER_MODE, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1)), 0);
                     }
                     break;
                 default:

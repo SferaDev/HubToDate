@@ -71,6 +71,11 @@ public class QPairUtils {
             myExtra = new String[]{mExtraName, mExtraValue};
         }
 
+        public sendBroadcastConnection(String mAction, String mExtraName, int mExtraValue) {
+            myAction = mAction;
+            myExtra = new String[]{mExtraName, String.valueOf(mExtraValue)};
+        }
+
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
 

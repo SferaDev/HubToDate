@@ -4,15 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
-import static com.sferadev.qpair.utils.Utils.EXTRA_URL;
-import static com.sferadev.qpair.utils.Utils.EXTRA_WIFI_STATE;
-import static com.sferadev.qpair.utils.Utils.createToast;
-import static com.sferadev.qpair.utils.Utils.openActivity;
-import static com.sferadev.qpair.utils.Utils.openPlayStore;
-import static com.sferadev.qpair.utils.Utils.openURL;
-import static com.sferadev.qpair.utils.Utils.switchIME;
-import static com.sferadev.qpair.utils.Utils.switchWifi;
+import static com.sferadev.qpair.utils.Utils.*;
 
 public class AdvancedReceiver extends BroadcastReceiver {
 
@@ -33,6 +25,9 @@ public class AdvancedReceiver extends BroadcastReceiver {
                 break;
             case "com.sferadev.qpair.CHANGE_WIFI":
                 switchWifi(Boolean.parseBoolean(intent.getStringExtra(EXTRA_WIFI_STATE)));
+                break;
+            case "com.sferadev.qpair.CHANGE_RINGER_MODE":
+                setRingerMode(Integer.valueOf(intent.getStringExtra(EXTRA_RINGER_MODE)));
                 break;
             default:
                 createToast(intent.getAction().toString());
