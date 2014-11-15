@@ -14,6 +14,7 @@ import com.sferadev.qpair.utils.QPairUtils;
 
 import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_ACTIVITY;
 import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
+import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getForegroundApp;
 
@@ -37,7 +38,7 @@ public class ShakeService extends Service {
                 if (count > 1) {
                     if (QPairUtils.isQPairOn() && QPairUtils.isConnected()) {
                         final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                        App.getContext().bindService(intent, new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, getForegroundApp()), 0);
+                        App.getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), intent), new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, getForegroundApp()), 0);
                     } else {
                         createToast("QPair: You're not connected to Peer");
                     }
