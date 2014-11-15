@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">QPair</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">HubToDate</string>
+    <string name="hello_world">Welcome to HubToDate\'s preview!</string>
+    <string name="shake_it">Shake your device!</string>
+    <string name="shake_it_2">It will open the same app on your peer device</string>
     <string name="action_settings">Settings</string>
 
 </resources>

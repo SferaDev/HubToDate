@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -54,10 +55,11 @@ public class Utils {
         toast.show();
     }
 
-    public static void createDialog(String title, String message) {
-        AlertDialog dialog = new AlertDialog.Builder(App.getContext())
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener listener) {
+        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
                 .setTitle(title)
                 .setMessage(message)
+                .setPositiveButton(getContext().getString(android.R.string.ok), listener)
                 .create();
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();
@@ -121,6 +123,7 @@ public class Utils {
     public static String getForegroundApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //TODO: You're screwed!
+            createToast("Shake doesn't work on L yet");
         } else {
             ActivityManager am = (ActivityManager) App.getContext().getSystemService(Context.ACTIVITY_SERVICE);
             ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
