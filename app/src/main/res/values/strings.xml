@@ -3,8 +3,12 @@
 
     <string name="app_name">HubToDate</string>
     <string name="hello_world">Welcome to HubToDate\'s preview!</string>
-    <string name="shake_it">Shake your device!</string>
-    <string name="shake_it_2">It will open the same app on your peer device</string>
+    <string name="shake_it">Shake and sync!</string>
+    <string name="shake_it_2">If you shake your device, your foreground App will be synced on your connected device</string>
+    <string name="app_sync">Install and uninstall with ease!</string>
+    <string name="app_sync_2">Handle App installs or uninstalls in all your devices at once</string>
+    <string name="wifi_etc">Your preferences shared across devices!</string>
+    <string name="wifi_etc_2">Sync your WiFi, Volume or even InputMethod preferences with your peer device</string>
     <string name="action_settings">Settings</string>
 
 </resources>

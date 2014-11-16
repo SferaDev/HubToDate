@@ -48,8 +48,6 @@ public class Utils {
     public static String KEY_LAST_APP = "lastApp";
     public static String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
-    public static boolean isAdvanced = true; //TODO
-
     public static void createToast(String string) {
         Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
         toast.show();
@@ -60,6 +58,17 @@ public class Utils {
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(getContext().getString(android.R.string.ok), listener)
+                .create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
+    }
+
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener positivelistener, DialogInterface.OnClickListener negativeListener) {
+        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getContext().getString(android.R.string.yes), positivelistener)
+                .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
                 .create();
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();

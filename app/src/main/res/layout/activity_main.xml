@@ -9,12 +9,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view_1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        card_view:cardElevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,10 +42,11 @@
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view_2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_below="@id/card_view_1"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        card_view:cardElevation="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,6 +63,7 @@
                 android:textColor="@color/colorPrimary"
                 android:gravity="left"
                 android:textSize="30sp"/>
+
             <TextView
                 android:id="@+id/info_text_3"
                 android:fontFamily="sans-serif-light"
@@ -70,6 +77,87 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_3"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_below="@id/card_view_2"
+        android:layout_marginTop="10dp"
+        card_view:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/info_text_4"
+                android:fontFamily="sans-serif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_sync"
+                android:textColor="@color/colorPrimary"
+                android:gravity="left"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/info_text_5"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_sync_2"
+                android:textColor="@color/colorPrimary"
+                android:gravity="left"
+                android:layout_margin="5dp"
+                android:textSize="19sp"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_4"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_below="@id/card_view_3"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        card_view:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/info_text_6"
+                android:fontFamily="sans-serif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wifi_etc"
+                android:textColor="@color/colorPrimary"
+                android:gravity="left"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/info_text_7"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wifi_etc_2"
+                android:textColor="@color/colorPrimary"
+                android:gravity="left"
+                android:layout_margin="5dp"
+                android:textSize="19sp"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 
     <com.shamanland.fab.FloatingActionButton
         android:id="@+id/fab"
