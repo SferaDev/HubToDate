@@ -109,6 +109,9 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                 case "android.intent.action.BATTERY_LOW":
                     getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA_MESSAGE, getContext().getString(R.string.battery_low)), 0);
                     break;
+                case "android.intent.action.DEVICE_STORAGE_LOW":
+                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA_MESSAGE, getContext().getString(R.string.storage_low)), 0);
+                    break;
                 default:
                     createToast("New intent received: " + intent.getAction());
                     break;
