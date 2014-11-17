@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sferadev.qpair.service.ShakeService;
-import com.sferadev.qpair.utils.MediaProjectionDemo;
 import com.shamanland.fab.FloatingActionButton;
 
 import static com.sferadev.qpair.utils.Utils.createDialog;
@@ -28,13 +27,7 @@ public class MainActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         openURL("https://plus.google.com/communities/102943838378590125127");
                     }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(App.getContext(), MediaProjectionDemo.class);
-                        startActivity(intent);
-                    }
-                });
+                }, null);
 
             }
         });
