@@ -54,7 +54,6 @@
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
                 <action android:name="android.intent.action.LOCALE_CHANGED" /> <!-- TODO -->
-                <action android:name="android.intent.action.MEDIA_BAD_REMOVAL" /> <!-- TODO -->
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
