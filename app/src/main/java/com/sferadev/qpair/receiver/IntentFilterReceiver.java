@@ -52,7 +52,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     createDialog("Install on Peer", "Do you wish to install this app on your QPair device?", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (dataPackageAdded[1] != getPreferences(KEY_LAST_APP, null)) {
+                            if (!dataPackageAdded[1].equals(getPreferences(KEY_LAST_APP, null))) {
                                 setPreferences(KEY_LAST_APP, dataPackageAdded[1]);
                                 getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageAdded[1]), 0);
                             }
@@ -64,7 +64,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     createDialog("Uninstall on Peer", "Do you wish to uninstall this app on your QPair device?", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (dataPackageRemoved[1] != getPreferences(KEY_LAST_APP, null)) {
+                            if (!dataPackageRemoved[1].equals(getPreferences(KEY_LAST_APP, null))) {
                                 setPreferences(KEY_LAST_APP, dataPackageRemoved[1]);
                                 getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageRemoved[1]), 0);
                             }

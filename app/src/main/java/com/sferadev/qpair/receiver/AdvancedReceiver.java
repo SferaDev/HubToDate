@@ -33,7 +33,7 @@ public class AdvancedReceiver extends BroadcastReceiver {
                 createDialog("HubToDate", intent.getStringExtra(EXTRA_MESSAGE), null);
                 break;
             default:
-                createToast(intent.getAction().toString());
+                createToast(intent.getAction());
         }
     }
 }

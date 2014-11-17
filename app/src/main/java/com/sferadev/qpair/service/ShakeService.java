@@ -20,17 +20,13 @@ import static com.sferadev.qpair.utils.Utils.getForegroundApp;
 
 public class ShakeService extends Service {
 
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private ShakeListener mShakeDetector;
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // ShakeDetector initialization
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager
+        SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor mAccelerometer = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mShakeDetector = new ShakeListener();
+        ShakeListener mShakeDetector = new ShakeListener();
         mShakeDetector.setOnShakeListener(new ShakeListener.OnShakeListener() {
 
             @Override

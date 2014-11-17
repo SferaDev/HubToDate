@@ -6,16 +6,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.media.AudioManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.BatteryManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
@@ -30,25 +26,25 @@ import static com.sferadev.qpair.App.getContext;
 
 public class Utils {
 
-    public static String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
-    public static String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
+    public static final String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
+    public static final String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
     public static String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
-    public static String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
-    public static String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
-    public static String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
-    public static String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
+    public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
+    public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
+    public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
+    public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
 
-    public static String EXTRA_URL = "url";
-    public static String EXTRA_PACKAGE_NAME = "packageName";
-    public static String EXTRA_WIFI_STATE = "wifiState";
-    public static String EXTRA_RINGER_MODE = "ringerMode";
-    public static String EXTRA_MESSAGE = "message";
+    public static final String EXTRA_URL = "url";
+    public static final String EXTRA_PACKAGE_NAME = "packageName";
+    public static final String EXTRA_WIFI_STATE = "wifiState";
+    public static final String EXTRA_RINGER_MODE = "ringerMode";
+    public static final String EXTRA_MESSAGE = "message";
 
-    public static String KEY_IS_PHONE = "isPhone";
-    public static String KEY_IS_ON = "isOn";
-    public static String KEY_IS_CONNECTED = "isConnected";
-    public static String KEY_LAST_APP = "lastApp";
-    public static String KEY_LAST_RINGER_MODE = "lastRingerMode";
+    public static final String KEY_IS_PHONE = "isPhone";
+    public static final String KEY_IS_ON = "isOn";
+    public static final String KEY_IS_CONNECTED = "isConnected";
+    public static final String KEY_LAST_APP = "lastApp";
+    public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
     public static void createToast(String string) {
         Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
@@ -65,11 +61,11 @@ public class Utils {
         dialog.show();
     }
 
-    public static void createDialog(String title, String message, DialogInterface.OnClickListener positivelistener, DialogInterface.OnClickListener negativeListener) {
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
         AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(getContext().getString(android.R.string.yes), positivelistener)
+                .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
                 .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
                 .create();
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
@@ -79,19 +75,19 @@ public class Utils {
     public static void setPreferences(String key, String value) {
         SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
         mEditor.putString(key, value);
-        mEditor.commit();
+        mEditor.apply();
     }
 
     public static void setPreferences(String key, boolean value) {
         SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
         mEditor.putBoolean(key, value);
-        mEditor.commit();
+        mEditor.apply();
     }
 
     public static void setPreferences(String key, int value) {
         SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
         mEditor.putInt(key, value);
-        mEditor.commit();
+        mEditor.apply();
     }
 
     public static String getPreferences(String key, String defaultValue) {
@@ -135,6 +131,14 @@ public class Utils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //TODO: You're screwed!
             createToast("Shake doesn't work on L yet");
+            // I hate L privacy! This is awful :(
+            ActivityManager activityManager = (ActivityManager) getContext().getSystemService( Context.ACTIVITY_SERVICE );
+            List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+            for(ActivityManager.RunningAppProcessInfo appProcess : appProcesses){
+                if(appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE){
+                    createToast(appProcess.processName);
+                }
+            }
         } else {
             ActivityManager am = (ActivityManager) App.getContext().getSystemService(Context.ACTIVITY_SERVICE);
             ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
@@ -195,20 +199,6 @@ public class Utils {
             AudioManager audioManager = (AudioManager) App.getContext().getSystemService(Context.AUDIO_SERVICE);
             audioManager.setRingerMode(value);
         }
-    }
-
-    public static String getBatteryLevel() {
-        Intent batteryIntent = getContext().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        int level = batteryIntent != null ? batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0) : 0;
-        int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, 100);
-        int percent = (level * 100) / scale;
-        return String.valueOf(percent) + "%";
-    }
-
-    public static boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        setPreferences(KEY_LAST_RINGER_MODE, value);
     }
 }

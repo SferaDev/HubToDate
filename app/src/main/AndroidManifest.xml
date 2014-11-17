@@ -66,9 +66,9 @@
             android:name=".service.ShakeService"
             android:enabled="true"
             android:exported="true"
-            android:process=":background"></service>
+            android:process=":background"/>
 
-        <activity android:name=".utils.MediaProjectionDemo"></activity>
+        <activity android:name=".utils.MediaProjectionDemo"/>
     </application>
 
 </manifest>
