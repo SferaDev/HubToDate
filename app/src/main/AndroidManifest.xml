@@ -41,6 +41,7 @@
                 <action android:name="com.sferadev.qpair.CHANGE_WIFI" />
                 <action android:name="com.sferadev.qpair.CHANGE_RINGER_MODE" />
                 <action android:name="com.sferadev.qpair.CREATE_DIALOG" />
+                <action android:name="com.sferadev.qpair.UPDATE_CLIPBOARD" />
             </intent-filter>
         </receiver>
         <receiver
@@ -63,7 +64,7 @@
         </receiver>
 
         <service
-            android:name=".service.ShakeService"
+            android:name=".service.ListenerService"
             android:enabled="true"
             android:exported="true"
             android:process=":background"/>

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.sferadev.qpair.service.ShakeService;
+import com.sferadev.qpair.service.ListenerService;
 import com.shamanland.fab.FloatingActionButton;
 
 import static com.sferadev.qpair.utils.Utils.createDialog;
@@ -33,8 +33,8 @@ public class MainActivity extends BaseActivity {
         });
 
         // Load Shake Service if off
-        if (!isServiceRunning(ShakeService.class)) {
-            Intent i = new Intent(this, ShakeService.class);
+        if (!isServiceRunning(ListenerService.class)) {
+            Intent i = new Intent(this, ListenerService.class);
             this.startService(i);
         }
     }

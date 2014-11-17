@@ -32,6 +32,10 @@ public class AdvancedReceiver extends BroadcastReceiver {
             case "com.sferadev.qpair.CREATE_DIALOG":
                 createDialog("HubToDate", intent.getStringExtra(EXTRA_MESSAGE), null);
                 break;
+            case "com.sferadev.qpair.UPDATE_CLIPBOARD":
+                setClipboardString(intent.getStringExtra(EXTRA_MESSAGE));
+                createToast("Added to clipboard: " + intent.getStringExtra(EXTRA_MESSAGE));
+                break;
             default:
                 createToast(intent.getAction());
         }

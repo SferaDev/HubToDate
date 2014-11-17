@@ -29,4 +29,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.shamanland:fab:0.0.3'
     compile files('libs/LGQPairAPIs.jar')
+    compile files('libs/libSFG-0.5-release.jar')
 }

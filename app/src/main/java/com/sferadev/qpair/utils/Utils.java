@@ -2,6 +2,8 @@ package com.sferadev.qpair.utils;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,11 +30,12 @@ public class Utils {
 
     public static final String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
     public static final String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
-    public static String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
+    public static final String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
     public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
     public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
     public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
     public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
+    public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
 
     public static final String EXTRA_URL = "url";
     public static final String EXTRA_PACKAGE_NAME = "packageName";
@@ -129,14 +132,12 @@ public class Utils {
 
     public static String getForegroundApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //TODO: You're screwed!
-            createToast("Shake doesn't work on L yet");
-            // I hate L privacy! This is awful :(
+            //You're screwed! This might or might not work, it's really hacky
             ActivityManager activityManager = (ActivityManager) getContext().getSystemService( Context.ACTIVITY_SERVICE );
             List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
             for(ActivityManager.RunningAppProcessInfo appProcess : appProcesses){
-                if(appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE){
-                    createToast(appProcess.processName);
+                if(appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND){
+                    return appProcess.processName;
                 }
             }
         } else {
@@ -155,6 +156,16 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static void setClipboardString(String value) {
+        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText("simple text", value));
+    }
+
+    public static String getClipboardString() {
+        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        return clipboard.getPrimaryClip().getItemAt(0).getText().toString();
     }
 
     public static void openActivity(String packageName) {

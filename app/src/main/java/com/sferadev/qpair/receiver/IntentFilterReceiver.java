@@ -10,7 +10,7 @@ import android.net.wifi.WifiManager;
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
 import com.sferadev.qpair.R;
-import com.sferadev.qpair.service.ShakeService;
+import com.sferadev.qpair.service.ListenerService;
 
 import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
@@ -39,20 +39,20 @@ public class IntentFilterReceiver extends BroadcastReceiver {
     public void onReceive(Context context, final Intent intent) {
 
         // Load Shake Service if off
-        if (!isServiceRunning(ShakeService.class)) {
-            Intent serviceIntent = new Intent(getContext(), ShakeService.class);
+        if (!isServiceRunning(ListenerService.class)) {
+            Intent serviceIntent = new Intent(getContext(), ListenerService.class);
             getContext().startService(serviceIntent);
         }
 
         if (isQPairOn() && isConnected()) {
             final Intent i = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-            switch (intent.getAction()) {
+            switch (intent.getAction()) { //TODO
                 case "android.intent.action.PACKAGE_ADDED":
                     final String[] dataPackageAdded = intent.getData().toString().split(":");
                     createDialog("Install on Peer", "Do you wish to install this app on your QPair device?", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (!dataPackageAdded[1].equals(getPreferences(KEY_LAST_APP, null))) {
+                            if (dataPackageAdded[1] != getPreferences(KEY_LAST_APP, null)) {
                                 setPreferences(KEY_LAST_APP, dataPackageAdded[1]);
                                 getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageAdded[1]), 0);
                             }
@@ -64,7 +64,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     createDialog("Uninstall on Peer", "Do you wish to uninstall this app on your QPair device?", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (!dataPackageRemoved[1].equals(getPreferences(KEY_LAST_APP, null))) {
+                            if (dataPackageRemoved[1] != getPreferences(KEY_LAST_APP, null)) {
                                 setPreferences(KEY_LAST_APP, dataPackageRemoved[1]);
                                 getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageRemoved[1]), 0);
                             }
