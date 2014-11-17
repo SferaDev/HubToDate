@@ -40,6 +40,7 @@
                 <action android:name="com.sferadev.qpair.CHANGE_IME" />
                 <action android:name="com.sferadev.qpair.CHANGE_WIFI" />
                 <action android:name="com.sferadev.qpair.CHANGE_RINGER_MODE" />
+                <action android:name="com.sferadev.qpair.CREATE_DIALOG" />
             </intent-filter>
         </receiver>
         <receiver
@@ -47,7 +48,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BATTERY_LOW" /> <!-- TODO -->
+                <action android:name="android.intent.action.BATTERY_LOW" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" /> <!-- TODO -->

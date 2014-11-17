@@ -36,11 +36,13 @@ public class Utils {
     public static String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
     public static String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
     public static String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
+    public static String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
 
     public static String EXTRA_URL = "url";
     public static String EXTRA_PACKAGE_NAME = "packageName";
     public static String EXTRA_WIFI_STATE = "wifiState";
     public static String EXTRA_RINGER_MODE = "ringerMode";
+    public static String EXTRA_MESSAGE = "message";
 
     public static String KEY_IS_PHONE = "isPhone";
     public static String KEY_IS_ON = "isOn";

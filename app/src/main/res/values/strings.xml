@@ -10,5 +10,6 @@
     <string name="wifi_etc">Your preferences shared across devices!</string>
     <string name="wifi_etc_2">Sync your WiFi, Volume or even InputMethod preferences with your peer device</string>
     <string name="action_settings">Settings</string>
+    <string name="battery_low">Your peer device battery is low</string>
 
 </resources>

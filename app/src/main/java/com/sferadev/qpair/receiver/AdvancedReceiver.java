@@ -4,17 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
-import static com.sferadev.qpair.utils.Utils.EXTRA_RINGER_MODE;
-import static com.sferadev.qpair.utils.Utils.EXTRA_URL;
-import static com.sferadev.qpair.utils.Utils.EXTRA_WIFI_STATE;
-import static com.sferadev.qpair.utils.Utils.createToast;
-import static com.sferadev.qpair.utils.Utils.openActivity;
-import static com.sferadev.qpair.utils.Utils.openPlayStore;
-import static com.sferadev.qpair.utils.Utils.openURL;
-import static com.sferadev.qpair.utils.Utils.setRingerMode;
-import static com.sferadev.qpair.utils.Utils.switchIME;
-import static com.sferadev.qpair.utils.Utils.switchWifi;
+import static com.sferadev.qpair.utils.Utils.*;
 
 public class AdvancedReceiver extends BroadcastReceiver {
 
@@ -38,6 +28,9 @@ public class AdvancedReceiver extends BroadcastReceiver {
                 break;
             case "com.sferadev.qpair.CHANGE_RINGER_MODE":
                 setRingerMode(Integer.valueOf(intent.getStringExtra(EXTRA_RINGER_MODE)));
+                break;
+            case "com.sferadev.qpair.CREATE_DIALOG":
+                createDialog("HubToDate", intent.getStringExtra(EXTRA_MESSAGE), null);
                 break;
             default:
                 createToast(intent.getAction().toString());

@@ -9,13 +9,31 @@ import android.net.wifi.WifiManager;
 
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
+import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
-import static com.sferadev.qpair.utils.Utils.*;
+import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_IME;
+import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_RINGER_MODE;
+import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
+import static com.sferadev.qpair.utils.Utils.ACTION_CREATE_DIALOG;
+import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
+import static com.sferadev.qpair.utils.Utils.EXTRA_MESSAGE;
+import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
+import static com.sferadev.qpair.utils.Utils.EXTRA_RINGER_MODE;
+import static com.sferadev.qpair.utils.Utils.EXTRA_WIFI_STATE;
+import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
+import static com.sferadev.qpair.utils.Utils.KEY_LAST_RINGER_MODE;
+import static com.sferadev.qpair.utils.Utils.createDialog;
+import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
+import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.Utils.getPreferences;
+import static com.sferadev.qpair.utils.Utils.isServiceRunning;
+import static com.sferadev.qpair.utils.Utils.setPreferences;
+
 public class IntentFilterReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, final Intent intent) {
@@ -87,6 +105,9 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                             }
                         }
                     }, null);
+                    break;
+                case "android.intent.action.BATTERY_LOW":
+                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA_MESSAGE, getContext().getString(R.string.battery_low)), 0);
                     break;
                 default:
                     createToast("New intent received: " + intent.getAction());
