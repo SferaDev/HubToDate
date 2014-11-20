@@ -70,6 +70,7 @@
             android:process=":background"/>
 
         <activity android:name=".utils.MediaProjectionDemo"/>
+
     </application>
 
 </manifest>

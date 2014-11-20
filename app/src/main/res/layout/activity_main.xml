@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -62,7 +62,7 @@
                 android:text="@string/shake_it"
                 android:textColor="@color/colorPrimary"
                 android:gravity="left"
-                android:textSize="30sp"/>
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/info_text_3"
@@ -73,7 +73,7 @@
                 android:textColor="@color/colorPrimary"
                 android:gravity="left"
                 android:layout_margin="5dp"
-                android:textSize="19sp"/>
+                android:textSize="14sp"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
@@ -101,7 +101,7 @@
                 android:text="@string/app_sync"
                 android:textColor="@color/colorPrimary"
                 android:gravity="left"
-                android:textSize="30sp"/>
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/info_text_5"
@@ -112,7 +112,7 @@
                 android:textColor="@color/colorPrimary"
                 android:gravity="left"
                 android:layout_margin="5dp"
-                android:textSize="19sp"/>
+                android:textSize="14sp"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
@@ -141,7 +141,7 @@
                 android:text="@string/wifi_etc"
                 android:textColor="@color/colorPrimary"
                 android:gravity="left"
-                android:textSize="30sp"/>
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/info_text_7"
@@ -152,23 +152,42 @@
                 android:textColor="@color/colorPrimary"
                 android:gravity="left"
                 android:layout_margin="5dp"
-                android:textSize="19sp"/>
+                android:textSize="14sp"/>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
         </RelativeLayout>
     </ScrollView>
 
-    <com.shamanland.fab.FloatingActionButton
-        android:id="@+id/fab"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fabMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/ic_action_av_shuffle"
-        app:floatingActionButtonColor="@color/colorAccent" />
+        android:layout_alignParentEnd="true"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/colorPrimary"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        android:layout_margin="25dp">
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabItem1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="#FFC107"
+        fab:fab_colorPressed="#FFB300"
+        fab:fab_icon="@drawable/ic_action_action_polymer"
+        fab:fab_size="mini"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabItem2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="#FF5722"
+        fab:fab_colorPressed="#F4511E"
+        fab:fab_icon="@drawable/ic_action_av_shuffle"
+        fab:fab_size="mini"/>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </RelativeLayout>
