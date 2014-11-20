@@ -78,7 +78,7 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view_3"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -115,14 +115,14 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>-->
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view_4"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_below="@id/card_view_3"
+        android:layout_below="@id/card_view_2"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         card_view:cardElevation="5dp">
@@ -178,7 +178,8 @@
         fab:fab_colorNormal="#FFC107"
         fab:fab_colorPressed="#FFB300"
         fab:fab_icon="@drawable/ic_action_action_polymer"
-        fab:fab_size="mini"/>
+        fab:fab_size="mini"
+        android:longClickable="true"/>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabItem2"
@@ -187,7 +188,8 @@
         fab:fab_colorNormal="#FF5722"
         fab:fab_colorPressed="#F4511E"
         fab:fab_icon="@drawable/ic_action_av_shuffle"
-        fab:fab_size="mini"/>
+        fab:fab_size="mini"
+        android:longClickable="true"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </RelativeLayout>

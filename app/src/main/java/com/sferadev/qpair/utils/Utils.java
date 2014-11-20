@@ -159,13 +159,23 @@ public class Utils {
     }
 
     public static void setClipboardString(String value) {
-        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-        clipboard.setPrimaryClip(ClipData.newPlainText("simple text", value));
+        try {
+            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setPrimaryClip(ClipData.newPlainText("simple text", value));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static String getClipboardString() {
-        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-        return clipboard.getPrimaryClip().getItemAt(0).getText().toString();
+        try {
+            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            return clipboard.getPrimaryClip().getItemAt(0).getText().toString();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void openActivity(String packageName) {
