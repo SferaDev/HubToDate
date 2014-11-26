@@ -15,7 +15,6 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings.SettingNotFoundException;
 import android.view.WindowManager;
@@ -287,9 +286,6 @@ public class Utils {
     }
 
     public static void turnScreenOff() {
-        PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-        wl.acquire();
-        wl.release();
+        //TODO: Use device admin ref: https://github.com/alixandru/android-screen-off
     }
 }
