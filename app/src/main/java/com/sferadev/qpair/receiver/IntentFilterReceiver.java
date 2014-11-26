@@ -10,7 +10,7 @@ import android.net.wifi.WifiManager;
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
 import com.sferadev.qpair.R;
-import com.sferadev.qpair.service.ListenerService;
+import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
@@ -38,9 +38,8 @@ public class IntentFilterReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, final Intent intent) {
 
-        // Load Shake Service if off
-        if (!isServiceRunning(ListenerService.class)) {
-            Intent serviceIntent = new Intent(getContext(), ListenerService.class);
+        if (!isServiceRunning(ShakeService.class)) {
+            Intent serviceIntent = new Intent(getContext(), ShakeService.class);
             getContext().startService(serviceIntent);
         }
 

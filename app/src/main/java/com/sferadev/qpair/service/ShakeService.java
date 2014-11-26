@@ -18,11 +18,10 @@ import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getForegroundApp;
 
-public class ListenerService extends Service {
+public class ShakeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // ShakeDetector initialization
         SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor mAccelerometer = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -31,7 +30,7 @@ public class ListenerService extends Service {
 
             @Override
             public void onShake(int count) {
-                if (count > 1) {
+                if (count > 1) { //TODO Simplify UX, Shake does not mean StartActivity on Peer!
                     if (QPairUtils.isQPairOn() && QPairUtils.isConnected()) {
                         final Intent intent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
                         getContext().bindService(createExplicitFromImplicitIntent(getContext(), intent), new QPairUtils.sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA_PACKAGE_NAME, getForegroundApp()), 0);

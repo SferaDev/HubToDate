@@ -133,10 +133,10 @@ public class Utils {
     public static String getForegroundApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //You're screwed! This might or might not work, it's really hacky
-            ActivityManager activityManager = (ActivityManager) getContext().getSystemService( Context.ACTIVITY_SERVICE );
+            ActivityManager activityManager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
-            for(ActivityManager.RunningAppProcessInfo appProcess : appProcesses){
-                if(appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND){
+            for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+                if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
                     return appProcess.processName;
                 }
             }
@@ -158,16 +158,6 @@ public class Utils {
         return false;
     }
 
-    public static void setClipboardString(String value) {
-        try {
-            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setPrimaryClip(ClipData.newPlainText("simple text", value));
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public static String getClipboardString() {
         try {
             ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -176,6 +166,16 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void setClipboardString(String value) {
+        try {
+            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setPrimaryClip(ClipData.newPlainText("simple text", value));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void openActivity(String packageName) {

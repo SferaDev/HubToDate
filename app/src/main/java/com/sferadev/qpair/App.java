@@ -5,6 +5,8 @@ import android.content.Context;
 
 public class App extends Application {
 
+    //TODO Document code
+
     private static Context mContext;
 
     public static Context getContext() {

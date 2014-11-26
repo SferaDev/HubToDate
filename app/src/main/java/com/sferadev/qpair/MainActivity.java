@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.lge.qpair.api.r1.QPairConstants;
-import com.sferadev.qpair.service.ListenerService;
+import com.sferadev.qpair.service.ShakeService;
 import com.sferadev.qpair.utils.QPairUtils;
 import com.sferadev.qpair.utils.Utils;
 
@@ -24,6 +24,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //TODO: We can be so much nicer ;)
+        //TODO: Resources exist for a reason, don't hardcode my material girl
+        //TODO: FAB is Awful atm
 
         FloatingActionButton fabItem1 = (FloatingActionButton) findViewById(R.id.fabItem1);
         fabItem1.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +71,8 @@ public class MainActivity extends BaseActivity {
         });
 
         // Load Shake Service if off
-        if (!isServiceRunning(ListenerService.class)) {
-            Intent i = new Intent(this, ListenerService.class);
+        if (!isServiceRunning(ShakeService.class)) {
+            Intent i = new Intent(this, ShakeService.class);
             this.startService(i);
         }
     }

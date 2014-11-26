@@ -54,7 +54,6 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" /> <!-- TODO -->
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -64,12 +63,10 @@
         </receiver>
 
         <service
-            android:name=".service.ListenerService"
+            android:name=".service.ShakeService"
             android:enabled="true"
             android:exported="true"
-            android:process=":background"/>
-
-        <activity android:name=".utils.MediaProjectionDemo"/>
+            android:process=":background" />
 
     </application>
 

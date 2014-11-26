@@ -4,7 +4,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import static com.sferadev.qpair.utils.Utils.*;
+import static com.sferadev.qpair.utils.Utils.EXTRA_MESSAGE;
+import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
+import static com.sferadev.qpair.utils.Utils.EXTRA_RINGER_MODE;
+import static com.sferadev.qpair.utils.Utils.EXTRA_URL;
+import static com.sferadev.qpair.utils.Utils.EXTRA_WIFI_STATE;
+import static com.sferadev.qpair.utils.Utils.createDialog;
+import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.Utils.openActivity;
+import static com.sferadev.qpair.utils.Utils.openPlayStore;
+import static com.sferadev.qpair.utils.Utils.openURL;
+import static com.sferadev.qpair.utils.Utils.setClipboardString;
+import static com.sferadev.qpair.utils.Utils.setRingerMode;
+import static com.sferadev.qpair.utils.Utils.switchIME;
+import static com.sferadev.qpair.utils.Utils.switchWifi;
 
 public class AdvancedReceiver extends BroadcastReceiver {
 
