@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">HubToDate</string>
-    <string name="hello_world">Welcome to HubToDate\'s preview!</string>
+    <string name="hello_world">Welcome to HubToDate!</string>
     <string name="shake_it">Shake and sync!</string>
     <string name="shake_it_2">If you shake your device, your foreground App will be synced on your connected device</string>
     <string name="app_sync">Install and uninstall with ease!</string>
