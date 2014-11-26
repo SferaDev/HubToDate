@@ -75,6 +75,15 @@ public class Utils {
         dialog.show();
     }
 
+    public static void createDialog(String title, String itemOptions[], DialogInterface.OnClickListener clickListener) {
+        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
+                .setTitle(title)
+                .setItems(itemOptions, clickListener)
+                .create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
+    }
+
     public static void setPreferences(String key, String value) {
         SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
         mEditor.putString(key, value);
@@ -141,6 +150,7 @@ public class Utils {
                 }
             }
         } else {
+            @SuppressWarnings("deprecation")
             ActivityManager am = (ActivityManager) App.getContext().getSystemService(Context.ACTIVITY_SERVICE);
             ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
             return foregroundTaskInfo.topActivity.getPackageName();
@@ -175,7 +185,6 @@ public class Utils {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void openActivity(String packageName) {
