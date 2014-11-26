@@ -27,8 +27,8 @@ public class MainActivity extends BaseActivity {
 
         createAssistDialog();
 
-        FloatingActionButton fabItem1 = (FloatingActionButton) findViewById(R.id.fabItem1);
-        fabItem1.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createDialog("Your opinion matters!", "Enter HubToDate's community and share your input!", new DialogInterface.OnClickListener() {
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
                 }, null);
             }
         });
-        fabItem1.setOnLongClickListener(new View.OnLongClickListener() {
+        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 createToast("Open Community");

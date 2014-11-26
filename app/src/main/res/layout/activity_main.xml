@@ -30,7 +30,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/pa2">
+                    android:background="@drawable/background">
 
                     <TextView
                         android:id="@+id/info_text_1"
@@ -168,37 +168,16 @@
         </RelativeLayout>
     </ScrollView>
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fabMenu"
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="25dp"
-        fab:fab_addButtonColorNormal="@color/colorAccent"
-        fab:fab_addButtonColorPressed="@color/colorPrimary"
-        fab:fab_addButtonPlusIconColor="@color/white">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabItem1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:longClickable="true"
-            fab:fab_colorNormal="#FFC107"
-            fab:fab_colorPressed="#FFB300"
-            fab:fab_icon="@drawable/ic_action_action_polymer"
-            fab:fab_size="mini" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabItem2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:longClickable="true"
-            fab:fab_colorNormal="#FF5722"
-            fab:fab_colorPressed="#F4511E"
-            fab:fab_icon="@drawable/ic_action_av_shuffle"
-            fab:fab_size="mini" />
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_colorPressed="@color/colorPrimary"
+        fab:fab_icon="@drawable/ic_action_communication_forum" />
 
 </RelativeLayout>
