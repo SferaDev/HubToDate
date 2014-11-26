@@ -43,7 +43,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
 
         if (isQPairOn() && isConnected()) {
             final Intent i = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-            switch (intent.getAction()) { //TODO
+            switch (intent.getAction()) {
                 case "android.intent.action.PACKAGE_ADDED":
                     final String[] dataPackageAdded = intent.getData().toString().split(":");
                     createDialog("Install on Peer", "Do you wish to install this app on your QPair device?", new DialogInterface.OnClickListener() {
