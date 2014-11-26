@@ -21,6 +21,16 @@ public class QPairUtils {
     public static String EXTRA_LOCAL_VERSION = "/local/qpair/version";
     public static String EXTRA_PEER_VERSION = "/peer/qpair/version";
 
+    public static boolean isPhone() {
+        if (getQPairProperty(EXTRA_QPAIR_DEVICE_TYPE).equals("phone")) {
+            Utils.setPreferences(Utils.KEY_IS_PHONE, true);
+            return true;
+        } else {
+            Utils.setPreferences(Utils.KEY_IS_PHONE, false);
+            return false;
+        }
+    }
+
     private static String getQPairProperty(String uriString) {
         Uri uri = Uri.parse(EXTRA_SCHEME_AUTHORITY + uriString);
         Cursor cursor = App.getContext().getContentResolver().query(uri, null, null, null, null);
@@ -34,16 +44,6 @@ public class QPairUtils {
             }
         }
         return null;
-    }
-
-    public static boolean isPhone() {
-        if (getQPairProperty(EXTRA_QPAIR_DEVICE_TYPE).equals("phone")) {
-            Utils.setPreferences(Utils.KEY_IS_PHONE, true);
-            return true;
-        } else {
-            Utils.setPreferences(Utils.KEY_IS_PHONE, false);
-            return false;
-        }
     }
 
     public static boolean isQPairOn() {
@@ -69,12 +69,12 @@ public class QPairUtils {
 
         public sendBroadcastConnection(String mAction, String mExtraName, String mExtraValue) {
             myAction = mAction;
-            myExtra = new String[]{mExtraName, mExtraValue};
+            myExtra = new String[] {mExtraName, mExtraValue};
         }
 
         public sendBroadcastConnection(String mAction, String mExtraName, int mExtraValue) {
             myAction = mAction;
-            myExtra = new String[]{mExtraName, String.valueOf(mExtraValue)};
+            myExtra = new String[] {mExtraName, String.valueOf(mExtraValue)};
         }
 
         @Override
