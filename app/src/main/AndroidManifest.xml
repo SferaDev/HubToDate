@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:name=".App"
@@ -20,7 +21,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.MyTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop">
             <intent-filter>
@@ -34,13 +35,14 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.sferadev.qpair.OPEN_ACTIVITY" />
-                <action android:name="com.sferadev.qpair.OPEN_PLAY_STORE" />
-                <action android:name="com.sferadev.qpair.OPEN_URL" />
                 <action android:name="com.sferadev.qpair.CHANGE_IME" />
                 <action android:name="com.sferadev.qpair.CHANGE_WIFI" />
                 <action android:name="com.sferadev.qpair.CHANGE_RINGER_MODE" />
                 <action android:name="com.sferadev.qpair.CREATE_DIALOG" />
+                <action android:name="com.sferadev.qpair.OPEN_ACTIVITY" />
+                <action android:name="com.sferadev.qpair.OPEN_PLAY_STORE" />
+                <action android:name="com.sferadev.qpair.OPEN_URL" />
+                <action android:name="com.sferadev.qpair.UPDATE_BRIGHTNESS" />
                 <action android:name="com.sferadev.qpair.UPDATE_CLIPBOARD" />
             </intent-filter>
         </receiver>
@@ -51,16 +53,28 @@
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="android.media.RINGER_MODE_CHANGED" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activity.AssistActivity"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.ASSIST" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.systemui.action_assist_icon"
+                android:resource="@drawable/ic_launcher" />
+        </activity>
 
         <service
             android:name=".service.ShakeService"

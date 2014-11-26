@@ -21,10 +21,7 @@ import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_RINGER_MODE;
 import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
 import static com.sferadev.qpair.utils.Utils.ACTION_CREATE_DIALOG;
 import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
-import static com.sferadev.qpair.utils.Utils.EXTRA_MESSAGE;
-import static com.sferadev.qpair.utils.Utils.EXTRA_PACKAGE_NAME;
-import static com.sferadev.qpair.utils.Utils.EXTRA_RINGER_MODE;
-import static com.sferadev.qpair.utils.Utils.EXTRA_WIFI_STATE;
+import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_RINGER_MODE;
 import static com.sferadev.qpair.utils.Utils.createDialog;
@@ -35,6 +32,7 @@ import static com.sferadev.qpair.utils.Utils.isServiceRunning;
 import static com.sferadev.qpair.utils.Utils.setPreferences;
 
 public class IntentFilterReceiver extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, final Intent intent) {
 
@@ -53,7 +51,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                         public void onClick(DialogInterface dialog, int which) {
                             if (dataPackageAdded[1] != getPreferences(KEY_LAST_APP, null)) {
                                 setPreferences(KEY_LAST_APP, dataPackageAdded[1]);
-                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageAdded[1]), 0);
+                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA, dataPackageAdded[1]), 0);
                             }
                         }
                     }, null);
@@ -65,7 +63,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                         public void onClick(DialogInterface dialog, int which) {
                             if (dataPackageRemoved[1] != getPreferences(KEY_LAST_APP, null)) {
                                 setPreferences(KEY_LAST_APP, dataPackageRemoved[1]);
-                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA_PACKAGE_NAME, dataPackageRemoved[1]), 0);
+                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA, dataPackageRemoved[1]), 0);
                             }
                         }
                     }, null);
@@ -85,10 +83,10 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (state) {
                                 case WifiManager.WIFI_STATE_DISABLED:
-                                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA_WIFI_STATE, "false"), 0);
+                                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "false"), 0);
                                     break;
                                 case WifiManager.WIFI_STATE_ENABLED:
-                                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA_WIFI_STATE, "true"), 0);
+                                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "true"), 0);
                                     break;
                             }
                         }
@@ -100,16 +98,16 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                         public void onClick(DialogInterface dialog, int which) {
                             if (intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1) != getPreferences(KEY_LAST_RINGER_MODE, -1)) {
                                 setPreferences(KEY_LAST_RINGER_MODE, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1));
-                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_RINGER_MODE, EXTRA_RINGER_MODE, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1)), 0);
+                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_RINGER_MODE, EXTRA, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1)), 0);
                             }
                         }
                     }, null);
                     break;
                 case "android.intent.action.BATTERY_LOW":
-                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA_MESSAGE, getContext().getString(R.string.battery_low)), 0);
+                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.battery_low)), 0);
                     break;
                 case "android.intent.action.DEVICE_STORAGE_LOW":
-                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA_MESSAGE, getContext().getString(R.string.storage_low)), 0);
+                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.storage_low)), 0);
                     break;
                 default:
                     createToast("New intent received: " + intent.getAction());

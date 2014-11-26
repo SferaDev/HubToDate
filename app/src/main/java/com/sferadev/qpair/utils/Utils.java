@@ -15,16 +15,22 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.provider.Settings.SettingNotFoundException;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
+import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 
 import java.util.List;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.QPairUtils.isConnected;
+import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 
 public class Utils {
 
@@ -36,12 +42,9 @@ public class Utils {
     public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
     public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
+    public static final String ACTION_UPDATE_BRIGHTNESS = "com.sferadev.qpair.UPDATE_BRIGHTNESS";
 
-    public static final String EXTRA_URL = "url";
-    public static final String EXTRA_PACKAGE_NAME = "packageName";
-    public static final String EXTRA_WIFI_STATE = "wifiState";
-    public static final String EXTRA_RINGER_MODE = "ringerMode";
-    public static final String EXTRA_MESSAGE = "message";
+    public static final String EXTRA = "qpairExtra";
 
     public static final String KEY_IS_PHONE = "isPhone";
     public static final String KEY_IS_ON = "isOn";
@@ -49,10 +52,12 @@ public class Utils {
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
-    public static void createToast(String string) {
-        Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
-        toast.show();
-    }
+    public static String[] shakeOptions = {
+            "Sync Current App",
+            "Sync Clipboard",
+            "Sync Brightness",
+            "Turn Peer Screen Off"
+    };
 
     public static void createDialog(String title, String message, DialogInterface.OnClickListener listener) {
         AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
@@ -75,6 +80,35 @@ public class Utils {
         dialog.show();
     }
 
+    public static void createAssistDialog() {
+        if (isQPairOn() && isConnected()) {
+            createDialog("HubToDate", shakeOptions, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            final Intent activityIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), activityIntent), new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA, getForegroundApp()), 0);
+                            break;
+                        case 1:
+                            final Intent clipboardIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), clipboardIntent), new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
+                            break;
+                        case 2:
+                            final Intent brightnessIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), brightnessIntent), new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA, getBrightnessLevel()), 0);
+                            break;
+                        default:
+                            createToast("Option is: " + which);
+                            break;
+                    }
+                }
+            });
+        } else {
+            createToast("QPair: You're not connected to Peer");
+        }
+    }
+
     public static void createDialog(String title, String itemOptions[], DialogInterface.OnClickListener clickListener) {
         AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
                 .setTitle(title)
@@ -82,36 +116,6 @@ public class Utils {
                 .create();
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();
-    }
-
-    public static void setPreferences(String key, String value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
-        mEditor.putString(key, value);
-        mEditor.apply();
-    }
-
-    public static void setPreferences(String key, boolean value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
-        mEditor.putBoolean(key, value);
-        mEditor.apply();
-    }
-
-    public static void setPreferences(String key, int value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
-        mEditor.putInt(key, value);
-        mEditor.apply();
-    }
-
-    public static String getPreferences(String key, String defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getString(key, defaultValue);
-    }
-
-    public static boolean getPreferences(String key, boolean defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(key, defaultValue);
-    }
-
-    public static int getPreferences(String key, int defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
     }
 
     public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
@@ -158,16 +162,6 @@ public class Utils {
         return null;
     }
 
-    public static boolean isServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static String getClipboardString() {
         try {
             ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -185,6 +179,60 @@ public class Utils {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getBrightnessLevel() {
+        try {
+            return android.provider.Settings.System.getInt(
+                    getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS);
+        } catch (SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static void createToast(String string) {
+        Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    public static void setBrightnessLevel(int value) {
+        android.provider.Settings.System.putInt(getContext().getContentResolver(),
+                android.provider.Settings.System.SCREEN_BRIGHTNESS, value);
+    }
+
+    public static void setPreferences(String key, String value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putString(key, value);
+        mEditor.apply();
+    }
+
+    public static void setPreferences(String key, boolean value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putBoolean(key, value);
+        mEditor.apply();
+    }
+
+    public static String getPreferences(String key, String defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getString(key, defaultValue);
+    }
+
+    public static boolean getPreferences(String key, boolean defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(key, defaultValue);
+    }
+
+    public static int getPreferences(String key, int defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
+    }
+
+    public static boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void openActivity(String packageName) {
@@ -230,5 +278,18 @@ public class Utils {
             audioManager.setRingerMode(value);
         }
         setPreferences(KEY_LAST_RINGER_MODE, value);
+    }
+
+    public static void setPreferences(String key, int value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putInt(key, value);
+        mEditor.apply();
+    }
+
+    public static void turnScreenOff() {
+        PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+        wl.acquire();
+        wl.release();
     }
 }
