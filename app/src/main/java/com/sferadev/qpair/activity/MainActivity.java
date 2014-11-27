@@ -9,7 +9,6 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
-import static com.sferadev.qpair.utils.Utils.createAssistDialog;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
@@ -21,11 +20,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: We can be so much nicer ;)
         //TODO: Resources exist for a reason, don't hardcode my material girl
-        //TODO: FAB is Awful atm
-
-        createAssistDialog();
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
