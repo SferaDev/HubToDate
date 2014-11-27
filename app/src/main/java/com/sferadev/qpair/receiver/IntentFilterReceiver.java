@@ -46,6 +46,9 @@ public class IntentFilterReceiver extends BroadcastReceiver {
             switch (intent.getAction()) {
                 case "android.intent.action.PACKAGE_ADDED":
                     final String[] dataPackageAdded = intent.getData().toString().split(":");
+                    if (dataPackageAdded[1].equals(getContext().getResources().getString(R.string.hubtodate_package))) {
+                        return;
+                    }
                     createDialog("Install on Peer", "Do you wish to install this app on your QPair device?", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -58,6 +61,9 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     break;
                 case "android.intent.action.PACKAGE_REMOVED":
                     final String[] dataPackageRemoved = intent.getData().toString().split(":");
+                    if (dataPackageRemoved[1].equals(getContext().getResources().getString(R.string.hubtodate_package))) {
+                        return;
+                    }
                     createDialog("Uninstall on Peer", "Do you wish to uninstall this app on your QPair device?", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
