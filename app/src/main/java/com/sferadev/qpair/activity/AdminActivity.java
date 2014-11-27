@@ -39,8 +39,7 @@ public class AdminActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (REQUEST_ENABLE == requestCode)
-        {
+        if (REQUEST_ENABLE == requestCode) {
             if (resultCode != Activity.RESULT_OK) {
                 createToast(getResources().getString(R.string.admin_failure));
             }

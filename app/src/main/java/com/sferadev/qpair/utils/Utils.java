@@ -113,7 +113,7 @@ public class Utils {
                 }
             });
         } else {
-            openActivity(getContext().getResources().getString(R.string.qpair_package));
+            openActivity(getContext().getString(R.string.qpair_package));
             createToast(getContext().getString(R.string.toast_not_connected));
         }
     }
@@ -205,6 +205,12 @@ public class Utils {
         toast.show();
     }
 
+    public static void openActivity(String packageName) {
+        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        getContext().startActivity(i);
+    }
+
     public static void setBrightnessLevel(int value) {
         android.provider.Settings.System.putInt(getContext().getContentResolver(),
                 android.provider.Settings.System.SCREEN_BRIGHTNESS, value);
@@ -217,14 +223,8 @@ public class Utils {
     }
 
     public static void setPreferences(String key, boolean value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
         mEditor.putBoolean(key, value);
-        mEditor.apply();
-    }
-
-    public static void setPreferences(String key, int value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
-        mEditor.putInt(key, value);
         mEditor.apply();
     }
 
@@ -248,12 +248,6 @@ public class Utils {
             }
         }
         return false;
-    }
-
-    public static void openActivity(String packageName) {
-        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-        i.addCategory(Intent.CATEGORY_LAUNCHER);
-        getContext().startActivity(i);
     }
 
     public static void openPlayStore(String packageName) {
@@ -295,6 +289,12 @@ public class Utils {
         setPreferences(KEY_LAST_RINGER_MODE, value);
     }
 
+    public static void setPreferences(String key, int value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putInt(key, value);
+        mEditor.apply();
+    }
+
     public static void turnScreenOff() {
         DevicePolicyManager policyManager = (DevicePolicyManager) getContext()
                 .getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -308,7 +308,7 @@ public class Utils {
             getContext().startActivity(
                     new Intent(getContext(), AdminActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            createToast(getContext().getResources().getString(R.string.admin_failure));
+            createToast(getContext().getString(R.string.admin_failure));
         }
     }
 
