@@ -57,10 +57,10 @@ public class Utils {
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
     public static String[] shakeOptions = {
-            "Sync Current App",
-            "Sync Clipboard",
-            "Sync Brightness",
-            "Turn Peer Screen Off"
+            getContext().getString(R.string.array_sync_app),
+            getContext().getString(R.string.array_sync_clipboard),
+            getContext().getString(R.string.array_sync_brightness),
+            getContext().getString(R.string.array_screen_off)
     };
 
     public static void createDialog(String title, String message, DialogInterface.OnClickListener listener) {
@@ -86,7 +86,7 @@ public class Utils {
 
     public static void createAssistDialog() {
         if (isQPairOn() && isConnected()) {
-            createDialog("HubToDate", shakeOptions, new DialogInterface.OnClickListener() {
+            createDialog(getContext().getString(R.string.app_name), shakeOptions, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
@@ -107,14 +107,14 @@ public class Utils {
                             getContext().bindService(createExplicitFromImplicitIntent(getContext(), screenOffIntent), new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
                             break;
                         default:
-                            createToast("Option is: " + which);
+                            createToast(getContext().getString(R.string.toast_option) + which);
                             break;
                     }
                 }
             });
         } else {
             openActivity(getContext().getResources().getString(R.string.qpair_package));
-            createToast("QPair: You're not connected to Peer");
+            createToast(getContext().getString(R.string.toast_not_connected));
         }
     }
 
@@ -222,6 +222,12 @@ public class Utils {
         mEditor.apply();
     }
 
+    public static void setPreferences(String key, int value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putInt(key, value);
+        mEditor.apply();
+    }
+
     public static String getPreferences(String key, String defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(getContext()).getString(key, defaultValue);
     }
@@ -252,13 +258,13 @@ public class Utils {
 
     public static void openPlayStore(String packageName) {
         try {
-            Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage("com.android.vending");
-            launchIntent.setComponent(new ComponentName("com.android.vending", "com.google.android.finsky.activities.LaunchUrlHandlerActivity"));
-            launchIntent.setData(Uri.parse("market://details?id=" + packageName));
+            Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(getContext().getString(R.string.play_package));
+            launchIntent.setComponent(new ComponentName(getContext().getString(R.string.play_package), getContext().getString(R.string.play_intent_activity)));
+            launchIntent.setData(Uri.parse(getContext().getString(R.string.play_market_scheme) + packageName));
             getContext().startActivity(launchIntent);
         } catch (android.content.ActivityNotFoundException e) {
             e.printStackTrace();
-            openURL("http://play.google.com/store/apps/details?id=" + packageName);
+            openURL(getContext().getString(R.string.play_url_scheme) + packageName);
         }
     }
 
@@ -287,12 +293,6 @@ public class Utils {
             audioManager.setRingerMode(value);
         }
         setPreferences(KEY_LAST_RINGER_MODE, value);
-    }
-
-    public static void setPreferences(String key, int value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
-        mEditor.putInt(key, value);
-        mEditor.apply();
     }
 
     public static void turnScreenOff() {

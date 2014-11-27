@@ -20,16 +20,14 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: Resources exist for a reason, don't hardcode my material girl
-
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createDialog("Your opinion matters!", "Enter HubToDate's community and share your input!", new DialogInterface.OnClickListener() {
+                createDialog(getString(R.string.dialog_community), getString(R.string.dialog_community_description), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        openURL("https://plus.google.com/communities/102943838378590125127");
+                        openURL(getString(R.string.community_url));
                     }
                 }, null);
             }
@@ -37,7 +35,7 @@ public class MainActivity extends BaseActivity {
         floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                createToast("Open Community");
+                createToast(getString(R.string.toast_community));
                 return true;
             }
         });

@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.sferadev.qpair.R;
+
+import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
@@ -48,11 +51,11 @@ public class AdvancedReceiver extends BroadcastReceiver {
                 break;
             case "com.sferadev.qpair.UPDATE_CLIPBOARD":
                 setClipboardString(intent.getStringExtra(EXTRA));
-                createToast("Added to clipboard: " + intent.getStringExtra(EXTRA));
+                createToast(getContext().getString(R.string.toast_clipboard) + intent.getStringExtra(EXTRA));
                 break;
             case "com.sferadev.qpair.UPDATE_BRIGHTNESS":
                 setBrightnessLevel(Integer.parseInt(intent.getStringExtra(EXTRA)));
-                createToast("Updated Brightness to: " + intent.getStringExtra(EXTRA));
+                createToast(getContext().getString(R.string.toast_brightness) + intent.getStringExtra(EXTRA));
                 break;
             default:
                 createToast(intent.getAction());

@@ -20,9 +20,7 @@ import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_IME;
 import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_RINGER_MODE;
 import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
 import static com.sferadev.qpair.utils.Utils.ACTION_CREATE_DIALOG;
-import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
 import static com.sferadev.qpair.utils.Utils.EXTRA;
-import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_RINGER_MODE;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
@@ -44,38 +42,8 @@ public class IntentFilterReceiver extends BroadcastReceiver {
         if (isQPairOn() && isConnected()) {
             final Intent i = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
             switch (intent.getAction()) {
-                case "android.intent.action.PACKAGE_ADDED":
-                    final String[] dataPackageAdded = intent.getData().toString().split(":");
-                    if (dataPackageAdded[1].equals(getContext().getResources().getString(R.string.hubtodate_package))) {
-                        return; //TODO: This must be removed, proper check is updateBelongsToPlayStore!
-                    }
-                    createDialog("Install on Peer", "Do you wish to install this app on your QPair device?", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (dataPackageAdded[1] != getPreferences(KEY_LAST_APP, null)) {
-                                setPreferences(KEY_LAST_APP, dataPackageAdded[1]);
-                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA, dataPackageAdded[1]), 0);
-                            }
-                        }
-                    }, null);
-                    break;
-                case "android.intent.action.PACKAGE_REMOVED":
-                    final String[] dataPackageRemoved = intent.getData().toString().split(":");
-                    if (dataPackageRemoved[1].equals(getContext().getResources().getString(R.string.hubtodate_package))) {
-                        return; //TODO: This must be removed, proper check is updateBelongsToPlayStore!
-                    }
-                    createDialog("Uninstall on Peer", "Do you wish to uninstall this app on your QPair device?", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (dataPackageRemoved[1] != getPreferences(KEY_LAST_APP, null)) {
-                                setPreferences(KEY_LAST_APP, dataPackageRemoved[1]);
-                                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA, dataPackageRemoved[1]), 0);
-                            }
-                        }
-                    }, null);
-                    break;
                 case "android.intent.action.INPUT_METHOD_CHANGED":
-                    createDialog("Change IME on Peer", "Do you wish to change the Input Method on your QPair device?", new DialogInterface.OnClickListener() {
+                    createDialog(getContext().getString(R.string.dialog_ime), getContext().getString(R.string.dialog_ime_description), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_IME), 0);
@@ -84,7 +52,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     break;
                 case "android.net.wifi.WIFI_STATE_CHANGED":
                     final int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
-                    createDialog("Update Wifi on Peer", "Do you wish to sync the Wifi state on your QPair device?", new DialogInterface.OnClickListener() {
+                    createDialog(getContext().getString(R.string.dialog_wifi), getContext().getString(R.string.dialog_wifi_description), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             switch (state) {
@@ -99,7 +67,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     }, null);
                     break;
                 case "android.media.RINGER_MODE_CHANGED":
-                    createDialog("Update Ringer on Peer", "Do you wish to sync the volume on your QPair device?", new DialogInterface.OnClickListener() {
+                    createDialog(getContext().getString(R.string.dialog_ringer), getContext().getString(R.string.dialog_ringer_description), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1) != getPreferences(KEY_LAST_RINGER_MODE, -1)) {
@@ -110,13 +78,13 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     }, null);
                     break;
                 case "android.intent.action.BATTERY_LOW":
-                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.battery_low)), 0);
+                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_battery_low)), 0);
                     break;
                 case "android.intent.action.DEVICE_STORAGE_LOW":
-                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.storage_low)), 0);
+                    getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_storage_low)), 0);
                     break;
                 default:
-                    createToast("New intent received: " + intent.getAction());
+                    createToast(getContext().getString(R.string.toast_intent) + intent.getAction());
                     break;
             }
         }
