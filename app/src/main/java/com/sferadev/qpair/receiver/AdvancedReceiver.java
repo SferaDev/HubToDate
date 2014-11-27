@@ -15,6 +15,7 @@ import static com.sferadev.qpair.utils.Utils.setClipboardString;
 import static com.sferadev.qpair.utils.Utils.setRingerMode;
 import static com.sferadev.qpair.utils.Utils.switchIME;
 import static com.sferadev.qpair.utils.Utils.switchWifi;
+import static com.sferadev.qpair.utils.Utils.turnScreenOff;
 
 public class AdvancedReceiver extends BroadcastReceiver {
 
@@ -41,6 +42,9 @@ public class AdvancedReceiver extends BroadcastReceiver {
                 break;
             case "com.sferadev.qpair.OPEN_URL":
                 openURL(intent.getStringExtra(EXTRA));
+                break;
+            case "com.sferadev.qpair.SCREEN_OFF":
+                turnScreenOff();
                 break;
             case "com.sferadev.qpair.UPDATE_CLIPBOARD":
                 setClipboardString(intent.getStringExtra(EXTRA));

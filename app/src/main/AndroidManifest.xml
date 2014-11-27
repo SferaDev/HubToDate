@@ -42,6 +42,7 @@
                 <action android:name="com.sferadev.qpair.OPEN_ACTIVITY" />
                 <action android:name="com.sferadev.qpair.OPEN_PLAY_STORE" />
                 <action android:name="com.sferadev.qpair.OPEN_URL" />
+                <action android:name="com.sferadev.qpair.SCREEN_OFF" />
                 <action android:name="com.sferadev.qpair.UPDATE_BRIGHTNESS" />
                 <action android:name="com.sferadev.qpair.UPDATE_CLIPBOARD" />
             </intent-filter>
@@ -77,11 +78,26 @@
                 android:resource="@drawable/ic_launcher" />
         </activity>
 
+        <activity
+            android:name=".activity.AdminActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+
         <service
             android:name=".service.ShakeService"
             android:enabled="true"
             android:exported="true"
             android:process=":background" />
+
+        <receiver
+            android:name=".receiver.AdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

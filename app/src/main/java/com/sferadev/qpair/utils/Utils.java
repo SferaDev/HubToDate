@@ -2,6 +2,7 @@ package com.sferadev.qpair.utils;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -23,6 +24,9 @@ import android.widget.Toast;
 
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
+import com.sferadev.qpair.R;
+import com.sferadev.qpair.activity.AdminActivity;
+import com.sferadev.qpair.receiver.AdminReceiver;
 import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 
 import java.util.List;
@@ -40,6 +44,7 @@ public class Utils {
     public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
     public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
     public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
+    public static final String ACTION_SCREEN_OFF = "com.sferadev.qpair.SCREEN_OFF";
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
     public static final String ACTION_UPDATE_BRIGHTNESS = "com.sferadev.qpair.UPDATE_BRIGHTNESS";
 
@@ -97,6 +102,10 @@ public class Utils {
                             final Intent brightnessIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
                             getContext().bindService(createExplicitFromImplicitIntent(getContext(), brightnessIntent), new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA, getBrightnessLevel()), 0);
                             break;
+                        case 3:
+                            final Intent screenOffIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), screenOffIntent), new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
+                            break;
                         default:
                             createToast("Option is: " + which);
                             break;
@@ -104,6 +113,7 @@ public class Utils {
                 }
             });
         } else {
+            openActivity(getContext().getResources().getString(R.string.qpair_package));
             createToast("QPair: You're not connected to Peer");
         }
     }
@@ -286,6 +296,20 @@ public class Utils {
     }
 
     public static void turnScreenOff() {
-        //TODO: Use device admin ref: https://github.com/alixandru/android-screen-off
+        DevicePolicyManager policyManager = (DevicePolicyManager) getContext()
+                .getSystemService(Context.DEVICE_POLICY_SERVICE);
+
+        ComponentName adminReceiver = new ComponentName(getContext(),
+                AdminReceiver.class);
+
+        if (policyManager.isAdminActive(adminReceiver)) {
+            policyManager.lockNow();
+        } else {
+            getContext().startActivity(
+                    new Intent(getContext(), AdminActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            createToast(getContext().getResources().getString(R.string.admin_failure));
+        }
     }
+
 }

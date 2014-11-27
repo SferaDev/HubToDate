@@ -13,4 +13,9 @@
     <string name="battery_low">Your peer device battery is low</string>
     <string name="storage_low">Your peer device storage is low</string>
 
+    <string name="admin_enabled">HubToDate was added as Device Administrator</string>
+    <string name="admin_disabled">HubToDate is no longer a Device Administrator</string>
+    <string name="admin_explanation">HubToDate will be allowed to turn your Screen Off when you ask to do so in your peer device</string>
+    <string name="admin_failure">HubToDate is not a Device Administrator. Please check Security settings.</string>
+
 </resources>
