@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="qpair_package"></string>
+    <string name="qpair_package">com.lge.p2p</string>
     <string name="hubtodate_package">com.sferadev.qpair</string>
 </resources>
