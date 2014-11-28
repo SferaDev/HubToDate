@@ -12,11 +12,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.provider.Settings.SettingNotFoundException;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -310,6 +312,22 @@ public class Utils {
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             createToast(getContext().getString(R.string.admin_failure));
         }
+    }
+
+    public static String getOwnerFullName() {
+        Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+        query.moveToFirst();
+        String value = query.getString(query.getColumnIndex("display_name"));
+        query.close();
+        return value;
+    }
+
+    public static String getOwnerName() {
+        Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+        query.moveToFirst();
+        String value[] = query.getString(query.getColumnIndex("display_name")).split(" ");
+        query.close();
+        return value[0];
     }
 
 }

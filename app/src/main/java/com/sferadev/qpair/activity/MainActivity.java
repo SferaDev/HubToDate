@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sferadev.qpair.R;
@@ -11,6 +12,7 @@ import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.Utils.getOwnerName;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
 import static com.sferadev.qpair.utils.Utils.openURL;
 
@@ -19,6 +21,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
+        welcomeText.setText("Welcome " + getOwnerName() + "!");
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

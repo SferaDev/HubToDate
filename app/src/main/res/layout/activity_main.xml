@@ -181,6 +181,6 @@
         android:layout_margin="25dp"
         fab:fab_colorNormal="@color/colorAccent"
         fab:fab_colorPressed="@color/colorPrimary"
-        fab:fab_icon="@drawable/ic_action_communication_forum" />
+        fab:fab_icon="@drawable/ic_action_community" />
 
 </RelativeLayout>
