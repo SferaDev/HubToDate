@@ -39,8 +39,9 @@ public class AppInstallReceiver extends BroadcastReceiver {
             switch (intent.getAction()) {
                 case "android.intent.action.PACKAGE_ADDED":
                     final String[] dataPackageAdded = intent.getData().toString().split(":");
-                    if (dataPackageAdded[1].equals(getContext().getResources().getString(R.string.hubtodate_package))) {
-                        return; //TODO: This must be removed, proper check is updateBelongsToPlayStore!
+                    if (getContext().getPackageManager().getInstallerPackageName(dataPackageAdded[1]) == null || !getContext().getPackageManager().getInstallerPackageName(dataPackageAdded[1]).equals(getContext().getString(R.string.play_package))) {
+                        createToast(getContext().getString(R.string.toast_app_not_supported));
+                        break;
                     }
                     createDialog(getContext().getString(R.string.dialog_install), getContext().getString(R.string.dialog_install_description), new DialogInterface.OnClickListener() {
                         @Override
@@ -54,9 +55,6 @@ public class AppInstallReceiver extends BroadcastReceiver {
                     break;
                 case "android.intent.action.PACKAGE_REMOVED":
                     final String[] dataPackageRemoved = intent.getData().toString().split(":");
-                    if (dataPackageRemoved[1].equals(getContext().getResources().getString(R.string.hubtodate_package))) {
-                        return; //TODO: This must be removed, proper check is updateBelongsToPlayStore!
-                    }
                     createDialog(getContext().getString(R.string.dialog_uninstall), getContext().getString(R.string.dialog_uninstall_description), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

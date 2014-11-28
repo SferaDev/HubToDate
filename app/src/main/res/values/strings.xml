@@ -21,6 +21,7 @@
     <string name="toast_intent">New intent received: </string>
     <string name="toast_option">Option is: </string>
     <string name="toast_not_connected">QPair: You\'re not connected to Peer</string>
+    <string name="toast_app_not_supported">We don\'t support this app right now, it was not installed by Play Store</string>
 
     <!-- Dialogs -->
     <string name="dialog_community">Your opinion matters!</string>
