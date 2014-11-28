@@ -22,8 +22,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
-        welcomeText.setText("Welcome " + getOwnerName() + "!");
+        if (getOwnerName() != null) {
+            TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
+            welcomeText.setText("Welcome " + getOwnerName() + "!");
+        }
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
