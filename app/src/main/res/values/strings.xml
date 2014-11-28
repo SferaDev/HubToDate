@@ -3,15 +3,16 @@
 
     <!-- Common values -->
     <string name="app_name">HubToDate</string>
+    <string name="hi">Hi</string>
 
     <!-- Main Content -->
     <string name="main_hello">Welcome to HubToDate!</string>
     <string name="main_shake">Shake, shake, shake!</string>
-    <string name="main_shake_description">If you shake this device, you can perform awesome tasks on your connected peer.</string>
+    <string name="main_shake_description">Perform awesome tasks on your connected peer with a Shake. You can also trigger those actions swiping up from your Navigation Bar!</string>
     <string name="main_app_sync">Install and uninstall with ease!</string>
-    <string name="main_app_sync_description">Handle App installs or uninstalls in all your devices at once.</string>
+    <string name="main_app_sync_description">Handle App installs or uninstalls in all your devices at once. Wait for the dialog that will politely ask you!</string>
     <string name="main_setting_sync">Your preferences shared across devices!</string>
-    <string name="main_setting_sync_description">Your preferences like WiFi or Volume will be auto-magically shared on your peer device.</string>
+    <string name="main_setting_sync_description">Sync certain settings like WiFi or Volume on your peer device. They will be magically shared!</string>
 
     <!-- Toasts -->
     <string name="toast_community">Open Community</string>
