@@ -8,6 +8,7 @@ import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -52,9 +53,11 @@ public class Utils {
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
 
     public static final String EXTRA = "qpairExtra";
+    
+    public static final String KEY_ALWAYS_RINGER = "alwaysRinger";
+    public static final String KEY_ALWAYS_WIFI = "alwaysWifi";
     public static final String KEY_IS_CONNECTED = "isConnected";
     public static final String KEY_IS_ON = "isOn";
-
     public static final String KEY_IS_PHONE = "isPhone";
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
@@ -116,6 +119,18 @@ public class Utils {
                 .setMessage(message)
                 .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
                 .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
+                .create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
+    }
+
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener, OnClickListener neutralListener) {
+        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
+                .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
+                .setNeutralButton(getContext().getString(R.string.always), neutralListener)
                 .create();
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();

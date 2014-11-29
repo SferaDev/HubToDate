@@ -4,6 +4,7 @@
     <!-- Common values -->
     <string name="app_name">HubToDate</string>
     <string name="hi">Hi</string>
+    <string name="always">Always</string>
 
     <!-- Main Content -->
     <string name="main_hello">Welcome to HubToDate!</string>
