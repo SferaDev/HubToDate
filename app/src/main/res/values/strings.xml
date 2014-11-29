@@ -16,7 +16,7 @@
     <string name="main_setting_sync_description">Sync certain settings like WiFi or Volume on your peer device. They will be magically shared!</string>
 
     <!-- Toasts -->
-    <string name="toast_app_not_found">We couldn\'t open the app because it's not installed!</string>
+    <string name="toast_app_not_found">We couldn\'t open the app because it\'s not installed!</string>
     <string name="toast_app_not_supported">We don\'t support this app right now, it was not installed by Play Store</string>
     <string name="toast_community">Open Community</string>
     <string name="toast_clipboard">Added to clipboard:</string>
