@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.media.AudioManager;
@@ -38,23 +39,22 @@ import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 
 public class Utils {
-
+    public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
+    public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
+    public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
+    public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
     public static final String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
     public static final String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
     public static final String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
-    public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
-    public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
-    public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
-    public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
     public static final String ACTION_SCREEN_OFF = "com.sferadev.qpair.SCREEN_OFF";
-    public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
     public static final String ACTION_UPDATE_BRIGHTNESS = "com.sferadev.qpair.UPDATE_BRIGHTNESS";
+    public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
 
     public static final String EXTRA = "qpairExtra";
+    public static final String KEY_IS_CONNECTED = "isConnected";
+    public static final String KEY_IS_ON = "isOn";
 
     public static final String KEY_IS_PHONE = "isPhone";
-    public static final String KEY_IS_ON = "isOn";
-    public static final String KEY_IS_CONNECTED = "isConnected";
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
@@ -64,27 +64,6 @@ public class Utils {
             getContext().getString(R.string.array_sync_brightness),
             getContext().getString(R.string.array_screen_off)
     };
-
-    public static void createDialog(String title, String message, DialogInterface.OnClickListener listener) {
-        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(getContext().getString(android.R.string.ok), listener)
-                .create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-    }
-
-    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
-        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
-                .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
-                .create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-    }
 
     public static void createAssistDialog() {
         if (isQPairOn() && isConnected()) {
@@ -118,6 +97,27 @@ public class Utils {
             openActivity(getContext().getString(R.string.qpair_package));
             createToast(getContext().getString(R.string.toast_not_connected));
         }
+    }
+
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener listener) {
+        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getContext().getString(android.R.string.ok), listener)
+                .create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
+    }
+
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+        AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
+                .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
+                .create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
     }
 
     public static void createDialog(String title, String itemOptions[], DialogInterface.OnClickListener clickListener) {
@@ -154,6 +154,31 @@ public class Utils {
         return explicitIntent;
     }
 
+    public static void createToast(String string) {
+        Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    public static int getBrightnessLevel() {
+        try {
+            return android.provider.Settings.System.getInt(
+                    getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS);
+        } catch (SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static String getClipboardString() {
+        try {
+            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            return clipboard.getPrimaryClip().getItemAt(0).getText().toString();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String getForegroundApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //You're screwed! This might or might not work, it's really hacky
@@ -173,61 +198,20 @@ public class Utils {
         return null;
     }
 
-    public static String getClipboardString() {
-        try {
-            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            return clipboard.getPrimaryClip().getItemAt(0).getText().toString();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static String getOwnerFullName() {
+        Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+        query.moveToFirst();
+        String value = query.getString(query.getColumnIndex("display_name"));
+        query.close();
+        return value;
     }
 
-    public static void setClipboardString(String value) {
-        try {
-            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setPrimaryClip(ClipData.newPlainText("simple text", value));
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static int getBrightnessLevel() {
-        try {
-            return android.provider.Settings.System.getInt(
-                    getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS);
-        } catch (SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    public static void createToast(String string) {
-        Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
-        toast.show();
-    }
-
-    public static void openActivity(String packageName) {
-        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-        i.addCategory(Intent.CATEGORY_LAUNCHER);
-        getContext().startActivity(i);
-    }
-
-    public static void setBrightnessLevel(int value) {
-        android.provider.Settings.System.putInt(getContext().getContentResolver(),
-                android.provider.Settings.System.SCREEN_BRIGHTNESS, value);
-    }
-
-    public static void setPreferences(String key, String value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
-        mEditor.putString(key, value);
-        mEditor.apply();
-    }
-
-    public static void setPreferences(String key, boolean value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-        mEditor.putBoolean(key, value);
-        mEditor.apply();
+    public static String getOwnerName() {
+        Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
+        query.moveToFirst();
+        String value[] = query.getString(query.getColumnIndex("display_name")).split(" ");
+        query.close();
+        return value[0];
     }
 
     public static String getPreferences(String key, String defaultValue) {
@@ -242,6 +226,15 @@ public class Utils {
         return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
     }
 
+    public static boolean isPackageInstalled(String packageName) {
+        try {
+            getContext().getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (NameNotFoundException e) {
+            return false;
+        }
+    }
+
     public static boolean isServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -250,6 +243,12 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static void openActivity(String packageName) {
+        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        getContext().startActivity(i);
     }
 
     public static void openPlayStore(String packageName) {
@@ -271,16 +270,36 @@ public class Utils {
         getContext().startActivity(i);
     }
 
-    public static void switchIME() {
-        InputMethodManager imeManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imeManager != null) {
-            imeManager.showInputMethodPicker();
+    public static void setBrightnessLevel(int value) {
+        android.provider.Settings.System.putInt(getContext().getContentResolver(),
+                android.provider.Settings.System.SCREEN_BRIGHTNESS, value);
+    }
+
+    public static void setClipboardString(String value) {
+        try {
+            ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setPrimaryClip(ClipData.newPlainText("simple text", value));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
-    public static void switchWifi(boolean state) {
-        WifiManager wifiManager = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
-        wifiManager.setWifiEnabled(state);
+    public static void setPreferences(String key, String value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putString(key, value);
+        mEditor.apply();
+    }
+
+    public static void setPreferences(String key, boolean value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        mEditor.putBoolean(key, value);
+        mEditor.apply();
+    }
+
+    public static void setPreferences(String key, int value) {
+        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
+        mEditor.putInt(key, value);
+        mEditor.apply();
     }
 
     public static void setRingerMode(int value) {
@@ -291,10 +310,16 @@ public class Utils {
         setPreferences(KEY_LAST_RINGER_MODE, value);
     }
 
-    public static void setPreferences(String key, int value) {
-        SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
-        mEditor.putInt(key, value);
-        mEditor.apply();
+    public static void switchIME() {
+        InputMethodManager imeManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imeManager != null) {
+            imeManager.showInputMethodPicker();
+        }
+    }
+
+    public static void switchWifi(boolean state) {
+        WifiManager wifiManager = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(state);
     }
 
     public static void turnScreenOff() {
@@ -313,21 +338,4 @@ public class Utils {
             createToast(getContext().getString(R.string.admin_failure));
         }
     }
-
-    public static String getOwnerFullName() {
-        Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
-        query.moveToFirst();
-        String value = query.getString(query.getColumnIndex("display_name"));
-        query.close();
-        return value;
-    }
-
-    public static String getOwnerName() {
-        Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
-        query.moveToFirst();
-        String value[] = query.getString(query.getColumnIndex("display_name")).split(" ");
-        query.close();
-        return value[0];
-    }
-
 }
