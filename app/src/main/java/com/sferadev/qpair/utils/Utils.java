@@ -47,6 +47,7 @@ public class Utils {
     public static final String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
     public static final String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
     public static final String ACTION_SCREEN_OFF = "com.sferadev.qpair.SCREEN_OFF";
+    public static final String ACTION_UNINSTALL_PACKAGE = "com.sferadev.qpair.UNINSTALL_PACKAGE";
     public static final String ACTION_UPDATE_BRIGHTNESS = "com.sferadev.qpair.UPDATE_BRIGHTNESS";
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
 
@@ -337,5 +338,11 @@ public class Utils {
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             createToast(getContext().getString(R.string.admin_failure));
         }
+    }
+    
+    public static void uninstallPackage(String packageName) {
+        Intent intent = new Intent(Intent.ACTION_DELETE, Uri.fromParts("package",
+                packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
     }
 }

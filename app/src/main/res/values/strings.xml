@@ -15,13 +15,14 @@
     <string name="main_setting_sync_description">Sync certain settings like WiFi or Volume on your peer device. They will be magically shared!</string>
 
     <!-- Toasts -->
+    <string name="toast_app_not_supported">We don\'t support this app right now, it was not installed by Play Store</string>
     <string name="toast_community">Open Community</string>
     <string name="toast_clipboard">Added to clipboard: </string>
     <string name="toast_brightness">Updated Brightness to: </string>
     <string name="toast_intent">New intent received: </string>
     <string name="toast_option">Option is: </string>
     <string name="toast_not_connected">QPair: You\'re not connected to Peer</string>
-    <string name="toast_app_not_supported">We don\'t support this app right now, it was not installed by Play Store</string>
+    <string name="toast_uninstall_failed">We couldn\'t uninstall because app was not found: </string>
 
     <!-- Dialogs -->
     <string name="dialog_community">Your opinion matters!</string>

@@ -48,6 +48,7 @@
                 <action android:name="com.sferadev.qpair.SCREEN_OFF" />
                 <action android:name="com.sferadev.qpair.UPDATE_BRIGHTNESS" />
                 <action android:name="com.sferadev.qpair.UPDATE_CLIPBOARD" />
+                <action android:name="com.sferadev.qpair.UNINSTALL_PACKAGE" />
             </intent-filter>
         </receiver>
         <receiver
