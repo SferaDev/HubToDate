@@ -53,7 +53,7 @@ public class Utils {
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
 
     public static final String EXTRA = "qpairExtra";
-    
+
     public static final String KEY_ALWAYS_RINGER = "alwaysRinger";
     public static final String KEY_ALWAYS_WIFI = "alwaysWifi";
     public static final String KEY_IS_CONNECTED = "isConnected";
