@@ -68,7 +68,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                     }
                     break;
                 default:
-                    createToast(getContext().getString(R.string.toast_intent) + intent.getAction());
+                    createToast(getContext().getString(R.string.toast_intent) + " " + intent.getAction());
                     break;
             }
         }

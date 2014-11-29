@@ -60,18 +60,18 @@ public class AdvancedReceiver extends BroadcastReceiver {
                 break;
             case "com.sferadev.qpair.UPDATE_BRIGHTNESS":
                 setBrightnessLevel(Integer.parseInt(intent.getStringExtra(EXTRA)));
-                createToast(getContext().getString(R.string.toast_brightness) + intent.getStringExtra(EXTRA));
+                createToast(getContext().getString(R.string.toast_brightness) + " " + intent.getStringExtra(EXTRA));
                 break;
             case "com.sferadev.qpair.UPDATE_CLIPBOARD":
                 setClipboardString(intent.getStringExtra(EXTRA));
-                createToast(getContext().getString(R.string.toast_clipboard) + intent.getStringExtra(EXTRA));
+                createToast(getContext().getString(R.string.toast_clipboard) + " " + intent.getStringExtra(EXTRA));
                 break;
             case "com.sferadev.qpair.UNINSTALL_PACKAGE":
                 setPreferences(KEY_LAST_APP, intent.getStringExtra(EXTRA));
                 if (isPackageInstalled(intent.getStringExtra(EXTRA))) {
                     uninstallPackage(intent.getStringExtra(EXTRA));
                 } else {
-                    createToast(getContext().getString(R.string.toast_uninstall_failed) + intent.getStringExtra(EXTRA));
+                    createToast(getContext().getString(R.string.toast_uninstall_failed) + " " + intent.getStringExtra(EXTRA));
                 }
                 break;
             default:

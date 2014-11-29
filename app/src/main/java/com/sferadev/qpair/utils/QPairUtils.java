@@ -98,7 +98,6 @@ public class QPairUtils {
             }
 
             App.getContext().unbindService(this);
-
         }
 
         @Override

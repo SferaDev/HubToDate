@@ -92,7 +92,7 @@ public class Utils {
                             getContext().bindService(createExplicitFromImplicitIntent(getContext(), screenOffIntent), new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
                             break;
                         default:
-                            createToast(getContext().getString(R.string.toast_option) + which);
+                            createToast(getContext().getString(R.string.toast_option) + " " + which);
                             break;
                     }
                 }
@@ -262,9 +262,13 @@ public class Utils {
     }
 
     public static void openActivity(String packageName) {
-        Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-        i.addCategory(Intent.CATEGORY_LAUNCHER);
-        getContext().startActivity(i);
+        if (isPackageInstalled(packageName)) {
+            Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            getContext().startActivity(i);
+        } else {
+            createToast(getContext().getString(R.string.toast_app_not_found));
+        }
     }
 
     public static void openPlayStore(String packageName) {
