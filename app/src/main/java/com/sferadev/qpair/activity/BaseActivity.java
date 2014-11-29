@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.sferadev.qpair.R;
 
+// BaseActivity that provides a common standard among the project.
 public abstract class BaseActivity extends ActionBarActivity {
 
     private Toolbar toolbar;

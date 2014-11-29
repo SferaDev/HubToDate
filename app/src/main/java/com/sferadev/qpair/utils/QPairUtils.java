@@ -12,6 +12,7 @@ import com.lge.qpair.api.r1.IPeerIntent;
 import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
 
+// Utils to handle connection with QPair
 public class QPairUtils {
 
     private static final String EXTRA_SCHEME_AUTHORITY = QPairConstants.PROPERTY_SCHEME_AUTHORITY;
@@ -21,6 +22,7 @@ public class QPairUtils {
     public static String EXTRA_LOCAL_VERSION = "/local/qpair/version";
     public static String EXTRA_PEER_VERSION = "/peer/qpair/version";
 
+    // Boolean that states if Device is Phone (true) or tablet (false)
     public static boolean isPhone() {
         if (getQPairProperty(EXTRA_QPAIR_DEVICE_TYPE).equals("phone")) {
             Utils.setPreferences(Utils.KEY_IS_PHONE, true);
@@ -31,6 +33,7 @@ public class QPairUtils {
         }
     }
 
+    // Get Preference Stored on the QPair Service
     private static String getQPairProperty(String uriString) {
         Uri uri = Uri.parse(EXTRA_SCHEME_AUTHORITY + uriString);
         Cursor cursor = App.getContext().getContentResolver().query(uri, null, null, null, null);
@@ -46,18 +49,21 @@ public class QPairUtils {
         return null;
     }
 
+    // Boolean with QPair Service Status
     public static boolean isQPairOn() {
         boolean isOn = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_ON));
         Utils.setPreferences(Utils.KEY_IS_ON, isOn);
         return isOn;
     }
 
+    // Boolean with QPair Connection Status
     public static boolean isConnected() {
         boolean isConnected = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_CONNECTED));
         Utils.setPreferences(Utils.KEY_IS_CONNECTED, isConnected);
         return isConnected;
     }
 
+    // Class that handles the communication between devices
     public static class sendBroadcastConnection implements ServiceConnection {
 
         final String myAction;

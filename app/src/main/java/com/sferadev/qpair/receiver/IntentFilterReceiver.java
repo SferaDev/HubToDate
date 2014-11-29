@@ -32,46 +32,62 @@ import static com.sferadev.qpair.utils.Utils.getPreferences;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
 import static com.sferadev.qpair.utils.Utils.setPreferences;
 
+// Receiver of System Broadcasts that handle the forward to Peer
 public class IntentFilterReceiver extends BroadcastReceiver {
+    // Intent to bind
     static final Intent i = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-    
+
+    // Action to perform if Battery is low
     private static void doBatteryAction() {
-        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_battery_low)), 0);
+        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_battery_low)), 0);
     }
-    
+
+    // Action to perform if there's an InputMethod change
     private static void doIMEAction() {
-        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_IME), 0);
+        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                new sendBroadcastConnection(ACTION_CHANGE_IME), 0);
     }
-    
+
+    // Action to perform if there's a change with Ringer Volume
     private static void doRingerAction(Intent intent) {
         if (intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1) != getPreferences(KEY_LAST_RINGER_MODE, -1)) {
             setPreferences(KEY_LAST_RINGER_MODE, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1));
-            getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_RINGER_MODE, EXTRA, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1)), 0);
+            getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                    new sendBroadcastConnection(ACTION_CHANGE_RINGER_MODE, EXTRA,
+                            intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1)), 0);
         }
     }
-    
+
+    // Action to perform if Storage is low
     private static void doStorageAction() {
-        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_storage_low)), 0);
+        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_storage_low)), 0);
     }
-    
+
+    // Action to perform if there's a change on WiFi state
     private static void doWifiAction(int state) {
         switch (state) {
             case WifiManager.WIFI_STATE_DISABLED:
-                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "false"), 0);
+                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "false"), 0);
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
-                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i), new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "true"), 0);
+                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "true"), 0);
                 break;
         }
     }
 
     @Override
     public void onReceive(Context context, final Intent intent) {
+        // Ensure our service is up and running
         if (!isServiceRunning(ShakeService.class)) {
             Intent serviceIntent = new Intent(getContext(), ShakeService.class);
             getContext().startService(serviceIntent);
         }
 
+        // If we are connected forward the Broadcasts
         if (isQPairOn() && isConnected()) {
             switch (intent.getAction()) {
                 case "android.intent.action.BATTERY_LOW":
@@ -125,6 +141,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                         doWifiAction(state);
                     }
                     break;
+                // Default case, this should never happen.
                 default:
                     createToast(getContext().getString(R.string.toast_intent) + " " + intent.getAction());
                     break;

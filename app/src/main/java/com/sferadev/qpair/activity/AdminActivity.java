@@ -11,6 +11,7 @@ import com.sferadev.qpair.receiver.AdminReceiver;
 
 import static com.sferadev.qpair.utils.Utils.createToast;
 
+// AdminActivity to handle the request and permission to Device Admin
 public class AdminActivity extends Activity {
 
     static final int REQUEST_ENABLE = 1;
@@ -18,12 +19,17 @@ public class AdminActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Request the Administrative Privileges
         requestAdmin();
     }
 
     private void requestAdmin() {
+        // Component for our Intent
         ComponentName adminReceiver = new ComponentName(this,
                 AdminReceiver.class);
+
+        // Intent to get Admin Rights
         Intent activateDeviceAdminIntent =
                 new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
                         .putExtra(
@@ -32,13 +38,14 @@ public class AdminActivity extends Activity {
                         .putExtra(
                                 DevicePolicyManager.EXTRA_ADD_EXPLANATION,
                                 getResources().getString(R.string.admin_explanation));
-
         startActivityForResult(activateDeviceAdminIntent, REQUEST_ENABLE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // Activity Result to check whether the rights are given or not
         if (REQUEST_ENABLE == requestCode) {
             if (resultCode != Activity.RESULT_OK) {
                 createToast(getResources().getString(R.string.admin_failure));

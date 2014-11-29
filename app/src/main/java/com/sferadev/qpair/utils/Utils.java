@@ -62,6 +62,7 @@ public class Utils {
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
+    // Options that appear in the AssistDialog
     public static String[] shakeOptions = {
             getContext().getString(R.string.array_sync_app),
             getContext().getString(R.string.array_sync_clipboard),
@@ -69,28 +70,38 @@ public class Utils {
             getContext().getString(R.string.array_screen_off)
     };
 
+    // Creation of the AssistDialog
     public static void createAssistDialog() {
         if (isQPairOn() && isConnected()) {
             createDialog(getContext().getString(R.string.app_name), shakeOptions, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
+                        // Case: Sync Current App
                         case 0:
                             final Intent activityIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), activityIntent), new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA, getForegroundApp()), 0);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), activityIntent),
+                                    new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA, getForegroundApp()), 0);
                             break;
+                        // Case: Sync Clipboard
                         case 1:
                             final Intent clipboardIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), clipboardIntent), new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), clipboardIntent),
+                                    new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
                             break;
+                        // Case: Sync Brightness
                         case 2:
                             final Intent brightnessIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), brightnessIntent), new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA, getBrightnessLevel()), 0);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), brightnessIntent),
+                                    new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA, getBrightnessLevel()), 0);
                             break;
+                        // Case: Turn Screen Off
                         case 3:
                             final Intent screenOffIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), screenOffIntent), new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), screenOffIntent),
+                                    new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
                             break;
+                        // Default Case, should never happen
                         default:
                             createToast(getContext().getString(R.string.toast_option) + " " + which);
                             break;
@@ -103,6 +114,7 @@ public class Utils {
         }
     }
 
+    // Dialog Creation with simple message and positive button
     public static void createDialog(String title, String message, DialogInterface.OnClickListener listener) {
         AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
                 .setTitle(title)
@@ -113,7 +125,9 @@ public class Utils {
         dialog.show();
     }
 
-    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+    // Dialog Creation with simple message, positive and negative button
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener,
+                                    DialogInterface.OnClickListener negativeListener) {
         AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
                 .setTitle(title)
                 .setMessage(message)
@@ -124,7 +138,9 @@ public class Utils {
         dialog.show();
     }
 
-    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener, OnClickListener neutralListener) {
+    // Dialog Creation with simple message, positive, negative and neutral button
+    public static void createDialog(String title, String message, DialogInterface.OnClickListener positiveListener,
+                                    DialogInterface.OnClickListener negativeListener, OnClickListener neutralListener) {
         AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
                 .setTitle(title)
                 .setMessage(message)
@@ -136,6 +152,7 @@ public class Utils {
         dialog.show();
     }
 
+    // Dialog Creation with options as main content
     public static void createDialog(String title, String itemOptions[], DialogInterface.OnClickListener clickListener) {
         AlertDialog dialog = new AlertDialog.Builder(App.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
                 .setTitle(title)
@@ -145,36 +162,26 @@ public class Utils {
         dialog.show();
     }
 
+    // Get Explicit from Implicit Intent, thanks Lollipop
     public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
-        // Retrieve all services that can match the given intent
-        PackageManager pm = context.getPackageManager();
-        List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
-
-        // Make sure only one match was found
+        List<ResolveInfo> resolveInfo = getContext().getPackageManager().queryIntentServices(implicitIntent, 0);
         if (resolveInfo == null || resolveInfo.size() != 1) {
             return null;
         }
-
-        // Get component info and create ComponentName
         ResolveInfo serviceInfo = resolveInfo.get(0);
         String packageName = serviceInfo.serviceInfo.packageName;
         String className = serviceInfo.serviceInfo.name;
         ComponentName component = new ComponentName(packageName, className);
-
-        // Create a new intent. Use the old one for extras and such reuse
-        Intent explicitIntent = new Intent(implicitIntent);
-
-        // Set the component to be explicit
-        explicitIntent.setComponent(component);
-
-        return explicitIntent;
+        return new Intent(implicitIntent).setComponent(component);
     }
 
+    // Toast Creation
     public static void createToast(String string) {
         Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
         toast.show();
     }
 
+    // Return Brightness level
     public static int getBrightnessLevel() {
         try {
             return android.provider.Settings.System.getInt(
@@ -185,6 +192,7 @@ public class Utils {
         return -1;
     }
 
+    // Return Clipboard value
     public static String getClipboardString() {
         try {
             ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -195,6 +203,7 @@ public class Utils {
         return null;
     }
 
+    // Get current running App, thanks again Lollipop
     public static String getForegroundApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //You're screwed! This might or might not work, it's really hacky
@@ -214,6 +223,7 @@ public class Utils {
         return null;
     }
 
+    // Return Owner's Full Name
     public static String getOwnerFullName() {
         Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
         query.moveToFirst();
@@ -222,6 +232,7 @@ public class Utils {
         return value;
     }
 
+    // Return Owner's Simple Name
     public static String getOwnerName() {
         Cursor query = getContext().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, null, null, null, null);
         query.moveToFirst();
@@ -230,18 +241,22 @@ public class Utils {
         return value[0];
     }
 
+    // Get String Preference
     public static String getPreferences(String key, String defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(getContext()).getString(key, defaultValue);
     }
 
+    // Get Boolean Preference
     public static boolean getPreferences(String key, boolean defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(key, defaultValue);
     }
 
+    // Get Integer Preference
     public static int getPreferences(String key, int defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
     }
 
+    // Return whether if an App is installed
     public static boolean isPackageInstalled(String packageName) {
         try {
             getContext().getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
@@ -251,6 +266,7 @@ public class Utils {
         }
     }
 
+    // Return whether if a Service is running
     public static boolean isServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -261,6 +277,7 @@ public class Utils {
         return false;
     }
 
+    // Open default activity upon packageName
     public static void openActivity(String packageName) {
         if (isPackageInstalled(packageName)) {
             Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
@@ -271,6 +288,7 @@ public class Utils {
         }
     }
 
+    // Open Play Store upon packageName
     public static void openPlayStore(String packageName) {
         try {
             Intent launchIntent = getContext().getPackageManager().getLaunchIntentForPackage(getContext().getString(R.string.play_package));
@@ -283,6 +301,7 @@ public class Utils {
         }
     }
 
+    // Open Website upon URL
     public static void openURL(String url) {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
@@ -290,11 +309,13 @@ public class Utils {
         getContext().startActivity(i);
     }
 
+    // Set Brightness Level
     public static void setBrightnessLevel(int value) {
         android.provider.Settings.System.putInt(getContext().getContentResolver(),
                 android.provider.Settings.System.SCREEN_BRIGHTNESS, value);
     }
 
+    // Set Clipboard value
     public static void setClipboardString(String value) {
         try {
             ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -304,24 +325,28 @@ public class Utils {
         }
     }
 
+    // Set String Preference
     public static void setPreferences(String key, String value) {
         SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
         mEditor.putString(key, value);
         mEditor.apply();
     }
 
+    // Set Boolean Preference
     public static void setPreferences(String key, boolean value) {
         SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
         mEditor.putBoolean(key, value);
         mEditor.apply();
     }
 
+    // Set Integer Preference
     public static void setPreferences(String key, int value) {
         SharedPreferences.Editor mEditor = PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit();
         mEditor.putInt(key, value);
         mEditor.apply();
     }
 
+    // Set Volume Ringer Mode
     public static void setRingerMode(int value) {
         if (value != -1) {
             AudioManager audioManager = (AudioManager) App.getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -330,6 +355,7 @@ public class Utils {
         setPreferences(KEY_LAST_RINGER_MODE, value);
     }
 
+    // Ask for a InputMethod change
     public static void switchIME() {
         InputMethodManager imeManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imeManager != null) {
@@ -337,11 +363,13 @@ public class Utils {
         }
     }
 
+    // Toggle WiFi state based on a Boolean value
     public static void switchWifi(boolean state) {
         WifiManager wifiManager = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(state);
     }
 
+    // Ask Device to turn its screen off
     public static void turnScreenOff() {
         DevicePolicyManager policyManager = (DevicePolicyManager) getContext()
                 .getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -358,7 +386,8 @@ public class Utils {
             createToast(getContext().getString(R.string.admin_failure));
         }
     }
-    
+
+    // Ask Device to uninstall App upon packageName
     public static void uninstallPackage(String packageName) {
         Intent intent = new Intent(Intent.ACTION_DELETE, Uri.fromParts("package",
                 packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

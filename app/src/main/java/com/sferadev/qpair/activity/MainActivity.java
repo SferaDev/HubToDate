@@ -16,17 +16,20 @@ import static com.sferadev.qpair.utils.Utils.getOwnerName;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
 import static com.sferadev.qpair.utils.Utils.openURL;
 
+// MainActivity that handles the creation of main UI elements
 public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Get the name of the device Owner and display it on a Card Text
         if (getOwnerName() != null) {
             TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
             welcomeText.setText("Welcome " + getOwnerName() + "!");
         }
 
+        // Handle the FAB
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

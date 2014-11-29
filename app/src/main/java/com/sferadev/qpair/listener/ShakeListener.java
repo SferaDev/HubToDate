@@ -6,6 +6,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.FloatMath;
 
+// ShakeListener to receive Shake Intents
 public class ShakeListener implements SensorEventListener {
 
     /*
@@ -41,12 +42,12 @@ public class ShakeListener implements SensorEventListener {
 
             if (gForce > SHAKE_THRESHOLD_GRAVITY) {
                 final long now = System.currentTimeMillis();
-                // ignore shake events too close to each other (500ms)
+                // Ignore shake events too close to each other (500ms)
                 if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
                     return;
                 }
 
-                // reset the shake count after 3 seconds of no shakes
+                // Reset the shake count after 3 seconds of no shakes
                 if (mShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < now) {
                     mShakeCount = 0;
                 }
@@ -61,7 +62,7 @@ public class ShakeListener implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // ignore
+        // Ignore
     }
 
     public interface OnShakeListener {
