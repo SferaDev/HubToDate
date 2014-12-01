@@ -48,6 +48,7 @@ public class Utils {
     public static final String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
     public static final String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
     public static final String ACTION_SCREEN_OFF = "com.sferadev.qpair.SCREEN_OFF";
+    public static final String ACTION_SHOW_TOUCHES = "com.sferadev.qpair.SHOW_TOUCHES";
     public static final String ACTION_UNINSTALL_PACKAGE = "com.sferadev.qpair.UNINSTALL_PACKAGE";
     public static final String ACTION_UPDATE_BRIGHTNESS = "com.sferadev.qpair.UPDATE_BRIGHTNESS";
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
@@ -67,7 +68,8 @@ public class Utils {
             getContext().getString(R.string.array_sync_app),
             getContext().getString(R.string.array_sync_clipboard),
             getContext().getString(R.string.array_sync_brightness),
-            getContext().getString(R.string.array_screen_off)
+            getContext().getString(R.string.array_screen_off),
+            getContext().getString(R.string.array_show_touches)
     };
 
     // Creation of the AssistDialog
@@ -93,13 +95,20 @@ public class Utils {
                         case 2:
                             final Intent brightnessIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
                             getContext().bindService(createExplicitFromImplicitIntent(getContext(), brightnessIntent),
-                                    new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA, getBrightnessLevel()), 0);
+                                    new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
+                                            getSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS)), 0);
                             break;
                         // Case: Turn Screen Off
                         case 3:
                             final Intent screenOffIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
                             getContext().bindService(createExplicitFromImplicitIntent(getContext(), screenOffIntent),
                                     new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
+                            break;
+                        // Case: Show Touches
+                        case 4:
+                            final Intent showTouchesIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
+                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), showTouchesIntent),
+                                    new QPairUtils.sendBroadcastConnection(ACTION_SHOW_TOUCHES, EXTRA, "showTouches"), 0);
                             break;
                         // Default Case, should never happen
                         default:
@@ -181,17 +190,6 @@ public class Utils {
         toast.show();
     }
 
-    // Return Brightness level
-    public static int getBrightnessLevel() {
-        try {
-            return android.provider.Settings.System.getInt(
-                    getContext().getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS);
-        } catch (SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
     // Return Clipboard value
     public static String getClipboardString() {
         try {
@@ -256,6 +254,17 @@ public class Utils {
         return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
     }
 
+    // Return System Preference
+    public static int getSystemPreference(String preferenceName) {
+        try {
+            return android.provider.Settings.System.getInt(
+                    getContext().getContentResolver(), preferenceName);
+        } catch (SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     // Return whether if an App is installed
     public static boolean isPackageInstalled(String packageName) {
         try {
@@ -309,12 +318,6 @@ public class Utils {
         getContext().startActivity(i);
     }
 
-    // Set Brightness Level
-    public static void setBrightnessLevel(int value) {
-        android.provider.Settings.System.putInt(getContext().getContentResolver(),
-                android.provider.Settings.System.SCREEN_BRIGHTNESS, value);
-    }
-
     // Set Clipboard value
     public static void setClipboardString(String value) {
         try {
@@ -355,6 +358,12 @@ public class Utils {
         setPreferences(KEY_LAST_RINGER_MODE, value);
     }
 
+    // Set System Preference
+    public static void setSystemPreference(String preferenceName, int value) {
+        android.provider.Settings.System.putInt(getContext().getContentResolver(),
+                preferenceName, value);
+    }
+
     // Ask for a InputMethod change
     public static void switchIME() {
         InputMethodManager imeManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -367,6 +376,14 @@ public class Utils {
     public static void switchWifi(boolean state) {
         WifiManager wifiManager = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(state);
+    }
+    
+    public static void toggleShowTouches() {
+        if (getSystemPreference("show_touches") == 1) {
+            setSystemPreference("show_touches", 0);
+        } else {
+            setSystemPreference("show_touches", 1);
+        }
     }
 
     // Ask Device to turn its screen off

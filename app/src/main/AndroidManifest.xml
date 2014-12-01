@@ -47,6 +47,7 @@
                 <action android:name="com.sferadev.qpair.OPEN_PLAY_STORE" />
                 <action android:name="com.sferadev.qpair.OPEN_URL" />
                 <action android:name="com.sferadev.qpair.SCREEN_OFF" />
+                <action android:name="com.sferadev.qpair.SHOW_TOUCHES" />
                 <action android:name="com.sferadev.qpair.UPDATE_BRIGHTNESS" />
                 <action android:name="com.sferadev.qpair.UPDATE_CLIPBOARD" />
                 <action android:name="com.sferadev.qpair.UNINSTALL_PACKAGE" />

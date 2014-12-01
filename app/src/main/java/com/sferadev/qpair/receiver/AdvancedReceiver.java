@@ -15,12 +15,13 @@ import static com.sferadev.qpair.utils.Utils.isPackageInstalled;
 import static com.sferadev.qpair.utils.Utils.openActivity;
 import static com.sferadev.qpair.utils.Utils.openPlayStore;
 import static com.sferadev.qpair.utils.Utils.openURL;
-import static com.sferadev.qpair.utils.Utils.setBrightnessLevel;
+import static com.sferadev.qpair.utils.Utils.setSystemPreference;
 import static com.sferadev.qpair.utils.Utils.setClipboardString;
 import static com.sferadev.qpair.utils.Utils.setPreferences;
 import static com.sferadev.qpair.utils.Utils.setRingerMode;
 import static com.sferadev.qpair.utils.Utils.switchIME;
 import static com.sferadev.qpair.utils.Utils.switchWifi;
+import static com.sferadev.qpair.utils.Utils.toggleShowTouches;
 import static com.sferadev.qpair.utils.Utils.turnScreenOff;
 import static com.sferadev.qpair.utils.Utils.uninstallPackage;
 
@@ -66,9 +67,13 @@ public class AdvancedReceiver extends BroadcastReceiver {
             case "com.sferadev.qpair.SCREEN_OFF":
                 turnScreenOff();
                 break;
+            case "com.sferadev.qpair.SHOW_TOUCHES":
+                toggleShowTouches();
+                break;
             // Request to update brightness with certain int value
             case "com.sferadev.qpair.UPDATE_BRIGHTNESS":
-                setBrightnessLevel(Integer.parseInt(intent.getStringExtra(EXTRA)));
+                setSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS,
+                        Integer.parseInt(intent.getStringExtra(EXTRA)));
                 createToast(getContext().getString(R.string.toast_brightness) + " " + intent.getStringExtra(EXTRA));
                 break;
             // Request to update Clipboard String

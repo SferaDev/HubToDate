@@ -47,6 +47,7 @@
     <string name="array_sync_clipboard">Sync Clipboard</string>
     <string name="array_sync_brightness">Sync Brightness</string>
     <string name="array_screen_off">Turn Peer Screen Off</string>
+    <string name="array_show_touches">Show/Hide Touches on Peer</string>
 
     <!-- Device Admin -->
     <string name="admin_enabled">HubToDate was added as Device Administrator</string>
