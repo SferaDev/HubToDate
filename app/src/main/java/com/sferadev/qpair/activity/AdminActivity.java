@@ -24,6 +24,19 @@ public class AdminActivity extends Activity {
         requestAdmin();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Activity Result to check whether the rights are given or not
+        if (REQUEST_ENABLE == requestCode) {
+            if (resultCode != Activity.RESULT_OK) {
+                createToast(getResources().getString(R.string.admin_failure));
+            }
+            finish();
+        }
+    }
+
     private void requestAdmin() {
         // Component for our Intent
         ComponentName adminReceiver = new ComponentName(this,
@@ -39,18 +52,5 @@ public class AdminActivity extends Activity {
                                 DevicePolicyManager.EXTRA_ADD_EXPLANATION,
                                 getResources().getString(R.string.admin_explanation));
         startActivityForResult(activateDeviceAdminIntent, REQUEST_ENABLE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Activity Result to check whether the rights are given or not
-        if (REQUEST_ENABLE == requestCode) {
-            if (resultCode != Activity.RESULT_OK) {
-                createToast(getResources().getString(R.string.admin_failure));
-            }
-            finish();
-        }
     }
 }

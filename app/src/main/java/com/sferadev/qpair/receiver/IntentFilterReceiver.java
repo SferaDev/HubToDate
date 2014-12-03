@@ -94,27 +94,27 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                 case "android.intent.action.INPUT_METHOD_CHANGED":
                     createDialog(getContext().getString(R.string.dialog_ime),
                             getContext().getString(R.string.dialog_ime_description), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            doIMEAction();
-                        }
-                    }, null);
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    doIMEAction();
+                                }
+                            }, null);
                     break;
                 case "android.media.RINGER_MODE_CHANGED":
                     if (!getPreferences(KEY_ALWAYS_RINGER, false)) {
                         createDialog(getContext().getString(R.string.dialog_ringer),
                                 getContext().getString(R.string.dialog_ringer_description), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                doRingerAction(intent);
-                            }
-                        }, null, new OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setPreferences(KEY_ALWAYS_RINGER, true);
-                                doRingerAction(intent);
-                            }
-                        });
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        doRingerAction(intent);
+                                    }
+                                }, null, new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        setPreferences(KEY_ALWAYS_RINGER, true);
+                                        doRingerAction(intent);
+                                    }
+                                });
                     } else {
                         doRingerAction(intent);
                     }
@@ -124,17 +124,17 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     if (!getPreferences(KEY_ALWAYS_WIFI, false)) {
                         createDialog(getContext().getString(R.string.dialog_wifi),
                                 getContext().getString(R.string.dialog_wifi_description), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                doWifiAction(state);
-                            }
-                        }, null, new OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setPreferences(KEY_ALWAYS_WIFI, true);
-                                doWifiAction(state);
-                            }
-                        });
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        doWifiAction(state);
+                                    }
+                                }, null, new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        setPreferences(KEY_ALWAYS_WIFI, true);
+                                        doWifiAction(state);
+                                    }
+                                });
                     } else {
                         doWifiAction(state);
                     }

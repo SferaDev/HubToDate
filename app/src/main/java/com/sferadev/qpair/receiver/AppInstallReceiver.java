@@ -40,7 +40,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                     // Get the packageName
                     final String[] dataPackageAdded = intent.getData().toString().split(":");
                     // If the app doesn't turns to be installed by Play Store return
-                    if (getContext().getPackageManager().getInstallerPackageName(dataPackageAdded[1]) == null 
+                    if (getContext().getPackageManager().getInstallerPackageName(dataPackageAdded[1]) == null
                             || !getContext().getPackageManager().getInstallerPackageName(dataPackageAdded[1]).equals(getContext().getString(R.string.play_package))) {
                         createToast(getContext().getString(R.string.toast_app_not_supported));
                         setPreferences(KEY_LAST_APP, dataPackageAdded[1]);
