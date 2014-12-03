@@ -20,6 +20,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -42,6 +43,7 @@ import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 
+// These aren't the droids you're looking for...
 public class Utils {
     public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
     public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
@@ -69,6 +71,16 @@ public class Utils {
     public static final Intent QPAIR_INTENT = createExplicitFromImplicitIntent(getContext(),
             new Intent(QPairConstants.ACTION_QPAIR_SERVICE));
 
+    // Options that appear in the AssistDialog
+    public static String[] assistOptions = {
+            getContext().getString(R.string.array_assist_sync_app),
+            getContext().getString(R.string.array_assist_sync_clipboard),
+            getContext().getString(R.string.array_assist_sync_brightness),
+            getContext().getString(R.string.array_assist_screen_off),
+            getContext().getString(R.string.array_assist_show_touches),
+            getContext().getString(R.string.array_assist_media)
+    };
+
     // Options that appear in the MediaDialog
     public static String[] mediaOptions = {
             getContext().getString(R.string.array_media_play),
@@ -78,20 +90,10 @@ public class Utils {
             getContext().getString(R.string.array_media_previous)
     };
 
-    // Options that appear in the AssistDialog
-    public static String[] shakeOptions = {
-            getContext().getString(R.string.array_assist_sync_app),
-            getContext().getString(R.string.array_assist_sync_clipboard),
-            getContext().getString(R.string.array_assist_sync_brightness),
-            getContext().getString(R.string.array_assist_screen_off),
-            getContext().getString(R.string.array_assist_show_touches),
-            getContext().getString(R.string.array_assist_media)
-    };
-
     // Creation of the AssistDialog
     public static void createAssistDialog() {
         if (isQPairOn() && isConnected()) {
-            createDialog(getContext().getString(R.string.app_name), shakeOptions, new DialogInterface.OnClickListener() {
+            createDialog(getContext().getString(R.string.app_name), assistOptions, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
@@ -361,6 +363,16 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static boolean isUserAGoat() throws InterruptedException {
+        if (VERSION.RELEASE == "FirefoxOS") {
+            // Wait 1h and 8m to finish talking about FirefoxOS
+            Thread.sleep(68*60*1000);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Open default activity upon packageName
