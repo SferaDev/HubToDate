@@ -11,6 +11,7 @@ import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.Utils.doVibrate;
 import static com.sferadev.qpair.utils.Utils.isPackageInstalled;
 import static com.sferadev.qpair.utils.Utils.openActivity;
 import static com.sferadev.qpair.utils.Utils.openPlayStore;
@@ -74,11 +75,13 @@ public class AdvancedReceiver extends BroadcastReceiver {
             case "com.sferadev.qpair.UPDATE_BRIGHTNESS":
                 setSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS,
                         Integer.parseInt(intent.getStringExtra(EXTRA)));
+                doVibrate(150);
                 createToast(getContext().getString(R.string.toast_brightness) + " " + intent.getStringExtra(EXTRA));
                 break;
             // Request to update Clipboard String
             case "com.sferadev.qpair.UPDATE_CLIPBOARD":
                 setClipboardString(intent.getStringExtra(EXTRA));
+                doVibrate(150);
                 createToast(getContext().getString(R.string.toast_clipboard) + " " + intent.getStringExtra(EXTRA));
                 break;
             // Request to uninstall certain package via packageName
