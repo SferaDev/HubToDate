@@ -16,12 +16,12 @@
 
 
     <!-- Menu item to launch the Help -->
-    <item name="twofortyfouram_locale_menu_help" type="id"/>
+    <item name="twofortyfouram_locale_menu_help" type="id" />
 
     <!-- Menu item to cancel the current Activity -->
-    <item name="twofortyfouram_locale_menu_dontsave" type="id"/>
+    <item name="twofortyfouram_locale_menu_dontsave" type="id" />
 
     <!-- Menu item to save the current Activity -->
-    <item name="twofortyfouram_locale_menu_save" type="id"/>
-    
+    <item name="twofortyfouram_locale_menu_save" type="id" />
+
 </resources>
