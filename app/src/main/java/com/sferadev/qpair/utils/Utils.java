@@ -19,6 +19,8 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.PowerManager;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.Settings.SettingNotFoundException;
@@ -190,6 +192,12 @@ public class Utils {
         toast.show();
     }
 
+    //Do vibration for x ms
+    public static void doVibrate(int time) {
+        Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(time);
+    }
+
     // Return Clipboard value
     public static String getClipboardString() {
         try {
@@ -272,6 +280,16 @@ public class Utils {
             return true;
         } catch (NameNotFoundException e) {
             return false;
+        }
+    }
+
+    // Check whether the device screen is on or not
+    public static boolean isScreenOn() {
+        PowerManager powerManager = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            return powerManager.isInteractive();
+        } else {
+            return powerManager.isScreenOn();
         }
     }
 
