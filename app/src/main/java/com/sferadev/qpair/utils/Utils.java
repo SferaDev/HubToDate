@@ -2,6 +2,7 @@ package com.sferadev.qpair.utils;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Instrumentation;
 import android.app.admin.DevicePolicyManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -46,6 +47,7 @@ public class Utils {
     public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
     public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
     public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
+    public static final String ACTION_MEDIA = "com.sferadev.qpair.ACTION_MEDIA";
     public static final String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
     public static final String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
     public static final String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
@@ -64,14 +66,26 @@ public class Utils {
     public static final String KEY_IS_PHONE = "isPhone";
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
+    public static final Intent QPAIR_INTENT = createExplicitFromImplicitIntent(getContext(),
+            new Intent(QPairConstants.ACTION_QPAIR_SERVICE));
+
+    // Options that appear in the MediaDialog
+    public static String[] mediaOptions = {
+            getContext().getString(R.string.array_media_play),
+            getContext().getString(R.string.array_media_pause),
+            getContext().getString(R.string.array_media_stop),
+            getContext().getString(R.string.array_media_next),
+            getContext().getString(R.string.array_media_previous)
+    };
 
     // Options that appear in the AssistDialog
     public static String[] shakeOptions = {
-            getContext().getString(R.string.array_sync_app),
-            getContext().getString(R.string.array_sync_clipboard),
-            getContext().getString(R.string.array_sync_brightness),
-            getContext().getString(R.string.array_screen_off),
-            getContext().getString(R.string.array_show_touches)
+            getContext().getString(R.string.array_assist_sync_app),
+            getContext().getString(R.string.array_assist_sync_clipboard),
+            getContext().getString(R.string.array_assist_sync_brightness),
+            getContext().getString(R.string.array_assist_screen_off),
+            getContext().getString(R.string.array_assist_show_touches),
+            getContext().getString(R.string.array_assist_media)
     };
 
     // Creation of the AssistDialog
@@ -83,34 +97,33 @@ public class Utils {
                     switch (which) {
                         // Case: Sync Current App
                         case 0:
-                            final Intent activityIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), activityIntent),
+                            getContext().bindService(QPAIR_INTENT,
                                     new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA, getForegroundApp()), 0);
                             break;
                         // Case: Sync Clipboard
                         case 1:
-                            final Intent clipboardIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), clipboardIntent),
+                            getContext().bindService(QPAIR_INTENT,
                                     new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
                             break;
                         // Case: Sync Brightness
                         case 2:
-                            final Intent brightnessIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), brightnessIntent),
+                            getContext().bindService(QPAIR_INTENT,
                                     new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
                                             getSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS)), 0);
                             break;
                         // Case: Turn Screen Off
                         case 3:
-                            final Intent screenOffIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), screenOffIntent),
+                            getContext().bindService(QPAIR_INTENT,
                                     new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
                             break;
                         // Case: Show Touches
                         case 4:
-                            final Intent showTouchesIntent = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-                            getContext().bindService(createExplicitFromImplicitIntent(getContext(), showTouchesIntent),
+                            getContext().bindService(QPAIR_INTENT,
                                     new QPairUtils.sendBroadcastConnection(ACTION_SHOW_TOUCHES, EXTRA, "showTouches"), 0);
+                            break;
+                        // Case: Media
+                        case 5:
+                            createMediaDialog();
                             break;
                         // Default Case, should never happen
                         default:
@@ -184,6 +197,52 @@ public class Utils {
         String className = serviceInfo.serviceInfo.name;
         ComponentName component = new ComponentName(packageName, className);
         return new Intent(implicitIntent).setComponent(component);
+    }
+
+    // Create a Media Dialog
+    public static void createMediaDialog() {
+        createDialog(getContext().getString(R.string.app_name), mediaOptions, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    // Case: Play
+                    case 0:
+                        getContext().bindService(QPAIR_INTENT,
+                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "play"), 0);
+                        break;
+                    // Case: Pause
+                    case 1:
+                        getContext().bindService(QPAIR_INTENT,
+                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "pause"), 0);
+                        break;
+                    // Case: Stop
+                    case 2:
+                        getContext().bindService(QPAIR_INTENT,
+                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "stop"), 0);
+                        break;
+                    // Case: Next
+                    case 3:
+                        getContext().bindService(QPAIR_INTENT,
+                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "next"), 0);
+                        break;
+                    // Case: Previous
+                    case 4:
+                        getContext().bindService(QPAIR_INTENT,
+                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "previous"), 0);
+                        break;
+                    // Default Case, should never happen
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    // Handle Music Intents
+    public static void createMusicIntent(String command) {
+        Intent i = new Intent("com.android.music.musicservicecommand");
+        i.putExtra("command" , command);
+        getContext().sendBroadcast(i);
     }
 
     // Toast Creation
@@ -380,6 +439,22 @@ public class Utils {
     public static void setSystemPreference(String preferenceName, int value) {
         android.provider.Settings.System.putInt(getContext().getContentResolver(),
                 preferenceName, value);
+    }
+
+    // Simulate Hardware Key
+    public static void simulateKey(final int KeyCode) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Instrumentation instrumentation = new Instrumentation();
+                    instrumentation.sendKeyDownUpSync(KeyCode);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }.start();
     }
 
     // Ask for a InputMethod change

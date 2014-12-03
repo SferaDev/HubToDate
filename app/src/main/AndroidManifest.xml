@@ -7,16 +7,16 @@
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="com.lge.qpair.permission.USE_QPAIR_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.lge.qpair.permission.USE_QPAIR_SERVICE" />
 
     <application
         android:name=".App"
@@ -40,6 +40,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.sferadev.qpair.ACTION_CALLBACK" />
+                <action android:name="com.sferadev.qpair.ACTION_MEDIA" />
                 <action android:name="com.sferadev.qpair.CHANGE_IME" />
                 <action android:name="com.sferadev.qpair.CHANGE_WIFI" />
                 <action android:name="com.sferadev.qpair.CHANGE_RINGER_MODE" />

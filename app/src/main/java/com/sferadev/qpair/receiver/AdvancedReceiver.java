@@ -10,16 +10,17 @@ import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
 import static com.sferadev.qpair.utils.Utils.createDialog;
+import static com.sferadev.qpair.utils.Utils.createMusicIntent;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.doVibrate;
 import static com.sferadev.qpair.utils.Utils.isPackageInstalled;
 import static com.sferadev.qpair.utils.Utils.openActivity;
 import static com.sferadev.qpair.utils.Utils.openPlayStore;
 import static com.sferadev.qpair.utils.Utils.openURL;
-import static com.sferadev.qpair.utils.Utils.setSystemPreference;
 import static com.sferadev.qpair.utils.Utils.setClipboardString;
 import static com.sferadev.qpair.utils.Utils.setPreferences;
 import static com.sferadev.qpair.utils.Utils.setRingerMode;
+import static com.sferadev.qpair.utils.Utils.setSystemPreference;
 import static com.sferadev.qpair.utils.Utils.switchIME;
 import static com.sferadev.qpair.utils.Utils.switchWifi;
 import static com.sferadev.qpair.utils.Utils.toggleShowTouches;
@@ -31,6 +32,10 @@ public class AdvancedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         switch (intent.getAction()) {
+            // Request to perform a Media Action
+            case "com.sferadev.qpair.ACTION_MEDIA":
+                createMusicIntent(intent.getStringExtra(EXTRA));
+                break;
             // Request to update InputMethod
             case "com.sferadev.qpair.CHANGE_IME":
                 switchIME();

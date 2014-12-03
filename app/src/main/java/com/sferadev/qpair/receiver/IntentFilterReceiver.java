@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 
-import com.lge.qpair.api.r1.QPairConstants;
-import com.sferadev.qpair.App;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
@@ -25,8 +23,8 @@ import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_RINGER;
 import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_WIFI;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_RINGER_MODE;
+import static com.sferadev.qpair.utils.Utils.QPAIR_INTENT;
 import static com.sferadev.qpair.utils.Utils.createDialog;
-import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getPreferences;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
@@ -34,18 +32,15 @@ import static com.sferadev.qpair.utils.Utils.setPreferences;
 
 // Receiver of System Broadcasts that handle the forward to Peer
 public class IntentFilterReceiver extends BroadcastReceiver {
-    // Intent to bind
-    static final Intent i = new Intent(QPairConstants.ACTION_QPAIR_SERVICE);
-
     // Action to perform if Battery is low
     private static void doBatteryAction() {
-        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+        getContext().bindService(QPAIR_INTENT,
                 new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_battery_low)), 0);
     }
 
     // Action to perform if there's an InputMethod change
     private static void doIMEAction() {
-        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+        getContext().bindService(QPAIR_INTENT,
                 new sendBroadcastConnection(ACTION_CHANGE_IME), 0);
     }
 
@@ -53,7 +48,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
     private static void doRingerAction(Intent intent) {
         if (intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1) != getPreferences(KEY_LAST_RINGER_MODE, -1)) {
             setPreferences(KEY_LAST_RINGER_MODE, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1));
-            getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+            getContext().bindService(QPAIR_INTENT,
                     new sendBroadcastConnection(ACTION_CHANGE_RINGER_MODE, EXTRA,
                             intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1)), 0);
         }
@@ -61,7 +56,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
 
     // Action to perform if Storage is low
     private static void doStorageAction() {
-        getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+        getContext().bindService(QPAIR_INTENT,
                 new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_storage_low)), 0);
     }
 
@@ -69,11 +64,11 @@ public class IntentFilterReceiver extends BroadcastReceiver {
     private static void doWifiAction(int state) {
         switch (state) {
             case WifiManager.WIFI_STATE_DISABLED:
-                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                getContext().bindService(QPAIR_INTENT,
                         new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "false"), 0);
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
-                getContext().bindService(createExplicitFromImplicitIntent(App.getContext(), i),
+                getContext().bindService(QPAIR_INTENT,
                         new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "true"), 0);
                 break;
         }
@@ -97,7 +92,8 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     doStorageAction();
                     break;
                 case "android.intent.action.INPUT_METHOD_CHANGED":
-                    createDialog(getContext().getString(R.string.dialog_ime), getContext().getString(R.string.dialog_ime_description), new DialogInterface.OnClickListener() {
+                    createDialog(getContext().getString(R.string.dialog_ime),
+                            getContext().getString(R.string.dialog_ime_description), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             doIMEAction();
@@ -106,7 +102,8 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     break;
                 case "android.media.RINGER_MODE_CHANGED":
                     if (!getPreferences(KEY_ALWAYS_RINGER, false)) {
-                        createDialog(getContext().getString(R.string.dialog_ringer), getContext().getString(R.string.dialog_ringer_description), new DialogInterface.OnClickListener() {
+                        createDialog(getContext().getString(R.string.dialog_ringer),
+                                getContext().getString(R.string.dialog_ringer_description), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 doRingerAction(intent);
@@ -125,7 +122,8 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                 case "android.net.wifi.WIFI_STATE_CHANGED":
                     final int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
                     if (!getPreferences(KEY_ALWAYS_WIFI, false)) {
-                        createDialog(getContext().getString(R.string.dialog_wifi), getContext().getString(R.string.dialog_wifi_description), new DialogInterface.OnClickListener() {
+                        createDialog(getContext().getString(R.string.dialog_wifi),
+                                getContext().getString(R.string.dialog_wifi_description), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 doWifiAction(state);

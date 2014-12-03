@@ -42,12 +42,20 @@
     <string name="dialog_ringer">Update Ringer on Peer</string>
     <string name="dialog_ringer_description">Do you wish to sync the volume on your QPair device?</string>
 
-    <!-- Arrays -->
-    <string name="array_sync_app">Sync Current App</string>
-    <string name="array_sync_clipboard">Sync Clipboard</string>
-    <string name="array_sync_brightness">Sync Brightness</string>
-    <string name="array_screen_off">Turn Peer Screen Off</string>
-    <string name="array_show_touches">Show/Hide Touches on Peer</string>
+    <!-- Assist Array -->
+    <string name="array_assist_sync_app">Sync Current App</string>
+    <string name="array_assist_sync_clipboard">Sync Clipboard</string>
+    <string name="array_assist_sync_brightness">Sync Brightness</string>
+    <string name="array_assist_screen_off">Turn Peer Screen Off</string>
+    <string name="array_assist_show_touches">Show/Hide Touches on Peer</string>
+    <string name="array_assist_media">Control Peer\'s Media</string>
+
+    <!-- Music Array -->
+    <string name="array_media_play">Play Music</string>
+    <string name="array_media_pause">Pause Music</string>
+    <string name="array_media_stop">Stop Music</string>
+    <string name="array_media_next">Next Song</string>
+    <string name="array_media_previous">Previous Song</string>
 
     <!-- Device Admin -->
     <string name="admin_enabled">HubToDate was added as Device Administrator</string>
