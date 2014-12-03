@@ -63,4 +63,24 @@
     <string name="admin_explanation">HubToDate will be allowed to turn your Screen Off when you ask to do so in your peer device</string>
     <string name="admin_failure">HubToDate is not a Device Administrator. Please check Security settings.</string>
 
+    <!-- Tasker -->
+    <string name="tasker_header">Tasker</string>
+    <string name="tasker_title">Action to Perform</string>
+
+    <string-array name="tasker_entries">
+        <item>Show All Options</item>
+        <item>Sync Current App</item>
+        <item>Sync Clipboard</item>
+        <item>Sync Brightness</item>
+        <item>Turn Peer Screen Off</item>
+    </string-array>
+
+    <string-array name="tasker_values">
+        <item>ASSIST</item>
+        <item>SYNC_APP</item>
+        <item>SYNC_CLIPBOARD</item>
+        <item>SYNC_BRIGHTNESS</item>
+        <item>SCREEN_OFF</item>
+    </string-array>
+
 </resources>

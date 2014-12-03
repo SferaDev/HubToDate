@@ -29,4 +29,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.getbase:floatingactionbutton:1.1.0'
     compile files('libs/LGQPairAPIs.jar')
+    compile project(':tasker')
 }

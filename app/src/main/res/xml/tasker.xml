@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/tasker_header" />
+
+    <ListPreference
+        android:entries="@array/tasker_entries"
+        android:entryValues="@array/tasker_values"
+        android:key="key_tasker_option"
+        android:title="@string/tasker_title" />
+
+</PreferenceScreen>
