@@ -98,6 +98,9 @@ public class AdvancedReceiver extends BroadcastReceiver {
                     createToast(getContext().getString(R.string.toast_uninstall_failed) + " " + intent.getStringExtra(EXTRA));
                 }
                 break;
+            case "com.sferadev.qpair.VIBRATE":
+                doVibrate(250);
+                break;
             // Default case, this should never happen.
             default:
                 createToast(intent.getAction());

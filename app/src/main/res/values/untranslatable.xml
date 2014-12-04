@@ -21,5 +21,8 @@
         <item>SYNC_CLIPBOARD</item>
         <item>SYNC_BRIGHTNESS</item>
         <item>SCREEN_OFF</item>
+        <item>WIFI_ON</item>
+        <item>WIFI_OFF</item>
+        <item>VIBRATE</item>
     </string-array>
 </resources>

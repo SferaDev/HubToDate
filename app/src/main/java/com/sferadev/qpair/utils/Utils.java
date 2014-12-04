@@ -58,6 +58,7 @@ public class Utils {
     public static final String ACTION_UNINSTALL_PACKAGE = "com.sferadev.qpair.UNINSTALL_PACKAGE";
     public static final String ACTION_UPDATE_BRIGHTNESS = "com.sferadev.qpair.UPDATE_BRIGHTNESS";
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
+    public static final String ACTION_VIBRATE = "com.sferadev.qpair.VIBRATE";
 
     public static final String EXTRA = "qpairExtra";
 

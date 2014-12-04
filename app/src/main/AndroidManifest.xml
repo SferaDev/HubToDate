@@ -82,6 +82,7 @@
                 <action android:name="com.sferadev.qpair.UPDATE_BRIGHTNESS" />
                 <action android:name="com.sferadev.qpair.UPDATE_CLIPBOARD" />
                 <action android:name="com.sferadev.qpair.UNINSTALL_PACKAGE" />
+                <action android:name="com.sferadev.qpair.VIBRATE" />
             </intent-filter>
         </receiver>
 

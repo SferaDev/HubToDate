@@ -70,6 +70,9 @@
         <item>Sync Clipboard</item>
         <item>Sync Brightness</item>
         <item>Turn Peer Screen Off</item>
+        <item>Turn Peer's WiFi On</item>
+        <item>Turn Peer's WiFi Off</item>
+        <item>Vibrate Peer Device</item>
     </string-array>
 
 </resources>

@@ -8,10 +8,12 @@ import com.sferadev.qpair.utils.QPairUtils;
 import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
 import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_ACTIVITY;
 import static com.sferadev.qpair.utils.Utils.ACTION_SCREEN_OFF;
 import static com.sferadev.qpair.utils.Utils.ACTION_UPDATE_BRIGHTNESS;
 import static com.sferadev.qpair.utils.Utils.ACTION_UPDATE_CLIPBOARD;
+import static com.sferadev.qpair.utils.Utils.ACTION_VIBRATE;
 import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.QPAIR_INTENT;
 import static com.sferadev.qpair.utils.Utils.createAssistDialog;
@@ -48,6 +50,21 @@ public class TaskerReceiver extends BroadcastReceiver {
             case "SCREEN_OFF":
                 getContext().bindService(QPAIR_INTENT,
                         new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
+                break;
+            // Case: Wifi On
+            case "WIFI_ON":
+                getContext().bindService(QPAIR_INTENT,
+                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "true"), 0);
+                break;
+            // Case: Wifi Off
+            case "WIFI_OFF":
+                getContext().bindService(QPAIR_INTENT,
+                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "false"), 0);
+                break;
+            // Case: Wifi Off
+            case "VIBRATE":
+                getContext().bindService(QPAIR_INTENT,
+                        new sendBroadcastConnection(ACTION_VIBRATE, EXTRA, "doVibrate"), 0);
                 break;
             // Default Case
             default:
