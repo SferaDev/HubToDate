@@ -40,6 +40,8 @@
     <string name="dialog_wifi_description">Do you wish to sync the Wifi state on your QPair device?</string>
     <string name="dialog_ringer">Update Ringer on Peer</string>
     <string name="dialog_ringer_description">Do you wish to sync the volume on your QPair device?</string>
+    <string name="dialog_update_qpair">You have an outdated QPair version!</string>
+    <string name="dialog_update_qpair_description">Looks like you\'re not in the loop! Please update QPair on your device!</string>
 
     <!-- Assist Array -->
     <string name="array_assist_sync_app">Sync Current App</string>

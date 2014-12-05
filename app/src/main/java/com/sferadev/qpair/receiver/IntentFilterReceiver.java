@@ -12,6 +12,7 @@ import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
@@ -23,7 +24,6 @@ import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_RINGER;
 import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_WIFI;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_RINGER_MODE;
-import static com.sferadev.qpair.utils.Utils.QPAIR_INTENT;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getPreferences;
@@ -34,13 +34,13 @@ import static com.sferadev.qpair.utils.Utils.setPreferences;
 public class IntentFilterReceiver extends BroadcastReceiver {
     // Action to perform if Battery is low
     private static void doBatteryAction() {
-        getContext().bindService(QPAIR_INTENT,
+        getContext().bindService(getQpairIntent(),
                 new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_battery_low)), 0);
     }
 
     // Action to perform if there's an InputMethod change
     private static void doIMEAction() {
-        getContext().bindService(QPAIR_INTENT,
+        getContext().bindService(getQpairIntent(),
                 new sendBroadcastConnection(ACTION_CHANGE_IME), 0);
     }
 
@@ -48,7 +48,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
     private static void doRingerAction(Intent intent) {
         if (intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1) != getPreferences(KEY_LAST_RINGER_MODE, -1)) {
             setPreferences(KEY_LAST_RINGER_MODE, intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1));
-            getContext().bindService(QPAIR_INTENT,
+            getContext().bindService(getQpairIntent(),
                     new sendBroadcastConnection(ACTION_CHANGE_RINGER_MODE, EXTRA,
                             intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, -1)), 0);
         }
@@ -56,7 +56,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
 
     // Action to perform if Storage is low
     private static void doStorageAction() {
-        getContext().bindService(QPAIR_INTENT,
+        getContext().bindService(getQpairIntent(),
                 new sendBroadcastConnection(ACTION_CREATE_DIALOG, EXTRA, getContext().getString(R.string.dialog_storage_low)), 0);
     }
 
@@ -64,11 +64,11 @@ public class IntentFilterReceiver extends BroadcastReceiver {
     private static void doWifiAction(int state) {
         switch (state) {
             case WifiManager.WIFI_STATE_DISABLED:
-                getContext().bindService(QPAIR_INTENT,
+                getContext().bindService(getQpairIntent(),
                         new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "false"), 0);
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
-                getContext().bindService(QPAIR_INTENT,
+                getContext().bindService(getQpairIntent(),
                         new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "true"), 0);
                 break;
         }

@@ -9,6 +9,7 @@ import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
@@ -16,7 +17,6 @@ import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
 import static com.sferadev.qpair.utils.Utils.ACTION_UNINSTALL_PACKAGE;
 import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
-import static com.sferadev.qpair.utils.Utils.QPAIR_INTENT;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getPreferences;
@@ -52,7 +52,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                         createDialog(getContext().getString(R.string.dialog_install), getContext().getString(R.string.dialog_install_description), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                getContext().bindService(QPAIR_INTENT,
+                                getContext().bindService(getQpairIntent(),
                                         new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA, dataPackageAdded[1]), 0);
                             }
                         }, null);
@@ -68,7 +68,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                         createDialog(getContext().getString(R.string.dialog_uninstall), getContext().getString(R.string.dialog_uninstall_description), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                getContext().bindService(QPAIR_INTENT,
+                                getContext().bindService(getQpairIntent(),
                                         new sendBroadcastConnection(ACTION_UNINSTALL_PACKAGE, EXTRA, dataPackageRemoved[1]), 0);
                             }
                         }, null);

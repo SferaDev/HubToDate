@@ -10,6 +10,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
+import static com.sferadev.qpair.utils.QPairUtils.isR2D2;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getOwnerName;
@@ -27,6 +28,11 @@ public class MainActivity extends BaseActivity {
         if (getOwnerName() != null) {
             TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
             welcomeText.setText("Welcome " + getOwnerName() + "!");
+        }
+
+        if (!isR2D2()) {
+            createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), null);
+            finish();
         }
 
         // Handle the FAB

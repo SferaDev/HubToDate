@@ -30,7 +30,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.lge.qpair.api.r1.QPairConstants;
 import com.sferadev.qpair.App;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.activity.AdminActivity;
@@ -40,6 +39,7 @@ import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 import java.util.List;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 
@@ -69,8 +69,6 @@ public class Utils {
     public static final String KEY_IS_PHONE = "isPhone";
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
-    public static final Intent QPAIR_INTENT = createExplicitFromImplicitIntent(getContext(),
-            new Intent(QPairConstants.ACTION_QPAIR_SERVICE));
 
     // Options that appear in the AssistDialog
     public static String[] assistOptions = {
@@ -100,28 +98,28 @@ public class Utils {
                     switch (which) {
                         // Case: Sync Current App
                         case 0:
-                            getContext().bindService(QPAIR_INTENT,
+                            getContext().bindService(getQpairIntent(),
                                     new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA, getForegroundApp()), 0);
                             break;
                         // Case: Sync Clipboard
                         case 1:
-                            getContext().bindService(QPAIR_INTENT,
+                            getContext().bindService(getQpairIntent(),
                                     new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
                             break;
                         // Case: Sync Brightness
                         case 2:
-                            getContext().bindService(QPAIR_INTENT,
+                            getContext().bindService(getQpairIntent(),
                                     new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
                                             getSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS)), 0);
                             break;
                         // Case: Turn Screen Off
                         case 3:
-                            getContext().bindService(QPAIR_INTENT,
+                            getContext().bindService(getQpairIntent(),
                                     new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
                             break;
                         // Case: Show Touches
                         case 4:
-                            getContext().bindService(QPAIR_INTENT,
+                            getContext().bindService(getQpairIntent(),
                                     new QPairUtils.sendBroadcastConnection(ACTION_SHOW_TOUCHES, EXTRA, "showTouches"), 0);
                             break;
                         // Case: Media
@@ -190,7 +188,7 @@ public class Utils {
     }
 
     // Get Explicit from Implicit Intent, thanks Lollipop
-    public static Intent createExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
+    public static Intent createExplicitFromImplicitIntent(Intent implicitIntent) {
         List<ResolveInfo> resolveInfo = getContext().getPackageManager().queryIntentServices(implicitIntent, 0);
         if (resolveInfo == null || resolveInfo.size() != 1) {
             return null;
@@ -210,27 +208,27 @@ public class Utils {
                 switch (which) {
                     // Case: Play
                     case 0:
-                        getContext().bindService(QPAIR_INTENT,
+                        getContext().bindService(getQpairIntent(),
                                 new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "play"), 0);
                         break;
                     // Case: Pause
                     case 1:
-                        getContext().bindService(QPAIR_INTENT,
+                        getContext().bindService(getQpairIntent(),
                                 new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "pause"), 0);
                         break;
                     // Case: Stop
                     case 2:
-                        getContext().bindService(QPAIR_INTENT,
+                        getContext().bindService(getQpairIntent(),
                                 new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "stop"), 0);
                         break;
                     // Case: Next
                     case 3:
-                        getContext().bindService(QPAIR_INTENT,
+                        getContext().bindService(getQpairIntent(),
                                 new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "next"), 0);
                         break;
                     // Case: Previous
                     case 4:
-                        getContext().bindService(QPAIR_INTENT,
+                        getContext().bindService(getQpairIntent(),
                                 new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "previous"), 0);
                         break;
                     // Default Case, should never happen

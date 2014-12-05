@@ -1,40 +1,32 @@
 package com.sferadev.qpair.utils;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import com.lge.qpair.api.r1.IPeerContext;
-import com.lge.qpair.api.r1.IPeerIntent;
-import com.lge.qpair.api.r1.QPairConstants;
+import com.lge.qpair.api.r2.IPeerContext;
+import com.lge.qpair.api.r2.IPeerIntent;
+import com.lge.qpair.api.r2.QPairConstants;
 import com.sferadev.qpair.App;
+
+import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
 
 // Utils to handle connection with QPair
 public class QPairUtils {
+    public static final String EXTRA_LOCAL_VERSION = "/local/qpair/version";
+    public static final String EXTRA_PEER_VERSION = "/peer/qpair/version";
+    public static final String EXTRA_QPAIR_DEVICE_TYPE = "/local/qpair/device_type";
+    public static final String EXTRA_QPAIR_IS_CONNECTED = "/local/qpair/is_connected";
+    public static final String EXTRA_QPAIR_IS_ON = "/local/qpair/is_on";
 
-    private static final String EXTRA_SCHEME_AUTHORITY = QPairConstants.PROPERTY_SCHEME_AUTHORITY;
-    private static final String EXTRA_QPAIR_IS_ON = "/local/qpair/is_on";
-    private static final String EXTRA_QPAIR_IS_CONNECTED = "/local/qpair/is_connected";
-    private static final String EXTRA_QPAIR_DEVICE_TYPE = "/local/qpair/device_type";
-    public static String EXTRA_LOCAL_VERSION = "/local/qpair/version";
-    public static String EXTRA_PEER_VERSION = "/peer/qpair/version";
-
-    // Boolean that states if Device is Phone (true) or tablet (false)
-    public static boolean isPhone() {
-        if (getQPairProperty(EXTRA_QPAIR_DEVICE_TYPE).equals("phone")) {
-            Utils.setPreferences(Utils.KEY_IS_PHONE, true);
-            return true;
-        } else {
-            Utils.setPreferences(Utils.KEY_IS_PHONE, false);
-            return false;
-        }
-    }
+    public static final String EXTRA_SCHEME_AUTHORITY = com.lge.qpair.api.r2.QPairConstants.PROPERTY_SCHEME_AUTHORITY;
 
     // Get Preference Stored on the QPair Service
-    private static String getQPairProperty(String uriString) {
+    public static String getQPairProperty(String uriString) {
         Uri uri = Uri.parse(EXTRA_SCHEME_AUTHORITY + uriString);
         Cursor cursor = App.getContext().getContentResolver().query(uri, null, null, null, null);
         if (cursor != null) {
@@ -49,11 +41,9 @@ public class QPairUtils {
         return null;
     }
 
-    // Boolean with QPair Service Status
-    public static boolean isQPairOn() {
-        boolean isOn = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_ON));
-        Utils.setPreferences(Utils.KEY_IS_ON, isOn);
-        return isOn;
+    // Create proper intent according if user is on r1 or r2
+    public static Intent getQpairIntent() {
+        return createExplicitFromImplicitIntent(new Intent(QPairConstants.ACTION_SERVICE));
     }
 
     // Boolean with QPair Connection Status
@@ -63,9 +53,35 @@ public class QPairUtils {
         return isConnected;
     }
 
+    // Boolean that states if Device is Phone (true) or tablet (false)
+    public static boolean isPhone() {
+        if (getQPairProperty(EXTRA_QPAIR_DEVICE_TYPE).equals("phone")) {
+            Utils.setPreferences(Utils.KEY_IS_PHONE, true);
+            return true;
+        } else {
+            Utils.setPreferences(Utils.KEY_IS_PHONE, false);
+            return false;
+        }
+    }
+
+    // Boolean with QPair Service Status
+    public static boolean isQPairOn() {
+        boolean isOn = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_ON));
+        Utils.setPreferences(Utils.KEY_IS_ON, isOn);
+        return isOn;
+    }
+
+    // Check if user is updated to r2
+    public static boolean isR2D2() {
+        if (Integer.parseInt(getQPairProperty(EXTRA_LOCAL_VERSION)) > 4200241) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Class that handles the communication between devices
     public static class sendBroadcastConnection implements ServiceConnection {
-
         final String myAction;
         String myExtra[];
 
@@ -85,7 +101,6 @@ public class QPairUtils {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-
             IPeerContext peerContext = IPeerContext.Stub.asInterface(service);
 
             try {
@@ -98,7 +113,7 @@ public class QPairUtils {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                peerContext.sendBroadcastOnPeer(peerIntent, null);
+                peerContext.sendBroadcastOnPeer(peerIntent, null, null);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -109,7 +124,5 @@ public class QPairUtils {
         @Override
         public void onServiceDisconnected(ComponentName name) {
         }
-
     }
-
 }
