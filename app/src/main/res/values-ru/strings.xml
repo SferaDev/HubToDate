@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common values -->
+    <string name="hi">Привет</string>
+    <string name="always">Всегда</string>
+    <!-- Main Content -->
+    <string name="main_hello">Добро пожаловать в HubToDate!</string>
+    <string name="main_shake">Трясите, трясите, трясите!</string>
+    <string name="main_shake_description">Выполняйте любые действия на подключённом устройстве с помощью тряски. Вы также можете затрагивать их проводя пальцем вверх от панели навигации!</string>
+    <string name="main_app_sync">Удобный контроль приложений!</string>
+    <string name="main_app_sync_description">Устанавлевайте и удаляйте приложения на несколько устройств сразу. Дождитесь диалога, который вежливо Вас спросит!</string>
+    <string name="main_setting_sync">Ваши настройки разосланы по устройствам!</string>
+    <string name="main_setting_sync_description">Синхронизируйте исключительные параметры, такие как WiFi или громкость на подключённом устройстве. Они будут чудесным образом применены!</string>
+    <!-- Toasts -->
+    <string name="toast_app_not_found">Не удалось открыть приложение, т.к. оно не установлено!</string>
+    <string name="toast_app_not_supported">Приложение не поддерживается, т.к. установлено не из Play Store</string>
+    <string name="toast_community">Посетить сообщество</string>
+    <string name="toast_clipboard">Добавлено в буфер обмена:</string>
+    <string name="toast_brightness">Выставлена яркость:</string>
+    <string name="toast_intent">Получена новая задача:</string>
+    <string name="toast_option">Парметр:</string>
+    <string name="toast_not_connected">QPair: устройство не подключено</string>
+    <string name="toast_uninstall_failed">Удаление не удалось, т.к. не найдено приложение:</string>
+    <!-- Dialogs -->
+    <string name="dialog_community">Нам важно Ваше мнение!</string>
+    <string name="dialog_community_description">Вступите в сообщество HubToDate и принимайте участие!</string>
+    <string name="dialog_battery_low">Заряд подключённого устройства низок</string>
+    <string name="dialog_storage_low">Подключённое устройство имеет мало свободного места</string>
+    <string name="dialog_install">Установить на подкл. у-во</string>
+    <string name="dialog_install_description">Вы действительно хотите перенести это приложение на Ваше QPair устройство?</string>
+    <string name="dialog_uninstall">Удалить из подкл. у-ва</string>
+    <string name="dialog_uninstall_description">Вы действительно хотите удалить это приложение с Вашего Qpair устройства?</string>
+    <string name="dialog_ime">Сменить сп. ввода на подключ. устройстве</string>
+    <string name="dialog_ime_description">Вы действительно хотите сменить способ ввода на Вашем Qpair устройстве?</string>
+    <string name="dialog_wifi">Настроить Wifi на подкл. устройстве</string>
+    <string name="dialog_wifi_description">Вы действительно хотите применить параметры Wifi на Вашем Qpair устройстве?</string>
+    <string name="dialog_ringer">Настроить звонок на подкл. устройстве</string>
+    <string name="dialog_ringer_description">Вы действительно хотите синхронизировать громкость звонка на QPair устройстве?</string>
+    <string name="dialog_update_qpair">Установленная версия QPair устарела!</string>
+    <string name="dialog_update_qpair_description">Похоже, Вы не с нами! Обновите QPair на Вашем устройстве!</string>
+    <!-- Assist Array -->
+    <string name="array_assist_sync_app">Синхронизировать текущее приложение</string>
+    <string name="array_assist_sync_clipboard">Синхронизировать буфер обмена</string>
+    <string name="array_assist_sync_brightness">Синхронизировать яркость</string>
+    <string name="array_assist_screen_off">Включить экран на подкл. у-ве</string>
+    <string name="array_assist_show_touches">Скрыть/отобразить касания на подкл. у-ве</string>
+    <string name="array_assist_media">Управление проигрывателем</string>
+    <!-- Music Array -->
+    <string name="array_media_play">Воспроизвести музыку</string>
+    <string name="array_media_pause">Приостановить музыку</string>
+    <string name="array_media_stop">Остановить музыку</string>
+    <string name="array_media_next">Следующая дорожка</string>
+    <string name="array_media_previous">Предыдущая дорожка</string>
+    <!-- Device Admin -->
+    <string name="admin_enabled">HubToDate добавлен в Администраторы устройства.</string>
+    <string name="admin_disabled">HubToDate более не является Администратором устройства.</string>
+    <string name="admin_explanation">HubToDate будет дозволено отключать экран на данном устройстве, как только это потребуется сделать на подключённом.</string>
+    <string name="admin_failure">HubToDate не является Администратором устройства. Зайдите в раздел \"Безопасность\" в настройках.</string>
+    <!-- Tasker -->
+    <string name="tasker_title">Возможные действия</string>
+    <string-array name="tasker_entries">
+        <item>Отобразить все параметры</item>
+        <item>Синхронизировать текущее приложение</item>
+        <item>Синхронизировать буфер обмена</item>
+        <item>Синхронизировать яркость</item>
+        <item>Включить экран на подкл. у-ве</item>
+        <item>Включить Wifi на подкл. у-ве</item>
+        <item>Выключить Wifi на подкл. у-ве</item>
+        <item>Включить вибрацию на подкл. у-ве</item>
+    </string-array>
+</resources>
