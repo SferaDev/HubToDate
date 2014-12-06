@@ -73,9 +73,14 @@ public class QPairUtils {
 
     // Check if user is updated to r2
     public static boolean isR2D2() {
-        if (Integer.parseInt(getQPairProperty(EXTRA_LOCAL_VERSION)) > 4200241) {
-            return true;
-        } else {
+        try {
+            if (Integer.parseInt(getQPairProperty(EXTRA_LOCAL_VERSION)) > 4200241) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
             return false;
         }
     }
