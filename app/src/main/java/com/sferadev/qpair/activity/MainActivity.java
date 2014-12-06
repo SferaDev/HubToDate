@@ -1,6 +1,7 @@
 package com.sferadev.qpair.activity;
 
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
+import static com.sferadev.qpair.utils.QPairUtils.EXTRA_LOCAL_VERSION;
+import static com.sferadev.qpair.utils.QPairUtils.getQPairProperty;
 import static com.sferadev.qpair.utils.QPairUtils.isR2D2;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
@@ -31,8 +34,12 @@ public class MainActivity extends BaseActivity {
         }
 
         if (!isR2D2()) {
-            createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), null);
-            finish();
+            createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            }, null);
         }
 
         // Handle the FAB
