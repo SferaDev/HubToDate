@@ -11,8 +11,6 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
-import static com.sferadev.qpair.utils.QPairUtils.EXTRA_LOCAL_VERSION;
-import static com.sferadev.qpair.utils.QPairUtils.getQPairProperty;
 import static com.sferadev.qpair.utils.QPairUtils.isR2D2;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
@@ -30,7 +28,7 @@ public class MainActivity extends BaseActivity {
         // Get the name of the device Owner and display it on a Card Text
         if (getOwnerName() != null) {
             TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
-            welcomeText.setText("Welcome " + getOwnerName() + "!");
+            welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
         }
 
         if (!isR2D2()) {
