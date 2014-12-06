@@ -179,8 +179,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="25dp"
-        fab:fab_colorNormal="@color/colorAccent"
-        fab:fab_colorPressed="@color/colorPrimary"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
         fab:fab_icon="@drawable/ic_action_community" />
 
 </RelativeLayout>
