@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.sferadev.qpair.utils.QPairUtils;
 import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 
 import static com.sferadev.qpair.App.getContext;
@@ -38,18 +37,18 @@ public class TaskerReceiver extends BroadcastReceiver {
             // Case: Sync Clipboard
             case "SYNC_CLIPBOARD":
                 getContext().bindService(getQpairIntent(),
-                        new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
+                        new sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
                 break;
             // Case: Sync Brightness
             case "SYNC_BRIGHTNESS":
                 getContext().bindService(getQpairIntent(),
-                        new QPairUtils.sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
+                        new sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
                                 getSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS)), 0);
                 break;
             // Case: Screen Off
             case "SCREEN_OFF":
                 getContext().bindService(getQpairIntent(),
-                        new QPairUtils.sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
+                        new sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
                 break;
             // Case: Wifi On
             case "WIFI_ON":

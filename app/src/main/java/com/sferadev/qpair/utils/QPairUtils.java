@@ -11,9 +11,13 @@ import android.os.RemoteException;
 import com.lge.qpair.api.r2.IPeerContext;
 import com.lge.qpair.api.r2.IPeerIntent;
 import com.lge.qpair.api.r2.QPairConstants;
-import com.sferadev.qpair.App;
 
+import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.Utils.KEY_IS_CONNECTED;
+import static com.sferadev.qpair.utils.Utils.KEY_IS_ON;
+import static com.sferadev.qpair.utils.Utils.KEY_IS_PHONE;
 import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
+import static com.sferadev.qpair.utils.Utils.setPreferences;
 
 // Utils to handle connection with QPair
 public class QPairUtils {
@@ -28,7 +32,7 @@ public class QPairUtils {
     // Get Preference Stored on the QPair Service
     public static String getQPairProperty(String uriString) {
         Uri uri = Uri.parse(EXTRA_SCHEME_AUTHORITY + uriString);
-        Cursor cursor = App.getContext().getContentResolver().query(uri, null, null, null, null);
+        Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
         if (cursor != null) {
             try {
                 if (cursor.moveToFirst()) {
@@ -49,17 +53,17 @@ public class QPairUtils {
     // Boolean with QPair Connection Status
     public static boolean isConnected() {
         boolean isConnected = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_CONNECTED));
-        Utils.setPreferences(Utils.KEY_IS_CONNECTED, isConnected);
+        setPreferences(KEY_IS_CONNECTED, isConnected);
         return isConnected;
     }
 
     // Boolean that states if Device is Phone (true) or tablet (false)
     public static boolean isPhone() {
         if (getQPairProperty(EXTRA_QPAIR_DEVICE_TYPE).equals("phone")) {
-            Utils.setPreferences(Utils.KEY_IS_PHONE, true);
+            setPreferences(KEY_IS_PHONE, true);
             return true;
         } else {
-            Utils.setPreferences(Utils.KEY_IS_PHONE, false);
+            setPreferences(KEY_IS_PHONE, false);
             return false;
         }
     }
@@ -67,7 +71,7 @@ public class QPairUtils {
     // Boolean with QPair Service Status
     public static boolean isQPairOn() {
         boolean isOn = Boolean.parseBoolean(getQPairProperty(EXTRA_QPAIR_IS_ON));
-        Utils.setPreferences(Utils.KEY_IS_ON, isOn);
+        setPreferences(KEY_IS_ON, isOn);
         return isOn;
     }
 
@@ -123,7 +127,7 @@ public class QPairUtils {
                 e.printStackTrace();
             }
 
-            App.getContext().unbindService(this);
+            getContext().unbindService(this);
         }
 
         @Override

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common values -->
+    <string name="hi">Hola</string>
+    <string name="always">Siempre</string>
+    <!-- Main Content -->
+    <string name="main_hello">Bienvenido a HubToDate!</string>
+    <string name="main_shake">Sacude tu dispositivo!</string>
+    <string name="main_shake_description">Puedes realizar tareas impresionantes en su dispositivo conectado con una sacudida. También podrás activar esas acciones deslizando para arriba la barra de navegación!</string>
+    <string name="main_app_sync">Instalar y desinstalar con facilidad!</string>
+    <string name="main_app_sync_description">Realice instalaciones y desinstalaciones en todos sus dispositivos a la vez. Espere a que el cuadro de diálogo se lo pregunte amablemente!</string>
+    <string name="main_setting_sync">Tus preferencias se comparten entre dispositivos!</string>
+    <string name="main_setting_sync_description">Sincroniza algunos ajustes, como el Wi-Fi o el volumen en su dispositivo conectado. Estarán sincronizados como por arte de magia!</string>
+    <!-- Toasts -->
+    <string name="toast_app_not_found">No hemos podido abrir la aplicación porque no está instalada!</string>
+    <string name="toast_app_not_supported">No soportamos esta aplicación por el momento, no fue instalada por la Play Store</string>
+    <string name="toast_community">Abrir Comunidad de G+</string>
+    <string name="toast_clipboard">Añadido al portapapeles:</string>
+    <string name="toast_brightness">Hemos actualizado el Brillo:</string>
+    <string name="toast_intent">Nuevo intent recibido:</string>
+    <string name="toast_option">La opción es:</string>
+    <string name="toast_not_connected">QPair: No estás conectado al dispositivo</string>
+    <string name="toast_uninstall_failed">No hemos podido desinstalar porque no se encontró la aplicación:</string>
+    <!-- Dialogs -->
+    <string name="dialog_community">Su opinión es muy importante!</string>
+    <string name="dialog_community_description">Entra en la comunidad de HubToDate y comparte tu opinión!</string>
+    <string name="dialog_battery_low">La batería del dispositivo QPair es baja</string>
+    <string name="dialog_storage_low">El almacenamiento del dispositivo QPair es bajo</string>
+    <string name="dialog_install">Instalar en el dispositivo QPair</string>
+    <string name="dialog_install_description">¿Desea instalar esta aplicación en su dispositivo QPair?</string>
+    <string name="dialog_uninstall">Desinstalar en el dispositivo QPair</string>
+    <string name="dialog_uninstall_description">¿Desea desinstalar esta aplicación en su dispositivo QPair?</string>
+    <string name="dialog_ime">Cambiar el teclado en el dispositivo QPair</string>
+    <string name="dialog_ime_description">¿Quiere cambiar el método de entrada de su dispositivo QPair?</string>
+    <string name="dialog_wifi">Conexión Wifi</string>
+    <string name="dialog_wifi_description">¿Desea sincronizar la conexión Wifi en su dispositivo QPair?</string>
+    <string name="dialog_ringer">Volumen del timbre</string>
+    <string name="dialog_ringer_description">¿Desea sincronizar el volumen en el dispositivo QPair?</string>
+    <string name="dialog_update_qpair">Tiene una versión obsoleta QPair!</string>
+    <string name="dialog_update_qpair_description">Parece que usted no está actualizado! Por favor, actualice QPair en su dispositivo!</string>
+    <!-- Assist Array -->
+    <string name="array_assist_sync_app">Sincronizar la aplicación actual</string>
+    <string name="array_assist_sync_clipboard">Sincronizar el portapapeles</string>
+    <string name="array_assist_sync_brightness">Sincronizar el brillo</string>
+    <string name="array_assist_screen_off">Apagar la pantalla del dispositivo QPair</string>
+    <string name="array_assist_show_touches">Mostrar/Ocultar toques en el dispositivo QPair</string>
+    <string name="array_assist_media">Control multimedia QPair</string>
+    <!-- Music Array -->
+    <string name="array_media_play">Reproducir la música</string>
+    <string name="array_media_pause">Pausar la música</string>
+    <string name="array_media_stop">Parar la música</string>
+    <string name="array_media_next">Siguiente</string>
+    <string name="array_media_previous">Anterior</string>
+    <!-- Device Admin -->
+    <string name="admin_enabled">HubToDate se añadió como Administrador de dispositivos</string>
+    <string name="admin_disabled">HubToDate ya no es un Administrador de dispositivos</string>
+    <string name="admin_explanation">HubToDate se le permitirá apagar la pantalla cuando pidas que lo haga en su dispositivo QPair</string>
+    <string name="admin_failure">HubToDate no es un Administrador de dispositivos. Verifica la configuración de seguridad.</string>
+    <!-- Tasker -->
+    <string name="tasker_title">Acción a realizar</string>
+    <string-array name="tasker_entries">
+        <item>Mostrar todas las opciones</item>
+        <item>Sincronizar la aplicación actual</item>
+        <item>Sincronizar el portapapeles</item>
+        <item>Sincronizar el brillo</item>
+        <item>Apagar la pantalla de su dispositivo QPair</item>
+        <item>Activar WiFi en su dispositivo QPair</item>
+        <item>Desactivar WiFi en su dispositivo QPair</item>
+        <item>Vibrar el dispositivo QPair</item>
+    </string-array>
+</resources>
