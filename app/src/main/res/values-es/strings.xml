@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Common values -->
     <string name="hi">Hola</string>
     <string name="always">Siempre</string>
+    <string name="welcome">Hola</string>
     <!-- Main Content -->
     <string name="main_hello">Bienvenido a HubToDate!</string>
     <string name="main_shake">Sacude tu dispositivo!</string>

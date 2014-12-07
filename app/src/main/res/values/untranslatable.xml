@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Common values -->
-    <string name="app_name">HubToDate</string>
+    <string name="app_name" translatable="false">HubToDate</string>
 
     <!-- Static -->
-    <string name="qpair_package">com.lge.p2p</string>
-    <string name="hubtodate_package">com.sferadev.qpair</string>
-    <string name="play_package">com.android.vending</string>
-    <string name="play_intent_activity">com.google.android.finsky.activities.LaunchUrlHandlerActivity</string>
-    <string name="play_market_scheme">market://details?id=</string>
-    <string name="play_url_scheme">http://play.google.com/store/apps/details?id=</string>
-    <string name="community_url">https://plus.google.com/communities/102943838378590125127</string>
+    <string name="qpair_package" translatable="false">com.lge.p2p</string>
+    <string name="hubtodate_package" translatable="false">com.sferadev.qpair</string>
+    <string name="play_package" translatable="false">com.android.vending</string>
+    <string name="play_intent_activity" translatable="false">com.google.android.finsky.activities.LaunchUrlHandlerActivity</string>
+    <string name="play_market_scheme" translatable="false">market://details?id=</string>
+    <string name="play_url_scheme" translatable="false">http://play.google.com/store/apps/details?id=</string>
+    <string name="community_url" translatable="false">https://plus.google.com/communities/102943838378590125127</string>
 
     <!-- Tasker -->
-    <string name="tasker_header">Tasker</string>
-    <string-array name="tasker_values">
+    <string name="tasker_header" translatable="false">Tasker</string>
+    <string-array name="tasker_values" translatable="false">
         <item>ASSIST</item>
         <item>SYNC_APP</item>
         <item>SYNC_CLIPBOARD</item>
