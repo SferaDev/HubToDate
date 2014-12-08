@@ -3,6 +3,7 @@ package com.sferadev.qpair.activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -25,13 +26,18 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get the name of the device Owner and display it on a Card Text
-        if (getOwnerName() != null) {
-            TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
-            welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
+        try {
+            // Get the name of the device Owner and display it on a Card Text
+            if (getOwnerName() != null) {
+                TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
+                welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
+            }
+        } catch (CursorIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         try {
+            // Check if User is in r2 and show a nice dialog telling them to update
             if (!isR2D2()) {
                 createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
                     @Override
