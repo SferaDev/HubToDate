@@ -83,7 +83,7 @@ public class QPairUtils {
             } else {
                 return false;
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
