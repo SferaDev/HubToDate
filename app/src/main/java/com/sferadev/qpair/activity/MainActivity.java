@@ -31,13 +31,17 @@ public class MainActivity extends BaseActivity {
             welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
         }
 
-        if (!isR2D2()) {
-            createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            }, null);
+        try {
+            if (!isR2D2()) {
+                createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         // Handle the FAB
