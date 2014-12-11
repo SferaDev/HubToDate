@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity {
                         getContext().startActivity(intent);
                     }
                 } else {
+                    createToast("Tap, tap, tap!");
                     eggTaps++;
                 }
             }
