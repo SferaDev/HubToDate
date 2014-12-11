@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.egg.EggActivity;
+import com.sferadev.qpair.egg.LGEggActivity;
 import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.QPairUtils.isPhone;
 import static com.sferadev.qpair.utils.QPairUtils.isR2D2;
 import static com.sferadev.qpair.utils.Utils.FLAG_FLOATING_WINDOW;
 import static com.sferadev.qpair.utils.Utils.createDialog;
@@ -67,10 +69,17 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 if (eggTaps > 7) {
                     eggTaps = 0;
-                    Intent intent = new Intent(getContext(), EggActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .addFlags(FLAG_FLOATING_WINDOW);
-                    getContext().startActivity(intent);
+                    if (!isPhone()) {
+                        Intent intent = new Intent(getContext(), LGEggActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                .putExtra("com.lge.app.floating.launchAsFloating", true);
+                        getContext().startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getContext(), EggActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                .addFlags(FLAG_FLOATING_WINDOW);
+                        getContext().startActivity(intent);
+                    }
                 } else {
                     eggTaps++;
                 }

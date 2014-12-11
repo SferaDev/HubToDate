@@ -1,13 +1,13 @@
 package com.sferadev.qpair.egg;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.lge.app.floating.FloatableActivity;
 import com.sferadev.qpair.R;
 
-public class EggActivity extends Activity {
+public class LGEggActivity extends FloatableActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
