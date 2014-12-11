@@ -22,6 +22,7 @@ import static com.sferadev.qpair.utils.Utils.FLAG_FLOATING_WINDOW;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getOwnerName;
+import static com.sferadev.qpair.utils.Utils.isPackageInstalled;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
 import static com.sferadev.qpair.utils.Utils.openURL;
 
@@ -69,7 +70,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 if (eggTaps > 7) {
                     eggTaps = 0;
-                    if (!isPhone()) {
+                    if (isPackageInstalled(getString(R.string.qpair_package)) && !isPhone()) {
                         Intent intent = new Intent(getContext(), LGEggActivity.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 .putExtra("com.lge.app.floating.launchAsFloating", true);
