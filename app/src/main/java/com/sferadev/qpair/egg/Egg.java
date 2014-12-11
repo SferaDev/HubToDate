@@ -39,7 +39,7 @@ public class Egg extends FrameLayout {
     public static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
     public static final boolean DEBUG_DRAW = false && DEBUG;
 
-    public static final void L(String s, Object ... objects) {
+    public static final void L(String s, Object... objects) {
         if (DEBUG) {
             Log.d(TAG, String.format(s, objects));
         }
@@ -67,6 +67,7 @@ public class Egg extends FrameLayout {
         public int G;
         public int MAX_V;
         public float SCENERY_Z, OBSTACLE_Z, PLAYER_Z, PLAYER_Z_BOOST, HUD_Z;
+
         public Params(Resources res) {
             TRANSLATION_PER_SEC = res.getDimension(R.dimen.translation_per_sec);
             OBSTACLE_SPACING = res.getDimensionPixelSize(R.dimen.obstacle_spacing);
@@ -115,10 +116,10 @@ public class Egg extends FrameLayout {
     private int mTimeOfDay;
     private static final int DAY = 0, NIGHT = 1, TWILIGHT = 2, SUNSET = 3;
     private static final int[][] SKIES = {
-            { 0xFFc0c0FF, 0xFFa0a0FF }, // DAY
-            { 0xFF000010, 0xFF000000 }, // NIGHT
-            { 0xFF000040, 0xFF000010 }, // TWILIGHT
-            { 0xFF805010, 0xFF202080 }, // SUNSET
+            {0xFFc0c0FF, 0xFFa0a0FF}, // DAY
+            {0xFF000010, 0xFF000000}, // NIGHT
+            {0xFF000040, 0xFF000010}, // TWILIGHT
+            {0xFF805010, 0xFF202080}, // SUNSET
     };
 
     private static Params PARAMS;
@@ -143,10 +144,21 @@ public class Egg extends FrameLayout {
         return !DEBUG;
     }
 
-    public int getGameWidth() { return mWidth; }
-    public int getGameHeight() { return mHeight; }
-    public float getGameTime() { return t; }
-    public float getLastTimeStep() { return dt; }
+    public int getGameWidth() {
+        return mWidth;
+    }
+
+    public int getGameHeight() {
+        return mHeight;
+    }
+
+    public float getGameTime() {
+        return t;
+    }
+
+    public float getLastTimeStep() {
+        return dt;
+    }
 
     public void setScoreField(TextView tv) {
         mScoreField = tv;
@@ -187,7 +199,7 @@ public class Egg extends FrameLayout {
         setScore(0);
 
         int i = getChildCount();
-        while (i-->0) {
+        while (i-- > 0) {
             final View v = getChildAt(i);
             if (v instanceof GameView) {
                 removeViewAt(i);
@@ -202,13 +214,13 @@ public class Egg extends FrameLayout {
         final int mh = mHeight / 6;
         final boolean cloudless = frand() < 0.25;
         final int N = 20;
-        for (i=0; i<N; i++) {
+        for (i = 0; i < N; i++) {
             final float r1 = frand();
             final Scenery s;
             s = new Building(getContext());
 
-            s.z = (float)i/N;
-            if (isHigherThanLollipop()) s.setTranslationZ(PARAMS.SCENERY_Z * (1+s.z));
+            s.z = (float) i / N;
+            if (isHigherThanLollipop()) s.setTranslationZ(PARAMS.SCENERY_Z * (1 + s.z));
             s.v = 0.85f * s.z; // buildings move proportional to their distance
             hsv[0] = 175;
             hsv[1] = 0.25f;
@@ -222,7 +234,7 @@ public class Egg extends FrameLayout {
             } else {
                 lp.gravity = Gravity.TOP;
                 final float r = frand();
-                lp.topMargin = (int) (1 - r*r * mHeight/2) + mHeight/2;
+                lp.topMargin = (int) (1 - r * r * mHeight / 2) + mHeight / 2;
             }
 
             addView(s, lp);
@@ -255,7 +267,7 @@ public class Egg extends FrameLayout {
     }
 
     private void start(boolean startPlaying) {
-        L("start(startPlaying=%s)", startPlaying?"true":"false");
+        L("start(startPlaying=%s)", startPlaying ? "true" : "false");
         if (startPlaying) {
             mPlaying = true;
 
@@ -264,7 +276,8 @@ public class Egg extends FrameLayout {
 
             if (mSplash != null && mSplash.getAlpha() > 0f) {
                 if (isHigherThanLollipop()) mSplash.setTranslationZ(PARAMS.HUD_Z);
-                if (isHigherThanLollipop()) mSplash.animate().alpha(0).translationZ(0).setDuration(400);
+                if (isHigherThanLollipop())
+                    mSplash.animate().alpha(0).translationZ(0).setDuration(400);
 
                 mScoreField.animate().translationY(0)
                         .setInterpolator(new DecelerateInterpolator())
@@ -339,7 +352,7 @@ public class Egg extends FrameLayout {
         // 1. Move all objects and update bounds
         final int N = getChildCount();
         int i = 0;
-        for (; i<N; i++) {
+        for (; i < N; i++) {
             final View v = getChildAt(i);
             if (v instanceof GameView) {
                 ((GameView) v).step(t_ms, dt_ms, t, dt);
@@ -358,7 +371,7 @@ public class Egg extends FrameLayout {
 
         // 3. Check for obstacles
         boolean passedBarrier = false;
-        for (int j = mObstaclesInPlay.size(); j-->0;) {
+        for (int j = mObstaclesInPlay.size(); j-- > 0; ) {
             final Obstacle ob = mObstaclesInPlay.get(j);
             if (mPlaying && ob.intersects(mDroid) && !DEBUG_IDDQD) {
                 L("player hit an obstacle");
@@ -375,7 +388,7 @@ public class Egg extends FrameLayout {
 
         // 4. Handle edge of screen
         // Walk backwards to make sure removal is safe
-        while (i-->0) {
+        while (i-- > 0) {
             final View v = getChildAt(i);
             if (v instanceof Obstacle) {
                 if (v.getTranslationX() + v.getWidth() < 0) {
@@ -393,26 +406,26 @@ public class Egg extends FrameLayout {
         if (mPlaying && (t - mLastPipeTime) > PARAMS.OBSTACLE_PERIOD) {
             mLastPipeTime = t;
             final int obstacley = (int) (Math.random()
-                    * (mHeight - 2*PARAMS.OBSTACLE_MIN - PARAMS.OBSTACLE_GAP)) + PARAMS.OBSTACLE_MIN;
+                    * (mHeight - 2 * PARAMS.OBSTACLE_MIN - PARAMS.OBSTACLE_GAP)) + PARAMS.OBSTACLE_MIN;
 
             final Obstacle p1 = new Obstacle(getContext(), obstacley);
             addView(p1, new LayoutParams(
                     PARAMS.OBSTACLE_WIDTH,
                     mHeight,
-                    Gravity.TOP|Gravity.LEFT));
+                    Gravity.TOP | Gravity.LEFT));
             p1.setTranslationX(mWidth);
             p1.setTranslationY(-mHeight);
             if (isHigherThanLollipop()) {
                 p1.setTranslationZ(0);
                 p1.animate()
-                        .translationY(-mHeight+p1.h)
+                        .translationY(-mHeight + p1.h)
                         .translationZ(PARAMS.OBSTACLE_Z)
-                        .setStartDelay(irand(0,250))
+                        .setStartDelay(irand(0, 250))
                         .setDuration(250);
             } else {
                 p1.animate()
-                        .translationY(-mHeight+p1.h)
-                        .setStartDelay(irand(0,250))
+                        .translationY(-mHeight + p1.h)
+                        .setStartDelay(irand(0, 250))
                         .setDuration(250);
             }
 
@@ -423,20 +436,20 @@ public class Egg extends FrameLayout {
             addView(p2, new LayoutParams(
                     PARAMS.OBSTACLE_WIDTH,
                     mHeight,
-                    Gravity.TOP|Gravity.LEFT));
+                    Gravity.TOP | Gravity.LEFT));
             p2.setTranslationX(mWidth);
             p2.setTranslationY(mHeight);
             if (isHigherThanLollipop()) {
                 p2.setTranslationZ(0);
                 p2.animate()
-                        .translationY(mHeight-p2.h)
+                        .translationY(mHeight - p2.h)
                         .translationZ(PARAMS.OBSTACLE_Z)
-                        .setStartDelay(irand(0,100))
+                        .setStartDelay(irand(0, 100))
                         .setDuration(400);
             } else {
                 p2.animate()
-                        .translationY(mHeight-p2.h)
-                        .setStartDelay(irand(0,100))
+                        .translationY(mHeight - p2.h)
+                        .setStartDelay(irand(0, 100))
                         .setDuration(400);
             }
 
@@ -487,7 +500,7 @@ public class Egg extends FrameLayout {
     }
 
     @Override
-    public boolean onGenericMotionEvent (MotionEvent ev) {
+    public boolean onGenericMotionEvent(MotionEvent ev) {
         if (DEBUG) L("generic: %s", ev);
         return false;
     }
@@ -504,7 +517,7 @@ public class Egg extends FrameLayout {
         mDroid.boost();
         if (DEBUG) {
             mDroid.dv *= DEBUG_SPEED_MULTIPLIER;
-            mDroid.animate().setDuration((long) (200/DEBUG_SPEED_MULTIPLIER));
+            mDroid.animate().setDuration((long) (200 / DEBUG_SPEED_MULTIPLIER));
         }
     }
 
@@ -517,20 +530,20 @@ public class Egg extends FrameLayout {
         final Paint pt = new Paint();
         pt.setColor(0xFFFFFFFF);
         final int L = mDroid.corners.length;
-        final int N = L/2;
-        for (int i=0; i<N; i++) {
-            final int x = (int) mDroid.corners[i*2];
-            final int y = (int) mDroid.corners[i*2+1];
+        final int N = L / 2;
+        for (int i = 0; i < N; i++) {
+            final int x = (int) mDroid.corners[i * 2];
+            final int y = (int) mDroid.corners[i * 2 + 1];
             c.drawCircle(x, y, 4, pt);
             c.drawLine(x, y,
-                    mDroid.corners[(i*2+2)%L],
-                    mDroid.corners[(i*2+3)%L],
+                    mDroid.corners[(i * 2 + 2) % L],
+                    mDroid.corners[(i * 2 + 3) % L],
                     pt);
         }
 
         final int M = getChildCount();
         pt.setColor(0x6000FF00);
-        for (int i=0; i<M; i++) {
+        for (int i = 0; i < M; i++) {
             final View v = getChildAt(i);
             if (v == mDroid) continue;
             if (!(v instanceof GameView)) continue;
@@ -559,12 +572,12 @@ public class Egg extends FrameLayout {
         public float dv;
 
         private final float[] sHull = new float[] {
-                0.3f,  0f,    // left antenna
-                0.7f,  0f,    // right antenna
+                0.3f, 0f,    // left antenna
+                0.7f, 0f,    // right antenna
                 0.92f, 0.33f, // off the right shoulder of Orion
                 0.92f, 0.75f, // right hand (our right, not his right)
-                0.6f,  1f,    // right foot
-                0.4f,  1f,    // left foot BLUE!
+                0.6f, 1f,    // right foot
+                0.4f, 1f,    // left foot BLUE!
                 0.08f, 0.75f, // sinistram
                 0.08f, 0.33f,  // cold shoulder
         };
@@ -592,21 +605,21 @@ public class Egg extends FrameLayout {
         }
 
         public void prepareCheckIntersections() {
-            final int inset = (PARAMS.PLAYER_SIZE - PARAMS.PLAYER_HIT_SIZE)/2;
+            final int inset = (PARAMS.PLAYER_SIZE - PARAMS.PLAYER_HIT_SIZE) / 2;
             final int scale = PARAMS.PLAYER_HIT_SIZE;
-            final int N = sHull.length/2;
-            for (int i=0; i<N; i++) {
-                corners[i*2]   = scale * sHull[i*2]   + inset;
-                corners[i*2+1] = scale * sHull[i*2+1] + inset;
+            final int N = sHull.length / 2;
+            for (int i = 0; i < N; i++) {
+                corners[i * 2] = scale * sHull[i * 2] + inset;
+                corners[i * 2 + 1] = scale * sHull[i * 2 + 1] + inset;
             }
             final Matrix m = getMatrix();
             m.mapPoints(corners);
         }
 
         public boolean below(int h) {
-            final int N = corners.length/2;
-            for (int i=0; i<N; i++) {
-                final int y = (int) corners[i*2+1];
+            final int N = corners.length / 2;
+            for (int i = 0; i < N; i++) {
+                final int y = (int) corners[i * 2 + 1];
                 if (y >= h) return true;
             }
             return false;
@@ -661,19 +674,19 @@ public class Egg extends FrameLayout {
         }
 
         public boolean intersects(Player p) {
-            final int N = p.corners.length/2;
-            for (int i=0; i<N; i++) {
-                final int x = (int) p.corners[i*2];
-                final int y = (int) p.corners[i*2+1];
+            final int N = p.corners.length / 2;
+            for (int i = 0; i < N; i++) {
+                final int x = (int) p.corners[i * 2];
+                final int y = (int) p.corners[i * 2 + 1];
                 if (hitRect.contains(x, y)) return true;
             }
             return false;
         }
 
         public boolean cleared(Player p) {
-            final int N = p.corners.length/2;
-            for (int i=0; i<N; i++) {
-                final int x = (int) p.corners[i*2];
+            final int N = p.corners.length / 2;
+            for (int i = 0; i < N; i++) {
+                final int x = (int) p.corners[i * 2];
                 if (hitRect.right >= x) return false;
             }
             return true;
@@ -681,7 +694,7 @@ public class Egg extends FrameLayout {
 
         @Override
         public void step(long t_ms, long dt_ms, float t, float dt) {
-            setTranslationX(getTranslationX()-PARAMS.TRANSLATION_PER_SEC*dt);
+            setTranslationX(getTranslationX() - PARAMS.TRANSLATION_PER_SEC * dt);
             getHitRect(hitRect);
         }
     }
@@ -690,6 +703,7 @@ public class Egg extends FrameLayout {
         public float z;
         public float v;
         public int h, w;
+
         public Scenery(Context context) {
             super(context);
         }
