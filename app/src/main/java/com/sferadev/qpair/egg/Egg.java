@@ -1,12 +1,15 @@
 package com.sferadev.qpair.egg;
 
 import android.animation.TimeAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Outline;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -16,6 +19,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -26,6 +30,9 @@ import com.sferadev.qpair.R;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.sferadev.qpair.utils.Utils.isHigherThanLollipop;
+
+@SuppressLint("NewApi")
 class Egg extends FrameLayout {
     public static final String TAG = "LLand";
 
@@ -144,7 +151,7 @@ class Egg extends FrameLayout {
     public void setScoreField(TextView tv) {
         mScoreField = tv;
         if (tv != null) {
-            //TODO: tv.setTranslationZ(PARAMS.HUD_Z);
+            if (isHigherThanLollipop()) tv.setTranslationZ(PARAMS.HUD_Z);
             if (!(mAnimating && mPlaying)) {
                 tv.setTranslationY(-500);
             }
@@ -201,7 +208,7 @@ class Egg extends FrameLayout {
             s = new Building(getContext());
 
             s.z = (float)i/N;
-            //TODO: s.setTranslationZ(PARAMS.SCENERY_Z * (1+s.z));
+            if (isHigherThanLollipop()) s.setTranslationZ(PARAMS.SCENERY_Z * (1+s.z));
             s.v = 0.85f * s.z; // buildings move proportional to their distance
             hsv[0] = 175;
             hsv[1] = 0.25f;
@@ -256,8 +263,8 @@ class Egg extends FrameLayout {
             mLastPipeTime = getGameTime() - PARAMS.OBSTACLE_PERIOD; // queue up a obstacle
 
             if (mSplash != null && mSplash.getAlpha() > 0f) {
-                //TODO: mSplash.setTranslationZ(PARAMS.HUD_Z);
-                //TODO: mSplash.animate().alpha(0).translationZ(0).setDuration(400);
+                if (isHigherThanLollipop()) mSplash.setTranslationZ(PARAMS.HUD_Z);
+                if (isHigherThanLollipop()) mSplash.animate().alpha(0).translationZ(0).setDuration(400);
 
                 mScoreField.animate().translationY(0)
                         .setInterpolator(new DecelerateInterpolator())
@@ -395,12 +402,20 @@ class Egg extends FrameLayout {
                     Gravity.TOP|Gravity.LEFT));
             p1.setTranslationX(mWidth);
             p1.setTranslationY(-mHeight);
-            //TODO: p1.setTranslationZ(0);
-            p1.animate()
-                    .translationY(-mHeight+p1.h)
-                            //TODO: .translationZ(PARAMS.OBSTACLE_Z)
-                    .setStartDelay(irand(0,250))
-                    .setDuration(250);
+            if (isHigherThanLollipop()) {
+                p1.setTranslationZ(0);
+                p1.animate()
+                        .translationY(-mHeight+p1.h)
+                        .translationZ(PARAMS.OBSTACLE_Z)
+                        .setStartDelay(irand(0,250))
+                        .setDuration(250);
+            } else {
+                p1.animate()
+                        .translationY(-mHeight+p1.h)
+                        .setStartDelay(irand(0,250))
+                        .setDuration(250);
+            }
+
             mObstaclesInPlay.add(p1);
 
             final Obstacle p2 = new Obstacle(getContext(),
@@ -411,12 +426,20 @@ class Egg extends FrameLayout {
                     Gravity.TOP|Gravity.LEFT));
             p2.setTranslationX(mWidth);
             p2.setTranslationY(mHeight);
-            //TODO: p2.setTranslationZ(0);
-            p2.animate()
-                    .translationY(mHeight-p2.h)
-                            //TODO: .translationZ(PARAMS.OBSTACLE_Z)
-                    .setStartDelay(irand(0,100))
-                    .setDuration(400);
+            if (isHigherThanLollipop()) {
+                p2.setTranslationZ(0);
+                p2.animate()
+                        .translationY(mHeight-p2.h)
+                        .translationZ(PARAMS.OBSTACLE_Z)
+                        .setStartDelay(irand(0,100))
+                        .setDuration(400);
+            } else {
+                p2.animate()
+                        .translationY(mHeight-p2.h)
+                        .setStartDelay(irand(0,100))
+                        .setDuration(400);
+            }
+
             mObstaclesInPlay.add(p2);
         }
 
@@ -551,19 +574,21 @@ class Egg extends FrameLayout {
             super(context);
 
             setBackgroundResource(R.drawable.ic_launcher);
-            //TODO: getBackground().setTintMode(PorterDuff.Mode.SRC_ATOP);
-            //TODO: getBackground().setTint(0xFF00FF00);
-            /* TODO:
-            setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    final int w = view.getWidth();
-                    final int h = view.getHeight();
-                    final int ix = (int) (w * 0.3f);
-                    final int iy = (int) (h * 0.2f);
-                    outline.setRect(ix, iy, w - ix, h - iy);
-                }
-            });*/
+            if (isHigherThanLollipop()) {
+                Random rnd = new Random();
+                getBackground().setTintMode(PorterDuff.Mode.SRC_ATOP);
+                getBackground().setTint(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+                setOutlineProvider(new ViewOutlineProvider() {
+                    @Override
+                    public void getOutline(View view, Outline outline) {
+                        final int w = view.getWidth();
+                        final int h = view.getHeight();
+                        final int ix = (int) (w * 0.3f);
+                        final int iy = (int) (h * 0.2f);
+                        outline.setRect(ix, iy, w - ix, h - iy);
+                    }
+                });
+            }
         }
 
         public void prepareCheckIntersections() {
@@ -604,14 +629,22 @@ class Egg extends FrameLayout {
 
         public void boost() {
             dv = -PARAMS.BOOST_DV;
-            //TODO: setTranslationZ(PARAMS.PLAYER_Z_BOOST);
+            if (isHigherThanLollipop()) setTranslationZ(PARAMS.PLAYER_Z_BOOST);
             setScaleX(1.25f);
             setScaleY(1.25f);
-            animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                            //TODO: .translationZ(PARAMS.PLAYER_Z)
-                    .setDuration(200);
+            if (isHigherThanLollipop()) {
+                animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .translationZ(PARAMS.PLAYER_Z)
+                        .setDuration(200);
+            } else {
+                animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(200);
+            }
+
         }
     }
 
@@ -623,8 +656,7 @@ class Egg extends FrameLayout {
         public Obstacle(Context context, float h) {
             super(context);
             Random rnd = new Random();
-            int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-            setBackgroundColor(color); //TODO 2
+            setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
             this.h = h;
         }
 
@@ -673,7 +705,7 @@ class Egg extends FrameLayout {
             super(context);
             w = irand(PARAMS.BUILDING_WIDTH_MIN, PARAMS.BUILDING_WIDTH_MAX);
             h = 0; // will be setup later, along with z
-            //TODO: setTranslationZ(PARAMS.SCENERY_Z);
+            if (isHigherThanLollipop()) setTranslationZ(PARAMS.SCENERY_Z);
         }
     }
 

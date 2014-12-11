@@ -286,7 +286,7 @@ public class Utils {
 
     // Get current running App, thanks again Lollipop
     public static String getForegroundApp() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (isHigherThanLollipop()) {
             ActivityManager activityManager = (ActivityManager) getContext()
                     .getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
@@ -348,6 +348,14 @@ public class Utils {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static boolean isHigherThanLollipop() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Return whether if an App is installed
