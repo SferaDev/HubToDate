@@ -61,6 +61,8 @@ public class Utils {
 
     public static final String EXTRA = "qpairExtra";
 
+    public static final int FLAG_FLOATING_WINDOW = 0x00002000;
+
     public static final String KEY_ALWAYS_RINGER = "alwaysRinger";
     public static final String KEY_ALWAYS_WIFI = "alwaysWifi";
     public static final String KEY_IS_CONNECTED = "isConnected";
