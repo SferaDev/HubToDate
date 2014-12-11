@@ -33,7 +33,7 @@ import java.util.Random;
 import static com.sferadev.qpair.utils.Utils.isHigherThanLollipop;
 
 @SuppressLint("NewApi")
-class Egg extends FrameLayout {
+public class Egg extends FrameLayout {
     public static final String TAG = "LLand";
 
     public static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
