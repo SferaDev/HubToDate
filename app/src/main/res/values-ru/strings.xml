@@ -3,34 +3,35 @@
     <!-- Common values -->
     <string name="hi">Привет</string>
     <string name="always">Всегда</string>
+    <string name="welcome">Добро пожаловать</string>
     <!-- Main Content -->
     <string name="main_hello">Добро пожаловать в HubToDate!</string>
-    <string name="main_shake">Трясите, трясите, трясите!</string>
-    <string name="main_shake_description">Выполняйте любые действия на подключённом устройстве с помощью тряски. Вы также можете затрагивать их проводя пальцем вверх от панели навигации!</string>
+    <string name="main_shake">Встряхнитесь!</string>
+    <string name="main_shake_description">Выполняйте любые действия на сопряж. у-ве с помощью тряски. Также, Вы можете проводить пальцем вверх от панели навигации!</string>
     <string name="main_app_sync">Удобный контроль приложений!</string>
-    <string name="main_app_sync_description">Устанавлевайте и удаляйте приложения на несколько устройств сразу. Дождитесь диалога, который вежливо Вас спросит!</string>
-    <string name="main_setting_sync">Ваши настройки разосланы по устройствам!</string>
-    <string name="main_setting_sync_description">Синхронизируйте исключительные параметры, такие как WiFi или громкость на подключённом устройстве. Они будут чудесным образом применены!</string>
+    <string name="main_app_sync_description">Устанавливайте и удаляйте приложения на обоих устройствах сразу. Вас вежливо осведомят в диалоговом окне!</string>
+    <string name="main_setting_sync">Единые настройки на все устройства!</string>
+    <string name="main_setting_sync_description">Синхронизируйте исключительные параметры, такие как WiFi или громкость на сопряженном устройстве. Они будут чудесным образом применены!</string>
     <!-- Toasts -->
-    <string name="toast_app_not_found">Не удалось открыть приложение, т.к. оно не установлено!</string>
+    <string name="toast_app_not_found">Открываемое приложение не установлено!</string>
     <string name="toast_app_not_supported">Приложение не поддерживается, т.к. установлено не из Play Store</string>
     <string name="toast_community">Посетить сообщество</string>
-    <string name="toast_clipboard">Добавлено в буфер обмена:</string>
+    <string name="toast_clipboard">Скопировано в буфер обмена:</string>
     <string name="toast_brightness">Выставлена яркость:</string>
     <string name="toast_intent">Получена новая задача:</string>
-    <string name="toast_option">Парметр:</string>
+    <string name="toast_option">Параметр:</string>
     <string name="toast_not_connected">QPair: устройство не подключено</string>
-    <string name="toast_uninstall_failed">Удаление не удалось, т.к. не найдено приложение:</string>
+    <string name="toast_uninstall_failed">Удаление не удалось - не найдено приложение:</string>
     <!-- Dialogs -->
     <string name="dialog_community">Нам важно Ваше мнение!</string>
-    <string name="dialog_community_description">Вступите в сообщество HubToDate и принимайте участие!</string>
-    <string name="dialog_battery_low">Заряд подключённого устройства низок</string>
-    <string name="dialog_storage_low">Подключённое устройство имеет мало свободного места</string>
+    <string name="dialog_community_description">Вступите в сообщество HubToDate и поделитесь им!</string>
+    <string name="dialog_battery_low">Подключенное устройство разряжено</string>
+    <string name="dialog_storage_low">На подключенном у-ве мало свободного места</string>
     <string name="dialog_install">Установить на подкл. у-во</string>
     <string name="dialog_install_description">Вы действительно хотите перенести это приложение на Ваше QPair устройство?</string>
-    <string name="dialog_uninstall">Удалить из подкл. у-ва</string>
+    <string name="dialog_uninstall">Удалить с подкл. у-ва</string>
     <string name="dialog_uninstall_description">Вы действительно хотите удалить это приложение с Вашего Qpair устройства?</string>
-    <string name="dialog_ime">Сменить сп. ввода на подключ. устройстве</string>
+    <string name="dialog_ime">Сменить сп. ввода на сопряж. устройстве</string>
     <string name="dialog_ime_description">Вы действительно хотите сменить способ ввода на Вашем Qpair устройстве?</string>
     <string name="dialog_wifi">Настроить Wifi на подкл. устройстве</string>
     <string name="dialog_wifi_description">Вы действительно хотите применить параметры Wifi на Вашем Qpair устройстве?</string>
