@@ -34,7 +34,7 @@ import static com.sferadev.qpair.utils.Utils.isHigherThanLollipop;
 
 @SuppressLint("NewApi")
 public class Egg extends FrameLayout {
-    public static final String TAG = "LLand";
+    public static final String TAG = "HubToDate";
 
     public static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
     public static final boolean DEBUG_DRAW = false && DEBUG;
@@ -46,7 +46,6 @@ public class Egg extends FrameLayout {
     }
 
     public static final boolean AUTOSTART = true;
-    public static final boolean HAVE_STARS = true;
 
     public static final float DEBUG_SPEED_MULTIPLIER = 1f; // 0.1f;
     public static final boolean DEBUG_IDDQD = false;
@@ -62,8 +61,6 @@ public class Egg extends FrameLayout {
         public int OBSTACLE_MIN;
         public int BUILDING_WIDTH_MIN, BUILDING_WIDTH_MAX;
         public int BUILDING_HEIGHT_MIN;
-        public int CLOUD_SIZE_MIN, CLOUD_SIZE_MAX;
-        public int STAR_SIZE_MIN, STAR_SIZE_MAX;
         public int G;
         public int MAX_V;
         public float SCENERY_Z, OBSTACLE_Z, PLAYER_Z, PLAYER_Z_BOOST, HUD_Z;
@@ -81,10 +78,6 @@ public class Egg extends FrameLayout {
             BUILDING_HEIGHT_MIN = res.getDimensionPixelSize(R.dimen.building_height_min);
             BUILDING_WIDTH_MIN = res.getDimensionPixelSize(R.dimen.building_width_min);
             BUILDING_WIDTH_MAX = res.getDimensionPixelSize(R.dimen.building_width_max);
-            CLOUD_SIZE_MIN = res.getDimensionPixelSize(R.dimen.cloud_size_min);
-            CLOUD_SIZE_MAX = res.getDimensionPixelSize(R.dimen.cloud_size_max);
-            STAR_SIZE_MIN = res.getDimensionPixelSize(R.dimen.star_size_min);
-            STAR_SIZE_MAX = res.getDimensionPixelSize(R.dimen.star_size_max);
 
             G = res.getDimensionPixelSize(R.dimen.G);
             MAX_V = res.getDimensionPixelSize(R.dimen.max_v);
