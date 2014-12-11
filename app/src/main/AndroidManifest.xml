@@ -55,6 +55,22 @@
             android:name=".activity.AdminActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
 
+        <!-- Easter Egg Activity -->
+        <activity android:name=".egg.EggActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="locked"
+            android:process=":egg"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- Shake Service -->
         <service
             android:name=".service.ShakeService"
