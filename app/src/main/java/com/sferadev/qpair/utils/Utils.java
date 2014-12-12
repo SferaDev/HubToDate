@@ -1,5 +1,6 @@
 package com.sferadev.qpair.utils;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Instrumentation;
@@ -42,8 +43,8 @@ import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 
-// These aren't the droids you're looking for...
 public class Utils {
+    // Possible actions coming from Peer device inside Intent
     public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
     public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
     public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
@@ -59,10 +60,13 @@ public class Utils {
     public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
     public static final String ACTION_VIBRATE = "com.sferadev.qpair.VIBRATE";
 
+    // Tag to identify extras within an intent
     public static final String EXTRA = "qpairExtra";
 
+    // Flag to launch as floating on supported ROMs
     public static final int FLAG_FLOATING_WINDOW = 0x00002000;
 
+    // Keys to identify what's going on
     public static final String KEY_ALWAYS_RINGER = "alwaysRinger";
     public static final String KEY_ALWAYS_WIFI = "alwaysWifi";
     public static final String KEY_IS_CONNECTED = "isConnected";
@@ -203,7 +207,8 @@ public class Utils {
 
     // Get Explicit from Implicit Intent, thanks Lollipop
     public static Intent createExplicitFromImplicitIntent(Intent implicitIntent) {
-        List<ResolveInfo> resolveInfo = getContext().getPackageManager().queryIntentServices(implicitIntent, 0);
+        List<ResolveInfo> resolveInfo = getContext().getPackageManager()
+                .queryIntentServices(implicitIntent, 0);
         if (resolveInfo == null || resolveInfo.size() != 1) {
             return null;
         }
@@ -285,8 +290,9 @@ public class Utils {
     }
 
     // Get current running App, thanks again Lollipop
+    @SuppressWarnings("deprecation")
     public static String getForegroundApp() {
-        if (isHigherThanLollipop()) {
+        if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP)) {
             ActivityManager activityManager = (ActivityManager) getContext()
                     .getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
@@ -296,7 +302,6 @@ public class Utils {
                 }
             }
         } else {
-            @SuppressWarnings("deprecation")
             ActivityManager am = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
             ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
             return foregroundTaskInfo.topActivity.getPackageName();
@@ -350,8 +355,9 @@ public class Utils {
         return -1;
     }
 
-    public static boolean isHigherThanLollipop() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    // Check Whether Build Version is higher than x
+    public static boolean isBuildHigherThanVersion(int version) {
+        if (Build.VERSION.SDK_INT >= version) {
             return true;
         } else {
             return false;
@@ -369,9 +375,11 @@ public class Utils {
     }
 
     // Check whether the device screen is on or not
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
     public static boolean isScreenOn() {
         PowerManager powerManager = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (isBuildHigherThanVersion(Build.VERSION_CODES.KITKAT_WATCH)) {
             return powerManager.isInteractive();
         } else {
             return powerManager.isScreenOn();
@@ -389,6 +397,8 @@ public class Utils {
         return false;
     }
 
+    // These aren't the droids you're looking for...
+    // Internal Joke from XDA:DevCon '14
     public static boolean isUserAGoat() throws InterruptedException {
         if (VERSION.RELEASE == "FirefoxOS") {
             // Wait 1h and 8m to finish talking about FirefoxOS
@@ -416,7 +426,8 @@ public class Utils {
             Intent launchIntent = getContext().getPackageManager()
                     .getLaunchIntentForPackage(getContext().getString(R.string.play_package));
             launchIntent.setComponent(new ComponentName(getContext()
-                    .getString(R.string.play_package), getContext().getString(R.string.play_intent_activity)));
+                    .getString(R.string.play_package),
+                    getContext().getString(R.string.play_intent_activity)));
             launchIntent.setData(Uri.parse(getContext().getString(R.string.play_market_scheme) + packageName));
             getContext().startActivity(launchIntent);
         } catch (android.content.ActivityNotFoundException e) {
@@ -500,7 +511,7 @@ public class Utils {
         }.start();
     }
 
-    // Ask for a InputMethod change
+    // Ask for an InputMethod change
     public static void switchIME() {
         InputMethodManager imeManager = (InputMethodManager) getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -514,7 +525,8 @@ public class Utils {
         WifiManager wifiManager = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(state);
     }
-    
+
+    // Toggle Touches appearance
     public static void toggleShowTouches() {
         if (getSystemPreference("show_touches") == 1) {
             setSystemPreference("show_touches", 0);
