@@ -13,8 +13,8 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -30,24 +30,13 @@ import com.sferadev.qpair.R;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.sferadev.qpair.utils.Utils.isHigherThanLollipop;
+import static com.sferadev.qpair.utils.Utils.isBuildHigherThanVersion;
 
 @SuppressLint("NewApi")
 public class Egg extends FrameLayout {
-    public static final String TAG = "HubToDate";
-
-    public static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
-    public static final boolean DEBUG_DRAW = false && DEBUG;
-
-    public static final void L(String s, Object... objects) {
-        if (DEBUG) {
-            Log.d(TAG, String.format(s, objects));
-        }
-    }
 
     public static final boolean AUTOSTART = true;
 
-    public static final float DEBUG_SPEED_MULTIPLIER = 1f; // 0.1f;
     public static final boolean DEBUG_IDDQD = false;
 
     private static class Params {
@@ -132,11 +121,6 @@ public class Egg extends FrameLayout {
         mTimeOfDay = irand(0, SKIES.length);
     }
 
-    @Override
-    public boolean willNotDraw() {
-        return !DEBUG;
-    }
-
     public int getGameWidth() {
         return mWidth;
     }
@@ -156,7 +140,8 @@ public class Egg extends FrameLayout {
     public void setScoreField(TextView tv) {
         mScoreField = tv;
         if (tv != null) {
-            if (isHigherThanLollipop()) tv.setTranslationZ(PARAMS.HUD_Z);
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP))
+                tv.setTranslationZ(PARAMS.HUD_Z);
             if (!(mAnimating && mPlaying)) {
                 tv.setTranslationY(-500);
             }
@@ -179,7 +164,6 @@ public class Egg extends FrameLayout {
     final float hsv[] = {0, 0, 0};
 
     private void reset() {
-        L("reset");
         final Drawable sky = new GradientDrawable(
                 GradientDrawable.Orientation.BOTTOM_TOP,
                 SKIES[mTimeOfDay]
@@ -213,7 +197,8 @@ public class Egg extends FrameLayout {
             s = new Building(getContext());
 
             s.z = (float) i / N;
-            if (isHigherThanLollipop()) s.setTranslationZ(PARAMS.SCENERY_Z * (1 + s.z));
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP))
+                s.setTranslationZ(PARAMS.SCENERY_Z * (1 + s.z));
             s.v = 0.85f * s.z; // buildings move proportional to their distance
             hsv[0] = 175;
             hsv[1] = 0.25f;
@@ -238,9 +223,6 @@ public class Egg extends FrameLayout {
         mDroid.setX(mWidth / 2);
         mDroid.setY(mHeight / 2);
         addView(mDroid, new LayoutParams(PARAMS.PLAYER_SIZE, PARAMS.PLAYER_SIZE));
-        if (mAnim != null) {
-            Log.wtf(TAG, "reseting while animating??!?");
-        }
         mAnim = new TimeAnimator();
         mAnim.setTimeListener(new TimeAnimator.TimeListener() {
             @Override
@@ -260,7 +242,6 @@ public class Egg extends FrameLayout {
     }
 
     private void start(boolean startPlaying) {
-        L("start(startPlaying=%s)", startPlaying ? "true" : "false");
         if (startPlaying) {
             mPlaying = true;
 
@@ -268,8 +249,9 @@ public class Egg extends FrameLayout {
             mLastPipeTime = getGameTime() - PARAMS.OBSTACLE_PERIOD; // queue up a obstacle
 
             if (mSplash != null && mSplash.getAlpha() > 0f) {
-                if (isHigherThanLollipop()) mSplash.setTranslationZ(PARAMS.HUD_Z);
-                if (isHigherThanLollipop())
+                if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP))
+                    mSplash.setTranslationZ(PARAMS.HUD_Z);
+                if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP))
                     mSplash.animate().alpha(0).translationZ(0).setDuration(400);
 
                 mScoreField.animate().translationY(0)
@@ -337,11 +319,6 @@ public class Egg extends FrameLayout {
         t = t_ms / 1000f; // seconds
         dt = dt_ms / 1000f;
 
-        if (DEBUG) {
-            t *= DEBUG_SPEED_MULTIPLIER;
-            dt *= DEBUG_SPEED_MULTIPLIER;
-        }
-
         // 1. Move all objects and update bounds
         final int N = getChildCount();
         int i = 0;
@@ -357,7 +334,6 @@ public class Egg extends FrameLayout {
             if (DEBUG_IDDQD) {
                 poke();
             } else {
-                L("player hit the floor");
                 stop();
             }
         }
@@ -367,7 +343,6 @@ public class Egg extends FrameLayout {
         for (int j = mObstaclesInPlay.size(); j-- > 0; ) {
             final Obstacle ob = mObstaclesInPlay.get(j);
             if (mPlaying && ob.intersects(mDroid) && !DEBUG_IDDQD) {
-                L("player hit an obstacle");
                 stop();
             } else if (ob.cleared(mDroid)) {
                 passedBarrier = true;
@@ -408,7 +383,7 @@ public class Egg extends FrameLayout {
                     Gravity.TOP | Gravity.LEFT));
             p1.setTranslationX(mWidth);
             p1.setTranslationY(-mHeight);
-            if (isHigherThanLollipop()) {
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP)) {
                 p1.setTranslationZ(0);
                 p1.animate()
                         .translationY(-mHeight + p1.h)
@@ -432,7 +407,7 @@ public class Egg extends FrameLayout {
                     Gravity.TOP | Gravity.LEFT));
             p2.setTranslationX(mWidth);
             p2.setTranslationY(mHeight);
-            if (isHigherThanLollipop()) {
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP)) {
                 p2.setTranslationZ(0);
                 p2.animate()
                         .translationY(mHeight - p2.h)
@@ -448,18 +423,10 @@ public class Egg extends FrameLayout {
 
             mObstaclesInPlay.add(p2);
         }
-
-        if (DEBUG) {
-            final Rect r = new Rect();
-            mDroid.getHitRect(r);
-            r.inset(-4, -4);
-            invalidate(r);
-        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (DEBUG) L("touch: %s", ev);
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             poke();
             return true;
@@ -469,7 +436,6 @@ public class Egg extends FrameLayout {
 
     @Override
     public boolean onTrackballEvent(MotionEvent ev) {
-        if (DEBUG) L("trackball: %s", ev);
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             poke();
             return true;
@@ -479,7 +445,6 @@ public class Egg extends FrameLayout {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent ev) {
-        if (DEBUG) L("keyDown: %d", keyCode);
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_CENTER:
             case KeyEvent.KEYCODE_DPAD_UP:
@@ -494,12 +459,10 @@ public class Egg extends FrameLayout {
 
     @Override
     public boolean onGenericMotionEvent(MotionEvent ev) {
-        if (DEBUG) L("generic: %s", ev);
         return false;
     }
 
     private void poke() {
-        L("poke");
         if (mFrozen) return;
         if (!mAnimating) {
             reset();
@@ -508,17 +471,11 @@ public class Egg extends FrameLayout {
             start(true);
         }
         mDroid.boost();
-        if (DEBUG) {
-            mDroid.dv *= DEBUG_SPEED_MULTIPLIER;
-            mDroid.animate().setDuration((long) (200 / DEBUG_SPEED_MULTIPLIER));
-        }
     }
 
     @Override
     public void onDraw(Canvas c) {
         super.onDraw(c);
-
-        if (!DEBUG_DRAW) return;
 
         final Paint pt = new Paint();
         pt.setColor(0xFFFFFFFF);
@@ -580,7 +537,7 @@ public class Egg extends FrameLayout {
             super(context);
 
             setBackgroundResource(R.drawable.ic_launcher);
-            if (isHigherThanLollipop()) {
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP)) {
                 Random rnd = new Random();
                 getBackground().setTintMode(PorterDuff.Mode.SRC_ATOP);
                 getBackground().setTint(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
@@ -635,10 +592,11 @@ public class Egg extends FrameLayout {
 
         public void boost() {
             dv = -PARAMS.BOOST_DV;
-            if (isHigherThanLollipop()) setTranslationZ(PARAMS.PLAYER_Z_BOOST);
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP))
+                setTranslationZ(PARAMS.PLAYER_Z_BOOST);
             setScaleX(1.25f);
             setScaleY(1.25f);
-            if (isHigherThanLollipop()) {
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP)) {
                 animate()
                         .scaleX(1f)
                         .scaleY(1f)
@@ -712,7 +670,8 @@ public class Egg extends FrameLayout {
             super(context);
             w = irand(PARAMS.BUILDING_WIDTH_MIN, PARAMS.BUILDING_WIDTH_MAX);
             h = 0; // will be setup later, along with z
-            if (isHigherThanLollipop()) setTranslationZ(PARAMS.SCENERY_Z);
+            if (isBuildHigherThanVersion(Build.VERSION_CODES.LOLLIPOP))
+                setTranslationZ(PARAMS.SCENERY_Z);
         }
     }
 
