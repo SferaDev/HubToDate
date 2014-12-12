@@ -61,7 +61,7 @@
             android:name=".activity.AdminActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
 
-        <!-- Easter Egg Activity -->
+        <!-- Easter Egg Activity For non LG -->
         <activity android:name=".egg.EggActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"
             android:configChanges="orientation|keyboardHidden"
@@ -76,6 +76,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Easter Egg Activity For LG -->
         <activity android:name=".egg.LGEggActivity"
                   android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"
                   android:configChanges="orientation|keyboardHidden"
@@ -90,6 +91,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Easter Egg Alias to be found by QSlide -->
         <activity-alias
             android:name=".egg.LGEggActivity"
             android:enabled="true"
