@@ -29,7 +29,7 @@ import static com.sferadev.qpair.utils.Utils.openURL;
 
 // MainActivity that handles the creation of main UI elements
 public class MainActivity extends BaseActivity {
-    int eggTaps = 0;
+    protected int eggTaps = 0;
 
     @Override
     protected int getLayoutResource() {
@@ -40,8 +40,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Some important stuff before UI is finally loaded
         checkQPairIsInstalled();
         checkVersion();
+        loadService();
         updateWelcome();
 
         // Handle the Easter Egg
@@ -89,24 +91,6 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
-
-        // Load Shake Service if off
-        if (!isServiceRunning(ShakeService.class)) {
-            Intent i = new Intent(this, ShakeService.class);
-            this.startService(i);
-        }
-    }
-
-    // Get the name of the device Owner and display it on a Card Text
-    private void updateWelcome() {
-        try {
-            if (getOwnerName() != null) {
-                TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
-                welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
-            }
-        } catch (CursorIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
     }
 
     // Check if User has QPair installed and show a nice dialog!
@@ -137,6 +121,27 @@ public class MainActivity extends BaseActivity {
                 }, null);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Load Shake Service if off
+    private void loadService() {
+        if (!isServiceRunning(ShakeService.class)) {
+            Intent intent = new Intent(this, ShakeService.class);
+            this.startService(intent);
+        }
+    }
+
+
+    // Get the name of the device Owner and display it on a Card Text
+    private void updateWelcome() {
+        try {
+            if (getOwnerName() != null) {
+                TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
+                welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
+            }
+        } catch (CursorIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
     }

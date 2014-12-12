@@ -260,9 +260,9 @@ public class Utils {
 
     // Handle Music Intents
     public static void createMusicIntent(String command) {
-        Intent i = new Intent("com.android.music.musicservicecommand");
-        i.putExtra("command" , command);
-        getContext().sendBroadcast(i);
+        Intent intent = new Intent("com.android.music.musicservicecommand");
+        intent.putExtra("command", command);
+        getContext().sendBroadcast(intent);
     }
 
     // Toast Creation
@@ -412,9 +412,9 @@ public class Utils {
     // Open default activity upon packageName
     public static void openActivity(String packageName) {
         if (isPackageInstalled(packageName)) {
-            Intent i = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
-            i.addCategory(Intent.CATEGORY_LAUNCHER);
-            getContext().startActivity(i);
+            Intent intent= getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            getContext().startActivity(intent);
         } else {
             createToast(getContext().getString(R.string.toast_app_not_found));
         }
@@ -438,10 +438,10 @@ public class Utils {
 
     // Open Website upon URL
     public static void openURL(String url) {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getContext().startActivity(i);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
     }
 
     // Set Clipboard value
