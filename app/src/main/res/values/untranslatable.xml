@@ -5,6 +5,7 @@
 
     <!-- Static -->
     <string name="qpair_package" translatable="false">com.lge.p2p</string>
+    <string name="qslide_extra" translatable="false">com.lge.app.floating.launchAsFloating</string>
     <string name="hubtodate_package" translatable="false">com.sferadev.qpair</string>
     <string name="play_package" translatable="false">com.android.vending</string>
     <string name="play_intent_activity" translatable="false">com.google.android.finsky.activities.LaunchUrlHandlerActivity</string>

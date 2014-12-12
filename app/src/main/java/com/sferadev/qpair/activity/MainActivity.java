@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
                     if (isPackageInstalled(getString(R.string.qpair_package)) && !isPhone()) {
                         Intent intent = new Intent(getContext(), LGEggActivity.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                .putExtra("com.lge.app.floating.launchAsFloating", true);
+                                .putExtra(getString(R.string.qslide_extra), true);
                         getContext().startActivity(intent);
                     } else {
                         Intent intent = new Intent(getContext(), EggActivity.class)
