@@ -24,6 +24,7 @@ import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getOwnerName;
 import static com.sferadev.qpair.utils.Utils.isPackageInstalled;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
+import static com.sferadev.qpair.utils.Utils.openPlayStore;
 import static com.sferadev.qpair.utils.Utils.openURL;
 
 // MainActivity that handles the creation of main UI elements
@@ -39,29 +40,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            // Get the name of the device Owner and display it on a Card Text
-            if (getOwnerName() != null) {
-                TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
-                welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
-            }
-        } catch (CursorIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // Check if User is in r2 and show a nice dialog telling them to update
-            if (!isR2D2()) {
-                createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }, null);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        checkQPairIsInstalled();
+        checkVersion();
+        updateWelcome();
 
         // Handle the Easter Egg
         CardView welcomeCard = (CardView) findViewById(R.id.main_hello);
@@ -113,6 +94,50 @@ public class MainActivity extends BaseActivity {
         if (!isServiceRunning(ShakeService.class)) {
             Intent i = new Intent(this, ShakeService.class);
             this.startService(i);
+        }
+    }
+
+    // Get the name of the device Owner and display it on a Card Text
+    private void updateWelcome() {
+        try {
+            if (getOwnerName() != null) {
+                TextView welcomeText = (TextView) findViewById(R.id.info_text_1);
+                welcomeText.setText(getString(R.string.welcome) + " " + getOwnerName() + "!");
+            }
+        } catch (CursorIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check if User has QPair installed and show a nice dialog!
+    private void checkQPairIsInstalled() {
+        try {
+            if (!isPackageInstalled(getString(R.string.qpair_package))) {
+                createDialog(getString(R.string.dialog_qpair_not_installed), getString(R.string.dialog_qpair_not_installed_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        openPlayStore(getString(R.string.qpair_package));
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check if User is in r2 and show a nice dialog telling them to update
+    private void checkVersion() {
+        try {
+            if (!isR2D2()) {
+                createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

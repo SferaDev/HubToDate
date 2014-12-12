@@ -45,6 +45,8 @@
     <string name="dialog_ringer_description">Do you wish to sync the volume on your QPair device?</string>
     <string name="dialog_update_qpair">You have an outdated QPair version!</string>
     <string name="dialog_update_qpair_description">Looks like you\'re not in the loop! Please update QPair on your device!</string>
+    <string name="dialog_qpair_not_installed">QPair not detected!</string>
+    <string name="dialog_qpair_not_installed_description">Looks like you don\'t have QPair installed. Please install it to enjoy of HubToDate!</string>
 
     <!-- Assist Array -->
     <string name="array_assist_sync_app">Sync Current App</string>
