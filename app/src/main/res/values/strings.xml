@@ -1,8 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation" >
 
-    <string name="app_name">QPair</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <!-- Common values -->
+    <string name="hi">Hi</string>
+    <string name="always">Always</string>
+    <string name="welcome">Welcome</string>
+    <string name="translate">Translate this app!</string>
+
+    <!-- Main Content -->
+    <string name="main_hello">Welcome to HubToDate!</string>
+    <string name="main_shake">Shake, shake, shake!</string>
+    <string name="main_shake_description">Perform awesome tasks on your connected peer with a Shake. You can also trigger those actions swiping up from your Navigation Bar!</string>
+    <string name="main_app_sync">Install and uninstall with ease!</string>
+    <string name="main_app_sync_description">Handle App installs or uninstalls in all your devices at once. Wait for the dialog that will politely ask you!</string>
+    <string name="main_setting_sync">Your preferences shared across devices!</string>
+    <string name="main_setting_sync_description">Sync certain settings like WiFi or Volume on your peer device. They will be magically shared!</string>
+
+    <!-- Slide Up Panel -->
+    <string name="slide_title">Actions on Peer device</string>
+    <string name="slide_brightness">Brightness</string>
+    <string name="slide_wifi">WiFi</string>
+    <string name="slide_touches">Show Touches</string>
+    <string name="slide_clipboard">Update Clipboard</string>
+    <string name="slide_url">Open Website</string>
+    <string name="slide_screen">Turn Screen Off</string>
+
+    <!-- Toasts -->
+    <string name="toast_app_not_found">We couldn\'t open the app because it\'s not installed!</string>
+    <string name="toast_app_not_supported">We don\'t support this app right now, it was not installed by Play Store</string>
+    <string name="toast_community">Open Community</string>
+    <string name="toast_clipboard">Added to clipboard:</string>
+    <string name="toast_brightness">Updated Brightness to:</string>
+    <string name="toast_intent">New intent received:</string>
+    <string name="toast_option">Option is:</string>
+    <string name="toast_not_connected">QPair: You\'re not connected to Peer</string>
+    <string name="toast_uninstall_failed">We couldn\'t uninstall because app was not found:</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_community">Your opinion matters!</string>
+    <string name="dialog_community_description">Enter HubToDate\'s community and share your input!</string>
+    <string name="dialog_battery_low">Your peer device battery is low</string>
+    <string name="dialog_storage_low">Your peer device storage is low</string>
+    <string name="dialog_install">Install on Peer</string>
+    <string name="dialog_install_description">Do you wish to install this app on your QPair device?</string>
+    <string name="dialog_uninstall">Uninstall on Peer</string>
+    <string name="dialog_uninstall_description">Do you wish to uninstall this app on your QPair device?</string>
+    <string name="dialog_ime">Change IME on Peer</string>
+    <string name="dialog_ime_description">Do you wish to change the Input Method on your QPair device?</string>
+    <string name="dialog_wifi">Update Wifi on Peer</string>
+    <string name="dialog_wifi_description">Do you wish to sync the Wifi state on your QPair device?</string>
+    <string name="dialog_ringer">Update Ringer on Peer</string>
+    <string name="dialog_ringer_description">Do you wish to sync the volume on your QPair device?</string>
+    <string name="dialog_update_qpair">You have an outdated QPair version!</string>
+    <string name="dialog_update_qpair_description">Looks like you\'re not in the loop! Please update QPair on your device!</string>
+    <string name="dialog_qpair_not_installed">QPair not detected!</string>
+    <string name="dialog_qpair_not_installed_description">Looks like you don\'t have QPair installed. Please install it to enjoy of HubToDate!</string>
+
+    <!-- Assist Array -->
+    <string name="array_assist_sync_app">Sync Current App</string>
+    <string name="array_assist_sync_clipboard">Sync Clipboard</string>
+    <string name="array_assist_sync_brightness">Sync Brightness</string>
+    <string name="array_assist_screen_off">Turn Peer Screen Off</string>
+    <string name="array_assist_show_touches">Show/Hide Touches on Peer</string>
+    <string name="array_assist_media">Control Peer\'s Media</string>
+
+    <!-- Music Array -->
+    <string name="array_media_play">Play Music</string>
+    <string name="array_media_pause">Pause Music</string>
+    <string name="array_media_stop">Stop Music</string>
+    <string name="array_media_next">Next Song</string>
+    <string name="array_media_previous">Previous Song</string>
+
+    <!-- Device Admin -->
+    <string name="admin_enabled">HubToDate was added as Device Administrator</string>
+    <string name="admin_disabled">HubToDate is no longer a Device Administrator</string>
+    <string name="admin_explanation">HubToDate will be allowed to turn your Screen Off when you ask to do so in your peer device</string>
+    <string name="admin_failure">HubToDate is not a Device Administrator. Please check Security settings.</string>
+
+    <!-- Tasker -->
+    <string name="tasker_title">Action to Perform</string>
+    <string-array name="tasker_entries">
+        <item>Show All Options</item>
+        <item>Sync Current App</item>
+        <item>Sync Clipboard</item>
+        <item>Sync Brightness</item>
+        <item>Turn Peer Screen Off</item>
+        <item>Turn Peer\'s WiFi On</item>
+        <item>Turn Peer\'s WiFi Off</item>
+        <item>Vibrate Peer Device</item>
+    </string-array>
 
 </resources>
