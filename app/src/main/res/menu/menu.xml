@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_sync_apps" android:title="@string/sync_apps" android:checkable="true" />
+    <item android:id="@+id/menu_sync_wifi" android:title="@string/sync_wifi" android:checkable="true" />
+    <item android:id="@+id/menu_sync_volume" android:title="@string/sync_volume" android:checkable="true" />
     <item android:id="@+id/menu_community" android:title="@string/dialog_community" />
     <item android:id="@+id/menu_translate" android:title="@string/translate" />
 </menu>

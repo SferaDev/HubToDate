@@ -8,6 +8,9 @@
     <string name="always">Always</string>
     <string name="welcome">Welcome</string>
     <string name="translate">Translate this app!</string>
+    <string name="sync_apps">Sync Apps</string>
+    <string name="sync_wifi">Sync WiFi</string>
+    <string name="sync_volume">Sync Volume</string>
 
     <!-- Main Content -->
     <string name="main_hello">Welcome to HubToDate!</string>

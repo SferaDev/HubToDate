@@ -5,6 +5,9 @@
     <string name="always">Siempre</string>
     <string name="welcome">Hola</string>
     <string name="translate">Puedes traducir esta aplicación!</string>
+    <string name="sync_apps">Sincronizar Aplicaciones</string>
+    <string name="sync_wifi">Sincronizar WiFi</string>
+    <string name="sync_volume">Sincronizar Volumen</string>
     <!-- Main Content -->
     <string name="main_hello">Bienvenido a HubToDate!</string>
     <string name="main_shake">Mueve tu dispositivo!</string>

@@ -24,6 +24,8 @@ import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_RINGER;
 import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_WIFI;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_RINGER_MODE;
+import static com.sferadev.qpair.utils.Utils.KEY_SYNC_VOLUME;
+import static com.sferadev.qpair.utils.Utils.KEY_SYNC_WIFI;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getPreference;
@@ -101,6 +103,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                             }, null);
                     break;
                 case "android.media.RINGER_MODE_CHANGED":
+                    if (!getPreference(KEY_SYNC_VOLUME, true)) break;
                     if (!getPreference(KEY_ALWAYS_RINGER, false)) {
                         createDialog(getContext().getString(R.string.dialog_ringer),
                                 getContext().getString(R.string.dialog_ringer_description), new DialogInterface.OnClickListener() {
@@ -120,6 +123,7 @@ public class IntentFilterReceiver extends BroadcastReceiver {
                     }
                     break;
                 case "android.net.wifi.WIFI_STATE_CHANGED":
+                    if (!getPreference(KEY_SYNC_WIFI, true)) break;
                     final int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
                     if (!getPreference(KEY_ALWAYS_WIFI, false)) {
                         createDialog(getContext().getString(R.string.dialog_wifi),

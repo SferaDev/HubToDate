@@ -17,6 +17,7 @@ import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
 import static com.sferadev.qpair.utils.Utils.ACTION_UNINSTALL_PACKAGE;
 import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
+import static com.sferadev.qpair.utils.Utils.KEY_SYNC_APPS;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createToast;
 import static com.sferadev.qpair.utils.Utils.getPreference;
@@ -33,7 +34,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
             getContext().startService(serviceIntent);
         }
 
-        if (isQPairOn() && isConnected()) {
+        if (isQPairOn() && isConnected() && getPreference(KEY_SYNC_APPS, true)) {
             switch (intent.getAction()) {
                 // Whether the action is that a new App is installed
                 case "android.intent.action.PACKAGE_ADDED":

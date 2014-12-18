@@ -78,6 +78,9 @@ public class Utils {
     public static final String KEY_IS_CONNECTED = "isConnected";
     public static final String KEY_IS_ON = "isOn";
     public static final String KEY_IS_PHONE = "isPhone";
+    public static final String KEY_SYNC_APPS = "syncApps";
+    public static final String KEY_SYNC_WIFI = "syncWifi";
+    public static final String KEY_SYNC_VOLUME = "syncVolume";
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
 
