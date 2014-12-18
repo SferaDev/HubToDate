@@ -226,7 +226,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showCommunitySnackBar() {
-        if (getPreference(KEY_IS_COMMUNITY, false)) {
+        if (!getPreference(KEY_IS_COMMUNITY, false)) {
             createSnackbar(this, getString(R.string.dialog_community_description), "GO", new ActionClickListener() {
                 @Override
                 public void onActionClicked(Snackbar snackbar) {
