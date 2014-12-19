@@ -74,15 +74,16 @@ public class Utils {
     // Keys to identify what's going on
     public static final String KEY_ALWAYS_RINGER = "alwaysRinger";
     public static final String KEY_ALWAYS_WIFI = "alwaysWifi";
+    public static final String KEY_HAS_VOTED = "hasVoted";
     public static final String KEY_IS_COMMUNITY = "isCommunity";
     public static final String KEY_IS_CONNECTED = "isConnected";
     public static final String KEY_IS_ON = "isOn";
     public static final String KEY_IS_PHONE = "isPhone";
-    public static final String KEY_SYNC_APPS = "syncApps";
-    public static final String KEY_SYNC_WIFI = "syncWifi";
-    public static final String KEY_SYNC_VOLUME = "syncVolume";
     public static final String KEY_LAST_APP = "lastApp";
     public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
+    public static final String KEY_SYNC_APPS = "syncApps";
+    public static final String KEY_SYNC_VOLUME = "syncVolume";
+    public static final String KEY_SYNC_WIFI = "syncWifi";
 
     // Options that appear in the AssistDialog
     public static String[] assistOptions = {

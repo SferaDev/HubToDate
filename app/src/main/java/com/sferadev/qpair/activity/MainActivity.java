@@ -28,6 +28,14 @@ import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
 
 import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
@@ -43,6 +51,7 @@ import static com.sferadev.qpair.utils.Utils.ACTION_UPDATE_BRIGHTNESS;
 import static com.sferadev.qpair.utils.Utils.ACTION_UPDATE_CLIPBOARD;
 import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.FLAG_FLOATING_WINDOW;
+import static com.sferadev.qpair.utils.Utils.KEY_HAS_VOTED;
 import static com.sferadev.qpair.utils.Utils.KEY_IS_COMMUNITY;
 import static com.sferadev.qpair.utils.Utils.createDialog;
 import static com.sferadev.qpair.utils.Utils.createInputDialog;
@@ -60,12 +69,61 @@ import static com.sferadev.qpair.utils.Utils.setPreference;
 
 // MainActivity that handles the creation of main UI elements
 public class MainActivity extends BaseActivity {
-    private Activity myActivity = this;
     protected int eggTaps = 0;
+    private Activity myActivity = this;
+
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+    // Check if User has QPair installed and show a nice dialog!
+    private void checkQPairIsInstalled() {
+        try {
+            if (!isPackageInstalled(getString(R.string.qpair_package))) {
+                createDialog(getString(R.string.dialog_qpair_not_installed), getString(R.string.dialog_qpair_not_installed_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        openPlayStore(getString(R.string.qpair_package));
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check if User is in r2 and show a nice dialog telling them to update
+    private void checkVersion() {
+        try {
+            if (!isR2D2()) {
+                createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_main;
+    }
+
+    // Load Shake Service if off
+    private void loadService() {
+        if (!isServiceRunning(ShakeService.class)) {
+            Intent intent = new Intent(this, ShakeService.class);
+            this.startService(intent);
+        }
     }
 
     @Override
@@ -191,37 +249,10 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-    }
 
-    // Check if User has QPair installed and show a nice dialog!
-    private void checkQPairIsInstalled() {
-        try {
-            if (!isPackageInstalled(getString(R.string.qpair_package))) {
-                createDialog(getString(R.string.dialog_qpair_not_installed), getString(R.string.dialog_qpair_not_installed_description), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        openPlayStore(getString(R.string.qpair_package));
-                    }
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Check if User is in r2 and show a nice dialog telling them to update
-    private void checkVersion() {
-        try {
-            if (!isR2D2()) {
-                createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }, null);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Handle Voting Dialog!
+        if (!getPreference(KEY_HAS_VOTED, false)) {
+            showVoteDialog();
         }
     }
 
@@ -237,14 +268,40 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    // Load Shake Service if off
-    private void loadService() {
-        if (!isServiceRunning(ShakeService.class)) {
-            Intent intent = new Intent(this, ShakeService.class);
-            this.startService(intent);
+    private void showVoteDialog() {
+        final String[] downloadedData = new String[3];
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL mURL = new URL("https://raw.githubusercontent.com/SferaDev/HubToDate/master/status.json");
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(mURL.openStream()));
+                    JSONObject response = new JSONObject(readAll(reader));
+                    downloadedData[0] = response.getString("show");
+                    downloadedData[1] = response.getString("body");
+                    downloadedData[2] = response.getString("url");
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+            if (downloadedData[0].equals("true")) {
+                createDialog(getString(R.string.app_name), downloadedData[1], new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        setPreference(KEY_HAS_VOTED, true);
+                        openURL(downloadedData[2]);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 
     // Get the name of the device Owner and display it on a Card Text
     private void updateWelcome() {
