@@ -4,6 +4,10 @@
     <string name="hi">Привет</string>
     <string name="always">Всегда</string>
     <string name="welcome">Добро пожаловать</string>
+    <string name="translate">Помочь с переводом</string>
+    <string name="sync_apps">Связать приложения</string>
+    <string name="sync_wifi">Связать WiFi</string>
+    <string name="sync_volume">Связать громкость</string>
     <!-- Main Content -->
     <string name="main_hello">Добро пожаловать в HubToDate!</string>
     <string name="main_shake">Встряхнитесь!</string>
@@ -13,6 +17,13 @@
     <string name="main_setting_sync">Единые настройки на все устройства!</string>
     <string name="main_setting_sync_description">Синхронизируйте исключительные параметры, такие как WiFi или громкость на сопряженном устройстве. Они будут чудесным образом применены!</string>
     <!-- Slide Up Panel -->
+    <string name="slide_title">Действия</string>
+    <string name="slide_brightness">Яркость</string>
+    <string name="slide_wifi">WiFi</string>
+    <string name="slide_touches">Показывать нажатия</string>
+    <string name="slide_clipboard">Обновить буфер обмена</string>
+    <string name="slide_url">Открыть ссылку</string>
+    <string name="slide_screen">Включить экран на подкл. у-ве</string>
     <!-- Toasts -->
     <string name="toast_app_not_found">Открываемое приложение не установлено!</string>
     <string name="toast_app_not_supported">Приложение не поддерживается, т.к. установлено не из Play Store</string>
@@ -40,6 +51,8 @@
     <string name="dialog_ringer_description">Вы действительно хотите синхронизировать громкость звонка на QPair устройстве?</string>
     <string name="dialog_update_qpair">Установленная версия QPair устарела!</string>
     <string name="dialog_update_qpair_description">Похоже, Вы не с нами! Обновите QPair на Вашем устройстве!</string>
+    <string name="dialog_qpair_not_installed">QPair не обнаружен!</string>
+    <string name="dialog_qpair_not_installed_description">Кажется, приложение QPair не установлено. Для комфортного пользования HubToDate, пожалуйста, установите его.</string>
     <!-- Assist Array -->
     <string name="array_assist_sync_app">Синхронизировать текущее приложение</string>
     <string name="array_assist_sync_clipboard">Синхронизировать буфер обмена</string>
