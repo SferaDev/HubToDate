@@ -72,60 +72,6 @@ public class MainActivity extends BaseActivity {
     protected int eggTaps = 0;
     private Activity myActivity = this;
 
-    private static String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
-    }
-
-    // Check if User has QPair installed and show a nice dialog!
-    private void checkQPairIsInstalled() {
-        try {
-            if (!isPackageInstalled(getString(R.string.qpair_package))) {
-                createDialog(getString(R.string.dialog_qpair_not_installed), getString(R.string.dialog_qpair_not_installed_description), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        openPlayStore(getString(R.string.qpair_package));
-                    }
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Check if User is in r2 and show a nice dialog telling them to update
-    private void checkVersion() {
-        try {
-            if (!isR2D2()) {
-                createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }, null);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_main;
-    }
-
-    // Load Shake Service if off
-    private void loadService() {
-        if (!isServiceRunning(ShakeService.class)) {
-            Intent intent = new Intent(this, ShakeService.class);
-            this.startService(intent);
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -253,6 +199,60 @@ public class MainActivity extends BaseActivity {
         // Handle Voting Dialog!
         if (!getPreference(KEY_HAS_VOTED, false)) {
             showVoteDialog();
+        }
+    }
+
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+    // Check if User has QPair installed and show a nice dialog!
+    private void checkQPairIsInstalled() {
+        try {
+            if (!isPackageInstalled(getString(R.string.qpair_package))) {
+                createDialog(getString(R.string.dialog_qpair_not_installed), getString(R.string.dialog_qpair_not_installed_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        openPlayStore(getString(R.string.qpair_package));
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check if User is in r2 and show a nice dialog telling them to update
+    private void checkVersion() {
+        try {
+            if (!isR2D2()) {
+                createDialog(getString(R.string.dialog_update_qpair), getString(R.string.dialog_update_qpair_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_main;
+    }
+
+    // Load Shake Service if off
+    private void loadService() {
+        if (!isServiceRunning(ShakeService.class)) {
+            Intent intent = new Intent(this, ShakeService.class);
+            this.startService(intent);
         }
     }
 
