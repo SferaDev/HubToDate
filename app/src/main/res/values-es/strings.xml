@@ -53,6 +53,8 @@
     <string name="dialog_update_qpair_description">Parece que usted no está actualizado! Por favor, actualice QPair en su dispositivo!</string>
     <string name="dialog_qpair_not_installed">QPair no detectado!</string>
     <string name="dialog_qpair_not_installed_description">Parece que no tiene instalado QPair. Por favor instálelo para disfrutar de HubToDate!</string>
+    <string name="dialog_hubtodate_not_installed">HubToDate no detectado en el otro dispositivo!</string>
+    <string name="dialog_hubtodate_not_installed_description">Parece que no tienes HubToDate instalado en el otro dispositivo! ¿Quieres instalarlo?</string>
     <!-- Assist Array -->
     <string name="array_assist_sync_app">Sincronizar la aplicación actual</string>
     <string name="array_assist_sync_clipboard">Sincronizar el portapapeles</string>

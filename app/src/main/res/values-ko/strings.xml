@@ -2,13 +2,87 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Common values -->
     <string name="hi">안녕</string>
+    <string name="always">항상</string>
+    <string name="welcome">환영합니다.</string>
+    <string name="translate">이 앱을 번역하세요!</string>
+    <string name="sync_apps">앱 싱크하기</string>
+    <string name="sync_wifi">WiFi 싱크하기</string>
+    <string name="sync_volume">볼륨 싱크하기</string>
     <!-- Main Content -->
-    <string name="main_hello">환영</string>
+    <string name="main_hello">HubToDate에 오신 것을 환영합니다!</string>
+    <string name="main_shake">흔들, 흔들, 흔들어주세요!</string>
+    <string name="main_shake_description">기기를 흔들어서 연결된 기기에서 놀라운 작업을 수행해보세요. 같은 작업을 네비게이션 바에서도 할 수 있어요!</string>
+    <string name="main_app_sync">쉽게 설치하고, 쉽게 지워요!</string>
+    <string name="main_app_sync_description">앱 설치나 삭제를 양쪽 기기에서 한번에 할 수 있어요. 설치나 삭제를 물어보는 다이얼로그가 나타날때까지 기다리세요!</string>
+    <string name="main_setting_sync">양쪽 기기에서 설정을 공유해요!</string>
+    <string name="main_setting_sync_description">WiFi나 볼륨 등의 설정을 연결된 기기와 싱크해보세요. 마법같은 설정 공유!</string>
     <!-- Slide Up Panel -->
+    <string name="slide_title">연결된 기기에서 작업 수행</string>
+    <string name="slide_brightness">화면 밝기</string>
+    <string name="slide_wifi">WiFi</string>
+    <string name="slide_touches">터치 위치 표시하기</string>
+    <string name="slide_clipboard">클립보드 업데이트하기</string>
+    <string name="slide_url">웹 사이트 열기</string>
+    <string name="slide_screen">화면 끄기</string>
     <!-- Toasts -->
+    <string name="toast_app_not_found">앱이 설치되지 않아서 실행할 수가 없어요!</string>
+    <string name="toast_app_not_supported">플레이 스토어에서 설치되지 않은 앱이군요, 현재는 이 앱을 지원하지 않습니다.</string>
+    <string name="toast_community">오픈 커뮤니티</string>
+    <string name="toast_clipboard">클립보드에 추가됨:</string>
+    <string name="toast_brightness">밝기 변경됨:</string>
+    <string name="toast_intent">새로운 인텐트 수신함:</string>
+    <string name="toast_option">옵션:</string>
+    <string name="toast_not_connected">QPair: 기기에 연결되지 않음</string>
+    <string name="toast_uninstall_failed">앱을 찾을 수 없어서 삭제할 수가 없어요.</string>
     <!-- Dialogs -->
+    <string name="dialog_community">의견 주세요!</string>
+    <string name="dialog_community_description">HubToDate 커뮤니티에서 의견을 공유하세요!</string>
+    <string name="dialog_battery_low">연결된 기기의 배터리 수준이 낮아요.</string>
+    <string name="dialog_storage_low">연결된 기기의 저장 공간이 작아요.</string>
+    <string name="dialog_install">연결된 기기에 설치하기</string>
+    <string name="dialog_install_description">QPair로 연결된 기기에 이 앱을 설치하시겠어요?</string>
+    <string name="dialog_uninstall">연결된 기기에서 삭제하기</string>
+    <string name="dialog_uninstall_description">QPair로 연결된 기기에서 이 앱을 삭제하시겠어요?</string>
+    <string name="dialog_ime">연결된 기기의 IME 변경</string>
+    <string name="dialog_ime_description">QPair로 연결된 기기의 입력 방법을 바꾸시겠어요?</string>
+    <string name="dialog_wifi">연결된 기기의 WiFi 상태 변경</string>
+    <string name="dialog_wifi_description">QPair로 연결된 기기의 WiFi 상태를 싱크하시겠어요?</string>
+    <string name="dialog_ringer">연결된 기기의 소리 변경</string>
+    <string name="dialog_ringer_description">QPair로 연결된 기기의 볼륨을 싱크하시겠어요?</string>
+    <string name="dialog_update_qpair">구 버전의 QPair를 사용중이군요!</string>
+    <string name="dialog_update_qpair_description">앱이 최신 상태가 아닌 것 같군요! 기기의 QPair를 업데이트 하세요!</string>
+    <string name="dialog_qpair_not_installed">QPair를 찾을 수 없어요!</string>
+    <string name="dialog_qpair_not_installed_description">QPair를 설치하지 않은 것 같군요. HubToDate를 즐기기 위해서 QPair 앱을 설치해주세요!</string>
+    <string name="dialog_hubtodate_not_installed">연결된 기기에서 HubToDate를 찾을 수 없어요!</string>
+    <string name="dialog_hubtodate_not_installed_description">연결된 기기에 HubToDate를 설치하지 않은 것 같군요! 지금 설치하시겠어요?</string>
     <!-- Assist Array -->
+    <string name="array_assist_sync_app">현재 앱 실행하기</string>
+    <string name="array_assist_sync_clipboard">클립보드 싱크하기</string>
+    <string name="array_assist_sync_brightness">화면 밝기 싱크하기</string>
+    <string name="array_assist_screen_off">연결된 기기 화면 끄기</string>
+    <string name="array_assist_show_touches">연결된 기기에서 터치 표시/숨기기</string>
+    <string name="array_assist_media">연결된 기기의 미디어 제어하기</string>
     <!-- Music Array -->
+    <string name="array_media_play">음악 재생</string>
+    <string name="array_media_pause">음악 일시정지</string>
+    <string name="array_media_stop">음악 중지</string>
+    <string name="array_media_next">다음 곡</string>
+    <string name="array_media_previous">이전 곡</string>
     <!-- Device Admin -->
+    <string name="admin_enabled">HubToDate가 기기 관리자가 되었어요.</string>
+    <string name="admin_disabled">HubToDate는 이제 기기 관리자가 아니예요.</string>
+    <string name="admin_explanation">사용자가 연결된 기기의 화면 끄기를 요청할 때 HubToDate가 화면을 끌 수 있게 됩니다.</string>
+    <string name="admin_failure">HubToDate가 기기 관리자가 아닙니다. 보안 설정을 확인하세요.</string>
     <!-- Tasker -->
+    <string name="tasker_title">수행할 작업</string>
+    <string-array name="tasker_entries">
+        <item>모든 옵션 보기</item>
+        <item>현재 앱 실행하기</item>
+        <item>클립보드 싱크하기</item>
+        <item>화면 밝기 싱크하기</item>
+        <item>연결된 기기 화면 끄기</item>
+        <item>연결된 기기 WiFi 켜기</item>
+        <item>연결된 기기 WiFi 끄기</item>
+        <item>연결된 기기 진동 울리기</item>
+    </string-array>
 </resources>
