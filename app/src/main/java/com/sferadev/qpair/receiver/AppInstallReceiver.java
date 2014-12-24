@@ -9,20 +9,20 @@ import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.Constants.ACTION_OPEN_PLAY_STORE;
+import static com.sferadev.qpair.utils.Constants.ACTION_UNINSTALL_PACKAGE;
+import static com.sferadev.qpair.utils.Constants.EXTRA;
+import static com.sferadev.qpair.utils.Constants.KEY_LAST_APP;
+import static com.sferadev.qpair.utils.Constants.KEY_SYNC_APPS;
+import static com.sferadev.qpair.utils.PreferenceUtils.getPreference;
+import static com.sferadev.qpair.utils.PreferenceUtils.setPreference;
 import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
-import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_PLAY_STORE;
-import static com.sferadev.qpair.utils.Utils.ACTION_UNINSTALL_PACKAGE;
-import static com.sferadev.qpair.utils.Utils.EXTRA;
-import static com.sferadev.qpair.utils.Utils.KEY_LAST_APP;
-import static com.sferadev.qpair.utils.Utils.KEY_SYNC_APPS;
-import static com.sferadev.qpair.utils.Utils.createDialog;
-import static com.sferadev.qpair.utils.Utils.createToast;
-import static com.sferadev.qpair.utils.Utils.getPreference;
+import static com.sferadev.qpair.utils.UIUtils.createDialog;
+import static com.sferadev.qpair.utils.UIUtils.createToast;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
-import static com.sferadev.qpair.utils.Utils.setPreference;
 
 // Receiver of App Installs or Uninstalls.
 public class AppInstallReceiver extends BroadcastReceiver {

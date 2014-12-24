@@ -12,25 +12,25 @@ import com.sferadev.qpair.R;
 import com.sferadev.qpair.service.ShakeService;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.Constants.ACTION_CHANGE_IME;
+import static com.sferadev.qpair.utils.Constants.ACTION_CHANGE_RINGER_MODE;
+import static com.sferadev.qpair.utils.Constants.ACTION_CHANGE_WIFI;
+import static com.sferadev.qpair.utils.Constants.ACTION_CREATE_DIALOG;
+import static com.sferadev.qpair.utils.Constants.EXTRA;
+import static com.sferadev.qpair.utils.Constants.KEY_ALWAYS_RINGER;
+import static com.sferadev.qpair.utils.Constants.KEY_ALWAYS_WIFI;
+import static com.sferadev.qpair.utils.Constants.KEY_LAST_RINGER_MODE;
+import static com.sferadev.qpair.utils.Constants.KEY_SYNC_VOLUME;
+import static com.sferadev.qpair.utils.Constants.KEY_SYNC_WIFI;
+import static com.sferadev.qpair.utils.PreferenceUtils.getPreference;
+import static com.sferadev.qpair.utils.PreferenceUtils.setPreference;
 import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
-import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_IME;
-import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_RINGER_MODE;
-import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
-import static com.sferadev.qpair.utils.Utils.ACTION_CREATE_DIALOG;
-import static com.sferadev.qpair.utils.Utils.EXTRA;
-import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_RINGER;
-import static com.sferadev.qpair.utils.Utils.KEY_ALWAYS_WIFI;
-import static com.sferadev.qpair.utils.Utils.KEY_LAST_RINGER_MODE;
-import static com.sferadev.qpair.utils.Utils.KEY_SYNC_VOLUME;
-import static com.sferadev.qpair.utils.Utils.KEY_SYNC_WIFI;
-import static com.sferadev.qpair.utils.Utils.createDialog;
-import static com.sferadev.qpair.utils.Utils.createToast;
-import static com.sferadev.qpair.utils.Utils.getPreference;
+import static com.sferadev.qpair.utils.UIUtils.createDialog;
+import static com.sferadev.qpair.utils.UIUtils.createToast;
 import static com.sferadev.qpair.utils.Utils.isServiceRunning;
-import static com.sferadev.qpair.utils.Utils.setPreference;
 
 // Receiver of System Broadcasts that handle the forward to Peer
 public class IntentFilterReceiver extends BroadcastReceiver {

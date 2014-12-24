@@ -8,12 +8,12 @@ import android.view.MenuItem;
 
 import com.sferadev.qpair.R;
 
-import static com.sferadev.qpair.utils.Utils.KEY_SYNC_APPS;
-import static com.sferadev.qpair.utils.Utils.KEY_SYNC_VOLUME;
-import static com.sferadev.qpair.utils.Utils.KEY_SYNC_WIFI;
-import static com.sferadev.qpair.utils.Utils.getPreference;
+import static com.sferadev.qpair.utils.Constants.KEY_SYNC_APPS;
+import static com.sferadev.qpair.utils.Constants.KEY_SYNC_VOLUME;
+import static com.sferadev.qpair.utils.Constants.KEY_SYNC_WIFI;
+import static com.sferadev.qpair.utils.PreferenceUtils.getPreference;
+import static com.sferadev.qpair.utils.PreferenceUtils.setPreference;
 import static com.sferadev.qpair.utils.Utils.openURL;
-import static com.sferadev.qpair.utils.Utils.setPreference;
 
 // BaseActivity that provides a common standard among the project.
 public abstract class BaseActivity extends ActionBarActivity {

@@ -7,7 +7,7 @@ import android.preference.PreferenceActivity;
 
 import com.sferadev.qpair.R;
 
-import static com.sferadev.qpair.utils.Utils.EXTRA;
+import static com.sferadev.qpair.utils.Constants.EXTRA;
 
 public class TaskerActivity extends PreferenceActivity {
 

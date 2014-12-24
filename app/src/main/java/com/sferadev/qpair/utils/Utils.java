@@ -1,9 +1,7 @@
 package com.sferadev.qpair.utils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.Instrumentation;
 import android.app.admin.DevicePolicyManager;
 import android.content.ClipData;
@@ -13,7 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
@@ -25,17 +22,9 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.PowerManager;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-import android.provider.Settings.SettingNotFoundException;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.listeners.ActionClickListener;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.activity.AdminActivity;
 import com.sferadev.qpair.receiver.AdminReceiver;
@@ -43,69 +32,28 @@ import com.sferadev.qpair.receiver.AdminReceiver;
 import java.util.List;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.Constants.ACTION_MEDIA;
+import static com.sferadev.qpair.utils.Constants.ACTION_OPEN_ACTIVITY;
+import static com.sferadev.qpair.utils.Constants.ACTION_SCREEN_OFF;
+import static com.sferadev.qpair.utils.Constants.ACTION_SHOW_TOUCHES;
+import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_BRIGHTNESS;
+import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_CLIPBOARD;
+import static com.sferadev.qpair.utils.Constants.EXTRA;
+import static com.sferadev.qpair.utils.Constants.KEY_LAST_RINGER_MODE;
+import static com.sferadev.qpair.utils.Constants.assistOptions;
+import static com.sferadev.qpair.utils.Constants.mediaOptions;
+import static com.sferadev.qpair.utils.PreferenceUtils.getSystemPreference;
+import static com.sferadev.qpair.utils.PreferenceUtils.setPreference;
+import static com.sferadev.qpair.utils.PreferenceUtils.setSystemPreference;
 import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
 import static com.sferadev.qpair.utils.QPairUtils.isConnected;
 import static com.sferadev.qpair.utils.QPairUtils.isQPairOn;
 import static com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
+import static com.sferadev.qpair.utils.UIUtils.createDialog;
+import static com.sferadev.qpair.utils.UIUtils.createToast;
+
 
 public class Utils {
-    // Possible actions coming from Peer device inside Intent
-    public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
-    public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
-    public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
-    public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";
-    public static final String ACTION_MEDIA = "com.sferadev.qpair.ACTION_MEDIA";
-    public static final String ACTION_OPEN_ACTIVITY = "com.sferadev.qpair.OPEN_ACTIVITY";
-    public static final String ACTION_OPEN_PLAY_STORE = "com.sferadev.qpair.OPEN_PLAY_STORE";
-    public static final String ACTION_OPEN_URL = "com.sferadev.qpair.OPEN_URL";
-    public static final String ACTION_SCREEN_OFF = "com.sferadev.qpair.SCREEN_OFF";
-    public static final String ACTION_SHOW_TOUCHES = "com.sferadev.qpair.SHOW_TOUCHES";
-    public static final String ACTION_UNINSTALL_PACKAGE = "com.sferadev.qpair.UNINSTALL_PACKAGE";
-    public static final String ACTION_UPDATE_BRIGHTNESS = "com.sferadev.qpair.UPDATE_BRIGHTNESS";
-    public static final String ACTION_UPDATE_CLIPBOARD = "com.sferadev.qpair.UPDATE_CLIPBOARD";
-    public static final String ACTION_VIBRATE = "com.sferadev.qpair.VIBRATE";
-
-    // Tag to identify extras within an intent
-    public static final String EXTRA = "qpairExtra";
-
-    // Flag to launch as floating on supported ROMs
-    public static final int FLAG_FLOATING_WINDOW = 0x00002000;
-
-    // Keys to identify what's going on
-    public static final String KEY_ALWAYS_RINGER = "alwaysRinger";
-    public static final String KEY_ALWAYS_WIFI = "alwaysWifi";
-    public static final String KEY_HAS_VOTED = "hasVoted";
-    public static final String KEY_IS_COMMUNITY = "isCommunity";
-    public static final String KEY_IS_CONNECTED = "isConnected";
-    public static final String KEY_IS_ON = "isOn";
-    public static final String KEY_IS_PHONE = "isPhone";
-    public static final String KEY_LAST_APP = "lastApp";
-    public static final String KEY_LAST_RINGER_MODE = "lastRingerMode";
-    public static final String KEY_SYNC_APPS = "syncApps";
-    public static final String KEY_SYNC_VOLUME = "syncVolume";
-    public static final String KEY_SYNC_WIFI = "syncWifi";
-
-    // Options that appear in the AssistDialog
-    public static String[] assistOptions = {
-            getContext().getString(R.string.array_assist_sync_app),
-            getContext().getString(R.string.array_assist_sync_clipboard),
-            getContext().getString(R.string.array_assist_sync_brightness),
-            getContext().getString(R.string.array_assist_screen_off),
-            getContext().getString(R.string.array_assist_show_touches),
-            getContext().getString(R.string.array_assist_media)
-    };
-
-    // Options that appear in the MediaDialog
-    public static String[] mediaOptions = {
-            getContext().getString(R.string.array_media_play),
-            getContext().getString(R.string.array_media_pause),
-            getContext().getString(R.string.array_media_stop),
-            getContext().getString(R.string.array_media_next),
-            getContext().getString(R.string.array_media_previous)
-    };
-
-    public static View myDialogView = null;
-
     // Creation of the AssistDialog
     public static void createAssistDialog() {
         if (isQPairOn() && isConnected()) {
@@ -160,63 +108,6 @@ public class Utils {
         }
     }
 
-    // Dialog Creation with simple message and positive button
-    public static void createDialog(String title, String message,
-                                    DialogInterface.OnClickListener listener) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext(),
-                android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(getContext().getString(android.R.string.ok), listener)
-                .create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-    }
-
-    // Dialog Creation with simple message, positive and negative button
-    public static void createDialog(String title, String message,
-                                    DialogInterface.OnClickListener positiveListener,
-                                    DialogInterface.OnClickListener negativeListener) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext(),
-                android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
-                .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
-                .create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-    }
-
-    // Dialog Creation with simple message, positive, negative and neutral button
-    public static void createDialog(String title, String message,
-                                    DialogInterface.OnClickListener positiveListener,
-                                    DialogInterface.OnClickListener negativeListener,
-                                    OnClickListener neutralListener) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext(),
-                android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
-                .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
-                .setNeutralButton(getContext().getString(R.string.always), neutralListener)
-                .create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-    }
-
-    // Dialog Creation with options as main content
-    public static void createDialog(String title, String itemOptions[],
-                                    DialogInterface.OnClickListener clickListener) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext(),
-                android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
-                .setTitle(title)
-                .setItems(itemOptions, clickListener)
-                .create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
-    }
-
     // Get Explicit from Implicit Intent, thanks Lollipop
     public static Intent createExplicitFromImplicitIntent(Intent implicitIntent) {
         List<ResolveInfo> resolveInfo = getContext().getPackageManager()
@@ -229,22 +120,6 @@ public class Utils {
         String className = serviceInfo.serviceInfo.name;
         ComponentName component = new ComponentName(packageName, className);
         return new Intent(implicitIntent).setComponent(component);
-    }
-
-    // Input Dialog Creation
-    public static void createInputDialog(String title, OnClickListener positiveListener,
-                                         OnClickListener negativeListener) {
-        LayoutInflater factory = LayoutInflater.from(getContext());
-        myDialogView = factory.inflate(R.layout.input_dialog, null);
-        AlertDialog dialog = new AlertDialog.Builder(getContext(),
-                android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth)
-                .setTitle(title)
-                .setView(myDialogView)
-                .setPositiveButton(getContext().getString(android.R.string.yes), positiveListener)
-                .setNegativeButton(getContext().getString(android.R.string.no), negativeListener)
-                .create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
     }
 
     // Create a Media Dialog
@@ -291,29 +166,6 @@ public class Utils {
         Intent intent = new Intent("com.android.music.musicservicecommand");
         intent.putExtra("command", command);
         getContext().sendBroadcast(intent);
-    }
-
-    // Snackbar Creation
-    public static void createSnackbar(Activity activity, String string) {
-        Snackbar.with(getContext())
-                .text(string)
-                .show(activity);
-    }
-
-    // Snackbar Creation
-    public static void createSnackbar(Activity activity, String string,
-                                      String action, ActionClickListener listener) {
-        Snackbar.with(getContext())
-                .text(string)
-                .actionLabel(action)
-                .actionListener(listener)
-                .show(activity);
-    }
-
-    // Toast Creation
-    public static void createToast(String string) {
-        Toast toast = Toast.makeText(getContext(), string, Toast.LENGTH_LONG);
-        toast.show();
     }
 
     //Do vibration for x ms
@@ -374,32 +226,6 @@ public class Utils {
         return value[0];
     }
 
-    // Get String Preference
-    public static String getPreference(String key, String defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getString(key, defaultValue);
-    }
-
-    // Get Boolean Preference
-    public static boolean getPreference(String key, boolean defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(key, defaultValue);
-    }
-
-    // Get Integer Preference
-    public static int getPreference(String key, int defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(key, defaultValue);
-    }
-
-    // Return System Preference
-    public static int getSystemPreference(String preferenceName) {
-        try {
-            return android.provider.Settings.System.getInt(
-                    getContext().getContentResolver(), preferenceName);
-        } catch (SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
     // Check Whether Build Version is higher than x
     public static boolean isBuildHigherThanVersion(int version) {
         if (Build.VERSION.SDK_INT >= version) {
@@ -447,7 +273,7 @@ public class Utils {
     public static boolean isUserAGoat() throws InterruptedException {
         if (VERSION.RELEASE == "FirefoxOS") {
             // Wait 1h and 8m to finish talking about FirefoxOS
-            Thread.sleep(68*60*1000);
+            Thread.sleep(68 * 60 * 1000);
             return true;
         } else {
             return false;
@@ -457,7 +283,7 @@ public class Utils {
     // Open default activity upon packageName
     public static void openActivity(String packageName) {
         if (isPackageInstalled(packageName)) {
-            Intent intent= getContext().getPackageManager().getLaunchIntentForPackage(packageName);
+            Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(packageName);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             getContext().startActivity(intent);
         } else {
@@ -500,30 +326,6 @@ public class Utils {
         }
     }
 
-    // Set String Preference
-    public static void setPreference(String key, String value) {
-        SharedPreferences.Editor mEditor = PreferenceManager
-                .getDefaultSharedPreferences(getContext()).edit();
-        mEditor.putString(key, value);
-        mEditor.apply();
-    }
-
-    // Set Boolean Preference
-    public static void setPreference(String key, boolean value) {
-        SharedPreferences.Editor mEditor = PreferenceManager
-                .getDefaultSharedPreferences(getContext()).edit();
-        mEditor.putBoolean(key, value);
-        mEditor.apply();
-    }
-
-    // Set Integer Preference
-    public static void setPreference(String key, int value) {
-        SharedPreferences.Editor mEditor = PreferenceManager
-                .getDefaultSharedPreferences(getContext()).edit();
-        mEditor.putInt(key, value);
-        mEditor.apply();
-    }
-
     // Set Volume Ringer Mode
     public static void setRingerMode(int value) {
         if (value != -1) {
@@ -532,12 +334,6 @@ public class Utils {
             audioManager.setRingerMode(value);
         }
         setPreference(KEY_LAST_RINGER_MODE, value);
-    }
-
-    // Set System Preference
-    public static void setSystemPreference(String preferenceName, int value) {
-        android.provider.Settings.System.putInt(getContext().getContentResolver(),
-                preferenceName, value);
     }
 
     // Simulate Hardware Key

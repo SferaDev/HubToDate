@@ -13,22 +13,19 @@ import com.lge.qpair.api.r2.IPeerIntent;
 import com.lge.qpair.api.r2.QPairConstants;
 
 import static com.sferadev.qpair.App.getContext;
-import static com.sferadev.qpair.utils.Utils.KEY_IS_CONNECTED;
-import static com.sferadev.qpair.utils.Utils.KEY_IS_ON;
-import static com.sferadev.qpair.utils.Utils.KEY_IS_PHONE;
+import static com.sferadev.qpair.utils.Constants.EXTRA_LOCAL_VERSION;
+import static com.sferadev.qpair.utils.Constants.EXTRA_QPAIR_DEVICE_TYPE;
+import static com.sferadev.qpair.utils.Constants.EXTRA_QPAIR_IS_CONNECTED;
+import static com.sferadev.qpair.utils.Constants.EXTRA_QPAIR_IS_ON;
+import static com.sferadev.qpair.utils.Constants.EXTRA_SCHEME_AUTHORITY;
+import static com.sferadev.qpair.utils.Constants.KEY_IS_CONNECTED;
+import static com.sferadev.qpair.utils.Constants.KEY_IS_ON;
+import static com.sferadev.qpair.utils.Constants.KEY_IS_PHONE;
+import static com.sferadev.qpair.utils.PreferenceUtils.setPreference;
 import static com.sferadev.qpair.utils.Utils.createExplicitFromImplicitIntent;
-import static com.sferadev.qpair.utils.Utils.setPreference;
 
 // Utils to handle connection with QPair
 public class QPairUtils {
-    public static final String EXTRA_LOCAL_VERSION = "/local/qpair/version";
-    public static final String EXTRA_PEER_VERSION = "/peer/qpair/version";
-    public static final String EXTRA_QPAIR_DEVICE_TYPE = "/local/qpair/device_type";
-    public static final String EXTRA_QPAIR_IS_CONNECTED = "/local/qpair/is_connected";
-    public static final String EXTRA_QPAIR_IS_ON = "/local/qpair/is_on";
-
-    public static final String EXTRA_SCHEME_AUTHORITY = com.lge.qpair.api.r2.QPairConstants.PROPERTY_SCHEME_AUTHORITY;
-
     // Get Preference Stored on the QPair Service
     public static String getQPairProperty(String uriString) {
         Uri uri = Uri.parse(EXTRA_SCHEME_AUTHORITY + uriString);

@@ -7,18 +7,18 @@ import android.content.Intent;
 import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.Constants.ACTION_CHANGE_WIFI;
+import static com.sferadev.qpair.utils.Constants.ACTION_OPEN_ACTIVITY;
+import static com.sferadev.qpair.utils.Constants.ACTION_SCREEN_OFF;
+import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_BRIGHTNESS;
+import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_CLIPBOARD;
+import static com.sferadev.qpair.utils.Constants.ACTION_VIBRATE;
+import static com.sferadev.qpair.utils.Constants.EXTRA;
+import static com.sferadev.qpair.utils.PreferenceUtils.getSystemPreference;
 import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
-import static com.sferadev.qpair.utils.Utils.ACTION_CHANGE_WIFI;
-import static com.sferadev.qpair.utils.Utils.ACTION_OPEN_ACTIVITY;
-import static com.sferadev.qpair.utils.Utils.ACTION_SCREEN_OFF;
-import static com.sferadev.qpair.utils.Utils.ACTION_UPDATE_BRIGHTNESS;
-import static com.sferadev.qpair.utils.Utils.ACTION_UPDATE_CLIPBOARD;
-import static com.sferadev.qpair.utils.Utils.ACTION_VIBRATE;
-import static com.sferadev.qpair.utils.Utils.EXTRA;
 import static com.sferadev.qpair.utils.Utils.createAssistDialog;
 import static com.sferadev.qpair.utils.Utils.getClipboardString;
 import static com.sferadev.qpair.utils.Utils.getForegroundApp;
-import static com.sferadev.qpair.utils.Utils.getSystemPreference;
 
 // Tasker Receiver
 public class TaskerReceiver extends BroadcastReceiver {

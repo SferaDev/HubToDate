@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import com.sferadev.qpair.R;
 
-import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.UIUtils.createToast;
 
 // Receiver of the Admin Privileges changes
 public class AdminReceiver extends DeviceAdminReceiver {

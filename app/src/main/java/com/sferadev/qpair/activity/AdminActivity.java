@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.receiver.AdminReceiver;
 
-import static com.sferadev.qpair.utils.Utils.createToast;
+import static com.sferadev.qpair.utils.UIUtils.createToast;
 
 // AdminActivity to handle the request and permission to Device Admin
 public class AdminActivity extends Activity {
