@@ -2,15 +2,20 @@ package com.sferadev.qpair.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 
+import com.lge.qpair.api.r2.QPairConstants;
 import com.sferadev.qpair.R;
+import com.sferadev.qpair.utils.QPairUtils.openURLConnection;
 
 import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.Constants.EXTRA;
 import static com.sferadev.qpair.utils.Constants.KEY_LAST_APP;
 import static com.sferadev.qpair.utils.PreferenceUtils.setPreference;
 import static com.sferadev.qpair.utils.PreferenceUtils.setSystemPreference;
+import static com.sferadev.qpair.utils.QPairUtils.getQpairIntent;
 import static com.sferadev.qpair.utils.UIUtils.createDialog;
 import static com.sferadev.qpair.utils.UIUtils.createToast;
 import static com.sferadev.qpair.utils.Utils.createMusicIntent;
@@ -35,6 +40,18 @@ public class AdvancedReceiver extends BroadcastReceiver {
             // Request to perform a Media Action
             case "com.sferadev.qpair.ACTION_MEDIA":
                 createMusicIntent(intent.getStringExtra(EXTRA));
+                break;
+            // Receive Intent Callback
+            case "com.sferadev.qpair.CALLBACK_FAILURE":
+                createToast(intent.getStringExtra(QPairConstants.EXTRA_CAUSE));
+                createDialog(getContext().getString(R.string.dialog_hubtodate_not_installed), getContext().getString(R.string.dialog_hubtodate_not_installed_description), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getContext().bindService(getQpairIntent(),
+                                new openURLConnection(getContext().getString(R.string.play_url_scheme) + getContext().getString(R.string.hubtodate_package)), 0);
+
+                    }
+                }, null);
                 break;
             // Request to update InputMethod
             case "com.sferadev.qpair.CHANGE_IME":

@@ -32,38 +32,38 @@ public class TaskerReceiver extends BroadcastReceiver {
             // Case: Sync App
             case "SYNC_APP":
                 getContext().bindService(getQpairIntent(),
-                        new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA, getForegroundApp()), 0);
+                        new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, getForegroundApp()), 0);
                 break;
             // Case: Sync Clipboard
             case "SYNC_CLIPBOARD":
                 getContext().bindService(getQpairIntent(),
-                        new sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA, getClipboardString()), 0);
+                        new sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, getClipboardString()), 0);
                 break;
             // Case: Sync Brightness
             case "SYNC_BRIGHTNESS":
                 getContext().bindService(getQpairIntent(),
-                        new sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
+                        new sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS,
                                 getSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS)), 0);
                 break;
             // Case: Screen Off
             case "SCREEN_OFF":
                 getContext().bindService(getQpairIntent(),
-                        new sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA, "screenOff"), 0);
+                        new sendBroadcastConnection(ACTION_SCREEN_OFF, "screenOff"), 0);
                 break;
             // Case: Wifi On
             case "WIFI_ON":
                 getContext().bindService(getQpairIntent(),
-                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "true"), 0);
+                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, "true"), 0);
                 break;
             // Case: Wifi Off
             case "WIFI_OFF":
                 getContext().bindService(getQpairIntent(),
-                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA, "false"), 0);
+                        new sendBroadcastConnection(ACTION_CHANGE_WIFI, "false"), 0);
                 break;
             // Case: Wifi Off
             case "VIBRATE":
                 getContext().bindService(getQpairIntent(),
-                        new sendBroadcastConnection(ACTION_VIBRATE, EXTRA, "doVibrate"), 0);
+                        new sendBroadcastConnection(ACTION_VIBRATE, "doVibrate"), 0);
                 break;
             // Default Case
             default:

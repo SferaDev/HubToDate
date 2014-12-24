@@ -25,6 +25,7 @@ import com.sferadev.qpair.egg.EggActivity;
 import com.sferadev.qpair.egg.LGEggActivity;
 import com.sferadev.qpair.service.ShakeService;
 import com.sferadev.qpair.utils.QPairUtils.sendBroadcastConnection;
+import com.sferadev.qpair.utils.QPairUtils.startActivityConnection;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener;
@@ -44,7 +45,6 @@ import static com.sferadev.qpair.utils.Constants.ACTION_SCREEN_OFF;
 import static com.sferadev.qpair.utils.Constants.ACTION_SHOW_TOUCHES;
 import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_BRIGHTNESS;
 import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_CLIPBOARD;
-import static com.sferadev.qpair.utils.Constants.EXTRA;
 import static com.sferadev.qpair.utils.Constants.FLAG_FLOATING_WINDOW;
 import static com.sferadev.qpair.utils.Constants.KEY_HAS_VOTED;
 import static com.sferadev.qpair.utils.Constants.KEY_IS_COMMUNITY;
@@ -78,6 +78,7 @@ public class MainActivity extends BaseActivity {
 
         // Some important stuff before UI is finally loaded
         checkQPairIsInstalled();
+        checkHubToDateOnPeer();
         checkVersion();
         showCommunitySnackBar();
         loadService();
@@ -92,7 +93,7 @@ public class MainActivity extends BaseActivity {
             public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
                 if (isQPairOn() && isConnected()) {
                     getContext().bindService(getQpairIntent(),
-                            new sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
+                            new sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS,
                                     value), 0);
                 } else {
                     createToast(getString(R.string.toast_not_connected));
@@ -106,7 +107,7 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isQPairOn() && isConnected()) {
                     getContext().bindService(getQpairIntent(),
-                            new sendBroadcastConnection(ACTION_CHANGE_WIFI, EXTRA,
+                            new sendBroadcastConnection(ACTION_CHANGE_WIFI,
                                     String.valueOf(isChecked)), 0);
                 } else {
                     createToast(getString(R.string.toast_not_connected));
@@ -120,7 +121,7 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isQPairOn() && isConnected()) {
                     getContext().bindService(getQpairIntent(),
-                            new sendBroadcastConnection(ACTION_SHOW_TOUCHES, EXTRA,
+                            new sendBroadcastConnection(ACTION_SHOW_TOUCHES,
                                     String.valueOf(isChecked)), 0);
                 } else {
                     createToast(getString(R.string.toast_not_connected));
@@ -146,7 +147,7 @@ public class MainActivity extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 EditText inputText = (EditText) myDialogView.findViewById(R.id.dialog_input);
                                 getContext().bindService(getQpairIntent(),
-                                        new sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA,
+                                        new sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD,
                                                 inputText.getText().toString()), 0);
                             }
                         }, null);
@@ -157,14 +158,14 @@ public class MainActivity extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 EditText inputText = (EditText) myDialogView.findViewById(R.id.dialog_input);
                                 getContext().bindService(getQpairIntent(),
-                                        new sendBroadcastConnection(ACTION_OPEN_URL, EXTRA,
+                                        new sendBroadcastConnection(ACTION_OPEN_URL,
                                                 inputText.getText().toString()), 0);
                             }
                         }, null);
                         break;
                     case 2:
                         getContext().bindService(getQpairIntent(),
-                                new sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA,
+                                new sendBroadcastConnection(ACTION_SCREEN_OFF,
                                         "screenOff"), 0);
                         break;
                 }
@@ -226,6 +227,13 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+
+   private void checkHubToDateOnPeer() {
+       if (isQPairOn() && isConnected()) {
+           getContext().bindService(getQpairIntent(),
+                   new startActivityConnection(getString(R.string.hubtodate_package), getString(R.string.hubtodate_package) + ".MainActivity"), 0);
+       }
+   }
 
     // Check if User is in r2 and show a nice dialog telling them to update
     private void checkVersion() {

@@ -124,6 +124,7 @@
             <intent-filter>
                 <action android:name="com.sferadev.qpair.ACTION_CALLBACK" />
                 <action android:name="com.sferadev.qpair.ACTION_MEDIA" />
+                <action android:name="com.sferadev.qpair.CALLBACK_FAILURE" />
                 <action android:name="com.sferadev.qpair.CHANGE_IME" />
                 <action android:name="com.sferadev.qpair.CHANGE_WIFI" />
                 <action android:name="com.sferadev.qpair.CHANGE_RINGER_MODE" />

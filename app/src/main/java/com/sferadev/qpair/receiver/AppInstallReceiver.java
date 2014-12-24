@@ -11,7 +11,6 @@ import com.sferadev.qpair.service.ShakeService;
 import static com.sferadev.qpair.App.getContext;
 import static com.sferadev.qpair.utils.Constants.ACTION_OPEN_PLAY_STORE;
 import static com.sferadev.qpair.utils.Constants.ACTION_UNINSTALL_PACKAGE;
-import static com.sferadev.qpair.utils.Constants.EXTRA;
 import static com.sferadev.qpair.utils.Constants.KEY_LAST_APP;
 import static com.sferadev.qpair.utils.Constants.KEY_SYNC_APPS;
 import static com.sferadev.qpair.utils.PreferenceUtils.getPreference;
@@ -54,7 +53,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getContext().bindService(getQpairIntent(),
-                                        new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, EXTRA, dataPackageAdded[1]), 0);
+                                        new sendBroadcastConnection(ACTION_OPEN_PLAY_STORE, dataPackageAdded[1]), 0);
                             }
                         }, null);
                     }
@@ -70,7 +69,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getContext().bindService(getQpairIntent(),
-                                        new sendBroadcastConnection(ACTION_UNINSTALL_PACKAGE, EXTRA, dataPackageRemoved[1]), 0);
+                                        new sendBroadcastConnection(ACTION_UNINSTALL_PACKAGE, dataPackageRemoved[1]), 0);
                             }
                         }, null);
                     }

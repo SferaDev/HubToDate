@@ -7,6 +7,7 @@ import static com.sferadev.qpair.App.getContext;
 public class Constants {
     // Possible actions coming from Peer device inside Intent
     public static final String ACTION_CHANGE_IME = "com.sferadev.qpair.CHANGE_IME";
+    public static final String ACTION_CALLBACK_FAILURE = "com.sferadev.qpair.CALLBACK_FAILURE";
     public static final String ACTION_CHANGE_RINGER_MODE = "com.sferadev.qpair.CHANGE_RINGER_MODE";
     public static final String ACTION_CHANGE_WIFI = "com.sferadev.qpair.CHANGE_WIFI";
     public static final String ACTION_CREATE_DIALOG = "com.sferadev.qpair.CREATE_DIALOG";

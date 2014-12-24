@@ -60,6 +60,8 @@
     <string name="dialog_update_qpair_description">Looks like you\'re not in the loop! Please update QPair on your device!</string>
     <string name="dialog_qpair_not_installed">QPair not detected!</string>
     <string name="dialog_qpair_not_installed_description">Looks like you don\'t have QPair installed. Please install it to enjoy of HubToDate!</string>
+    <string name="dialog_hubtodate_not_installed">HubToDate not detected on Peer!</string>
+    <string name="dialog_hubtodate_not_installed_description">Looks like you don\'t have HubToDate installed on your Peer! Do you want to install it?</string>
 
     <!-- Assist Array -->
     <string name="array_assist_sync_app">Sync Current App</string>

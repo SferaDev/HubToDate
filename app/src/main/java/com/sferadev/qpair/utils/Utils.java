@@ -38,7 +38,6 @@ import static com.sferadev.qpair.utils.Constants.ACTION_SCREEN_OFF;
 import static com.sferadev.qpair.utils.Constants.ACTION_SHOW_TOUCHES;
 import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_BRIGHTNESS;
 import static com.sferadev.qpair.utils.Constants.ACTION_UPDATE_CLIPBOARD;
-import static com.sferadev.qpair.utils.Constants.EXTRA;
 import static com.sferadev.qpair.utils.Constants.KEY_LAST_RINGER_MODE;
 import static com.sferadev.qpair.utils.Constants.assistOptions;
 import static com.sferadev.qpair.utils.Constants.mediaOptions;
@@ -64,31 +63,31 @@ public class Utils {
                         // Case: Sync Current App
                         case 0:
                             getContext().bindService(getQpairIntent(),
-                                    new sendBroadcastConnection(ACTION_OPEN_ACTIVITY, EXTRA,
+                                    new sendBroadcastConnection(ACTION_OPEN_ACTIVITY,
                                             getForegroundApp()), 0);
                             break;
                         // Case: Sync Clipboard
                         case 1:
                             getContext().bindService(getQpairIntent(),
-                                    new sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD, EXTRA,
+                                    new sendBroadcastConnection(ACTION_UPDATE_CLIPBOARD,
                                             getClipboardString()), 0);
                             break;
                         // Case: Sync Brightness
                         case 2:
                             getContext().bindService(getQpairIntent(),
-                                    new sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS, EXTRA,
+                                    new sendBroadcastConnection(ACTION_UPDATE_BRIGHTNESS,
                                             getSystemPreference(android.provider.Settings.System.SCREEN_BRIGHTNESS)), 0);
                             break;
                         // Case: Turn Screen Off
                         case 3:
                             getContext().bindService(getQpairIntent(),
-                                    new sendBroadcastConnection(ACTION_SCREEN_OFF, EXTRA,
+                                    new sendBroadcastConnection(ACTION_SCREEN_OFF,
                                             "screenOff"), 0);
                             break;
                         // Case: Show Touches
                         case 4:
                             getContext().bindService(getQpairIntent(),
-                                    new sendBroadcastConnection(ACTION_SHOW_TOUCHES, EXTRA,
+                                    new sendBroadcastConnection(ACTION_SHOW_TOUCHES,
                                             "showTouches"), 0);
                             break;
                         // Case: Media
@@ -131,27 +130,27 @@ public class Utils {
                     // Case: Play
                     case 0:
                         getContext().bindService(getQpairIntent(),
-                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "play"), 0);
+                                new sendBroadcastConnection(ACTION_MEDIA, "play"), 0);
                         break;
                     // Case: Pause
                     case 1:
                         getContext().bindService(getQpairIntent(),
-                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "pause"), 0);
+                                new sendBroadcastConnection(ACTION_MEDIA, "pause"), 0);
                         break;
                     // Case: Stop
                     case 2:
                         getContext().bindService(getQpairIntent(),
-                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "stop"), 0);
+                                new sendBroadcastConnection(ACTION_MEDIA, "stop"), 0);
                         break;
                     // Case: Next
                     case 3:
                         getContext().bindService(getQpairIntent(),
-                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "next"), 0);
+                                new sendBroadcastConnection(ACTION_MEDIA, "next"), 0);
                         break;
                     // Case: Previous
                     case 4:
                         getContext().bindService(getQpairIntent(),
-                                new sendBroadcastConnection(ACTION_MEDIA, EXTRA, "previous"), 0);
+                                new sendBroadcastConnection(ACTION_MEDIA, "previous"), 0);
                         break;
                     // Default Case, should never happen
                     default:

@@ -13,6 +13,9 @@ import com.lge.qpair.api.r2.IPeerIntent;
 import com.lge.qpair.api.r2.QPairConstants;
 
 import static com.sferadev.qpair.App.getContext;
+import static com.sferadev.qpair.utils.Constants.ACTION_CALLBACK_FAILURE;
+import static com.sferadev.qpair.utils.Constants.ACTION_OPEN_ACTIVITY;
+import static com.sferadev.qpair.utils.Constants.EXTRA;
 import static com.sferadev.qpair.utils.Constants.EXTRA_LOCAL_VERSION;
 import static com.sferadev.qpair.utils.Constants.EXTRA_QPAIR_DEVICE_TYPE;
 import static com.sferadev.qpair.utils.Constants.EXTRA_QPAIR_IS_CONNECTED;
@@ -81,44 +84,100 @@ public class QPairUtils {
         }
     }
 
-    // Class that handles the communication between devices
+    // Class that handles the broadcast between devices
     public static class sendBroadcastConnection implements ServiceConnection {
         final String myAction;
-        String myExtra[];
+        String myExtra = null;
 
         public sendBroadcastConnection(String mAction) {
             myAction = mAction;
         }
 
-        public sendBroadcastConnection(String mAction, String mExtraName, String mExtraValue) {
+        public sendBroadcastConnection(String mAction, String mExtraValue) {
             myAction = mAction;
-            myExtra = new String[] {mExtraName, mExtraValue};
+            myExtra = mExtraValue;
         }
 
-        public sendBroadcastConnection(String mAction, String mExtraName, int mExtraValue) {
+        public sendBroadcastConnection(String mAction, int mExtraValue) {
             myAction = mAction;
-            myExtra = new String[] {mExtraName, String.valueOf(mExtraValue)};
+            myExtra = String.valueOf(mExtraValue);
         }
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             IPeerContext peerContext = IPeerContext.Stub.asInterface(service);
-
             try {
                 IPeerIntent peerIntent = peerContext.newPeerIntent();
                 peerIntent.setAction(myAction);
-                try {
-                    if (myExtra[0] != null && myExtra[1] != null) {
-                        peerIntent.putStringExtra(myExtra[0], myExtra[1]);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (myExtra != null) {
+                    peerIntent.putStringExtra(EXTRA, myExtra);
                 }
+
                 peerContext.sendBroadcastOnPeer(peerIntent, null, null);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+            getContext().unbindService(this);
+        }
 
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    }
+
+    // Class that handles the Activity between devices
+    public static class startActivityConnection implements ServiceConnection {
+        final String myPackage;
+        final String myActivity;
+
+        public startActivityConnection(String mPackage, String mActivity) {
+            myPackage = mPackage;
+            myActivity = mActivity;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            IPeerContext peerContext = IPeerContext.Stub.asInterface(service);
+            try {
+                IPeerIntent peerIntent = peerContext.newPeerIntent();
+                peerIntent.setAction(ACTION_OPEN_ACTIVITY);
+                peerIntent.putStringExtra(EXTRA, myPackage);
+
+                IPeerIntent failureCallback = peerContext.newPeerIntent();
+                failureCallback.setAction(ACTION_CALLBACK_FAILURE);
+
+                peerContext.sendBroadcastOnPeer(peerIntent, null, failureCallback);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            getContext().unbindService(this);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    }
+
+    // Class that handles the URL between devices
+    public static class openURLConnection implements ServiceConnection {
+        final String myURL;
+
+        public openURLConnection(String mURL) {
+            myURL = mURL;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            IPeerContext peerContext = IPeerContext.Stub.asInterface(service);
+            try {
+                IPeerIntent peerIntent = peerContext.newPeerIntent();
+                peerIntent.setAction(Intent.ACTION_VIEW);
+                peerIntent.setData(myURL);
+
+                peerContext.startActivityOnPeer(peerIntent, null, null);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             getContext().unbindService(this);
         }
 
