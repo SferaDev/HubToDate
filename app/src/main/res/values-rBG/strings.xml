@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Common values -->
+    <string name="always">Винаги</string>
+    <!-- Main Content -->
+    <!-- Slide Up Panel -->
+    <!-- Toasts -->
+    <!-- Dialogs -->
+    <!-- Assist Array -->
+    <!-- Music Array -->
+    <!-- Device Admin -->
+    <!-- Tasker -->
+</resources>

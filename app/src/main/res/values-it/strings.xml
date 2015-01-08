@@ -2,13 +2,87 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Common values -->
     <string name="hi">Ciao</string>
+    <string name="always">Sempre</string>
+    <string name="welcome">Benvenuto</string>
+    <string name="translate">Traduci questa app!</string>
+    <string name="sync_apps">Sincronizza Apps</string>
+    <string name="sync_wifi">Sincronizza Wi-Fi</string>
+    <string name="sync_volume">Sincronizza Volume</string>
     <!-- Main Content -->
     <string name="main_hello">Benvenuti a HubToDate!</string>
+    <string name="main_shake">Agita,agita,agita!</string>
+    <string name="main_shake_description">Agita per far compiere azioni divertenti al dispositivo collegato. Puoi anche azionarle facendo swipe verso l\'alto dalla tua Barra di Navigazione</string>
+    <string name="main_app_sync">Installa e disinstalla con facilità!</string>
+    <string name="main_app_sync_description">Gestisci installazioni e disinstallazioni delle app su tutti i tuoi dispositivi in una sola volta. Attendi che la finestra di dialogo te lo chieda educatamente!</string>
+    <string name="main_setting_sync">I tuoi settaggi verranno condivisi tra i dispositivi!</string>
+    <string name="main_setting_sync_description">Sincronizza alcune impostazioni come Wi-Fi o Volume sul dispositivo accoppiato. Verranno magicamente condivise!!</string>
     <!-- Slide Up Panel -->
+    <string name="slide_title">Azioni sul dispositivo collegato</string>
+    <string name="slide_brightness">Luminosità</string>
+    <string name="slide_wifi">Wi-Fi</string>
+    <string name="slide_touches">Mostra Tocchi</string>
+    <string name="slide_clipboard">Aggiorna Appunti</string>
+    <string name="slide_url">Apri sito web</string>
+    <string name="slide_screen">Spegni schermo</string>
     <!-- Toasts -->
+    <string name="toast_app_not_found">Non è possibile aprire l\'app perchè non è installata!</string>
+    <string name="toast_app_not_supported">Questa app non è supportata al momento, non è stata installata dal Play Store</string>
+    <string name="toast_community">Open Community</string>
+    <string name="toast_clipboard">Aggiunto agli appunti:</string>
+    <string name="toast_brightness">Luminosità aggiornata su:</string>
+    <string name="toast_intent">Nuovo comando ricevuto:</string>
+    <string name="toast_option">L\'opzione è:</string>
+    <string name="toast_not_connected">QPair: Non sei connesso al dispositivo</string>
+    <string name="toast_uninstall_failed">Non è possibile disinstallare perchè l\'app non è stata trovata:</string>
     <!-- Dialogs -->
+    <string name="dialog_community">La tua opinione è importante!</string>
+    <string name="dialog_community_description">Entra nella community di HubToDate e dai il tuo contributo!</string>
+    <string name="dialog_battery_low">La batteria del tuo dispositivo collegato è scarica</string>
+    <string name="dialog_storage_low">La memoria interna del dispositivo collegato è in esaurimento</string>
+    <string name="dialog_install">Installa sul dispositivo</string>
+    <string name="dialog_install_description">Desideri installare questa app sul tuo dispositivo QPair?</string>
+    <string name="dialog_uninstall">Disinstalla sul dispositivo</string>
+    <string name="dialog_uninstall_description">Desideri disinstallare questa app dal tuo dispositivo QPair?</string>
+    <string name="dialog_ime">Cambia tastiera sul dispositivo</string>
+    <string name="dialog_ime_description">Desideri cambiare il metodo d\'inserimento sul tuo dispositivo QPair?</string>
+    <string name="dialog_wifi">Aggiorna il Wifi sul dispositivo</string>
+    <string name="dialog_wifi_description">Desideri sincronizzare lo stato del Wi-Fi sul dispositivo QPair?</string>
+    <string name="dialog_ringer">Aggiorna volume suoneria sul dispositivo</string>
+    <string name="dialog_ringer_description">Desideri sincronizzare il volume sul dispositivo QPair?</string>
+    <string name="dialog_update_qpair">La versione di QPair non è aggiornata!</string>
+    <string name="dialog_update_qpair_description">Sembra tu non sia nel giro! Aggiorna QPair sul tuo dispositivo!</string>
+    <string name="dialog_qpair_not_installed">QPair non rilevato!</string>
+    <string name="dialog_qpair_not_installed_description">Sembra che QPair non sia installato. Installalo per sfruttare HubToDate!</string>
+    <string name="dialog_hubtodate_not_installed">HubToDate non rilevato sul dispositivo collegato!</string>
+    <string name="dialog_hubtodate_not_installed_description">Sembra che HubToDate non sia installato sul dispositivo collegato! Vuoi installarlo?</string>
     <!-- Assist Array -->
+    <string name="array_assist_sync_app">Sincronizza app corrente</string>
+    <string name="array_assist_sync_clipboard">Sincronizza gli appunti</string>
+    <string name="array_assist_sync_brightness">Sincronizza la luminosità</string>
+    <string name="array_assist_screen_off">Spegni schermo del dispositivo</string>
+    <string name="array_assist_show_touches">Mostra/Nascondi tocchi sul dispositivo</string>
+    <string name="array_assist_media">Controllo Multimediale</string>
     <!-- Music Array -->
+    <string name="array_media_play">Musica in play</string>
+    <string name="array_media_pause">Musica in Pausa</string>
+    <string name="array_media_stop">Musica in Stop</string>
+    <string name="array_media_next">Traccia successiva</string>
+    <string name="array_media_previous">Traccia precedente</string>
     <!-- Device Admin -->
+    <string name="admin_enabled">HubToDate è stato aggiunto come Amministratore Dispositivo</string>
+    <string name="admin_disabled">HubToDate non è più Amministratore Dispositivo</string>
+    <string name="admin_explanation">Ad HubToDate sarà permesso di spegnere lo schermo quando lo richiederai sul tuo dispositivo collegato</string>
+    <string name="admin_failure">HubToDate è non Amministratore Dispositivo. Controlla le impostazioni di Sicurezza</string>
     <!-- Tasker -->
+    <string name="tasker_title">Azione da compiere</string>
+    <string-array name="tasker_entries">
+        <item>Mostra tutte le opzioni</item>
+        <item>Sincronizza App corrente</item>
+        <item>Sincronizza Appunti</item>
+        <item>Sincronizza Luminosità</item>
+        <item>Spegni schermo del dispositivo</item>
+        <item>Accendi schermo del dispositivo</item>
+        <item>Spegni Wi-Fi del dispositivo</item>
+        <item>Fai vibrare il dispositivo</item>
+    </string-array>
 </resources>

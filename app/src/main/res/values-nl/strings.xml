@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Common values -->
+    <string name="hi">Hallo</string>
+    <string name="always">Altijd</string>
+    <!-- Main Content -->
+    <string name="main_hello">Welkom bij HubToDate</string>
+    <string name="main_shake">Shudden, schudden, schudden!</string>
+    <string name="main_shake_description">Voer taken uit op je verbonden apperaat door te schudden. Je kunt deze acties ook uitvoeren door omhoog te vegen vanaf je Navigatie Balk</string>
+    <!-- Slide Up Panel -->
+    <!-- Toasts -->
+    <!-- Dialogs -->
+    <!-- Assist Array -->
+    <!-- Music Array -->
+    <!-- Device Admin -->
+    <!-- Tasker -->
+</resources>
