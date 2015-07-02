@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/QPair.iml" filepath="$PROJECT_DIR$/QPair.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HubToDate.iml" filepath="$PROJECT_DIR$/HubToDate.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/seekBar/seekBar.iml" filepath="$PROJECT_DIR$/seekBar/seekBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/switchButton/switchButton.iml" filepath="$PROJECT_DIR$/switchButton/switchButton.iml" />
@@ -10,4 +10,3 @@
     </modules>
   </component>
 </project>
-

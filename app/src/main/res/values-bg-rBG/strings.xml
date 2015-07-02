@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- Common values -->
-    <string name="hi">你好</string>
+    <string name="always">Винаги</string>
     <!-- Main Content -->
-    <string name="main_hello">欢迎</string>
     <!-- Slide Up Panel -->
     <!-- Toasts -->
     <!-- Dialogs -->

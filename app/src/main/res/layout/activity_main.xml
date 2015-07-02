@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:panelHeight="48dp"
-    sothree:shadowHeight="4dp"
+    sothree:umanoPanelHeight="48dp"
+    sothree:umanoShadowHeight="4dp"
     android:layout_marginBottom="20dp"
     tools:context=".MainActivity">
 
