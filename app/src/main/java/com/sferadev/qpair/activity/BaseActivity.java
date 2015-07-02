@@ -29,7 +29,6 @@ public abstract class BaseActivity extends ActionBarActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
     }
 
     @Override

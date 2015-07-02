@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.listeners.ActionClickListener;
+import com.samsung.android.sdk.multiwindow.SMultiWindow;
+import com.samsung.android.sdk.multiwindow.SMultiWindowActivity;
 import com.sferadev.qpair.R;
 import com.sferadev.qpair.egg.EggActivity;
 import com.sferadev.qpair.egg.LGEggActivity;
@@ -72,9 +74,20 @@ public class MainActivity extends BaseActivity {
     protected int eggTaps = 0;
     private Activity myActivity = this;
 
+    private SMultiWindow mMultiWindow = null;
+    private SMultiWindowActivity mMultiWindowActivity = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            mMultiWindow = new SMultiWindow();
+            mMultiWindow.initialize(this);
+            mMultiWindowActivity = new SMultiWindowActivity(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Some important stuff before UI is finally loaded
         checkQPairIsInstalled();
@@ -196,11 +209,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-
-        // Handle Voting Dialog!
-        if (!getPreference(KEY_HAS_VOTED, false)) {
-            showVoteDialog();
-        }
     }
 
     private static String readAll(Reader rd) throws IOException {

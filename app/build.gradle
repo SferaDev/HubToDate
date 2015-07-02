@@ -8,8 +8,8 @@ android {
         applicationId "com.sferadev.qpair"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 14
-        versionName "1.4"
+        versionCode 20
+        versionName "2.0"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -17,7 +17,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,6 +38,8 @@ dependencies {
     compile 'com.balysv:material-ripple:0.9.3-SNAPSHOT@aar'
     compile files('libs/LGQPairAPIs.jar')
     provided files('libs/LGQSlideAPIs.jar')
+    compile files('libs/multiwindow-v1.2.3.jar')
+    compile files('libs/sdk-v1.0.0.jar')
     compile project(':tasker')
     compile project(':seekBar')
     compile project(':switchButton')
